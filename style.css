@@ -1,0 +1,245 @@
+/* ===== 뒤집은 후 캐릭터만 보이기 ===== */
+
+.tile:not(.hidden) .character{
+  width:90px !important;
+  height:90px !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  background:none !important;
+  border:0 !important;
+  outline:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+
+  overflow:visible !important;
+}
+
+/* 팀 색 원 제거 */
+.tile.blue:not(.hidden) .character,
+.tile.red:not(.hidden) .character{
+  background:none !important;
+  border:0 !important;
+  outline:0 !important;
+  box-shadow:none !important;
+}
+
+/* 캐릭터 영역 */
+.tile:not(.hidden) .animal{
+  width:90px !important;
+  height:90px !important;
+
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+
+  background:none !important;
+  border:0 !important;
+}
+
+/* 실제 캐릭터 이미지 */
+.tile:not(.hidden) .animal img{
+  width:80px !important;
+  height:80px !important;
+
+  object-fit:contain !important;
+
+  background:none !important;
+  border:0 !important;
+  outline:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+/* =================================
+   ★ 최종 장기판 표시 강제 고정 ★
+   ================================= */
+
+/* 모든 사각 칸 = 나무판 그대로 */
+.tile,
+.tile.blue,
+.tile.red {
+  background: transparent !important;
+  border: 1px solid rgba(120,72,30,.22) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+
+/* =========================
+   뒤집기 전 = 발바닥 나무알
+   ========================= */
+
+.tile.hidden {
+  background: transparent !important;
+  font-size: 0 !important;
+  color: transparent !important;
+}
+
+.tile.hidden::before {
+  content: "" !important;
+
+  width: 90px !important;
+  height: 90px !important;
+
+  background-image:
+    url("https://i.ibb.co/5hH56SSC/image.png") !important;
+
+  background-size: contain !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  display: block !important;
+}
+
+.tile.hidden::after {
+  content: none !important;
+  display: none !important;
+}
+
+.tile.hidden .character {
+  display: none !important;
+}
+
+
+/* =========================
+   뒤집은 후 = 캐릭터만
+   ========================= */
+
+.tile:not(.hidden) {
+  background: transparent !important;
+}
+
+.tile:not(.hidden) .character {
+  width: 90px !important;
+  height: 90px !important;
+
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  overflow: visible !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.tile.blue:not(.hidden) .character,
+.tile.red:not(.hidden) .character {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.tile:not(.hidden) .animal {
+  width: 90px !important;
+  height: 90px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  background: transparent !important;
+}
+
+.tile:not(.hidden) .animal img {
+  width: 86px !important;
+  height: 86px !important;
+
+  object-fit: contain !important;
+
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+/* ===== 장기판 밝은 원목 + 칸 줄 ===== */
+
+#board{
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(130,80,30,.035) 0px,
+      rgba(130,80,30,.035) 1px,
+      transparent 1px,
+      transparent 8px
+    ),
+    linear-gradient(
+      90deg,
+      #f6d99f 0%,
+      #efc77e 50%,
+      #f6d99f 100%
+    ) !important;
+
+  border:10px solid #75431f !important;
+  border-radius:18px !important;
+
+  padding:10px !important;
+  gap:0 !important;
+
+  box-shadow:
+    inset 0 0 0 3px #b97a3e,
+    0 8px 14px rgba(0,0,0,.35) !important;
+}
+
+
+/* 장기판 칸 줄 */
+.tile,
+.tile.blue,
+.tile.red,
+.tile.hidden,
+.tile:not(.hidden){
+  background:transparent !important;
+
+  border:1px solid rgba(125,78,31,.32) !important;
+  border-radius:0 !important;
+
+  box-shadow:none !important;
+}
+/* 레드팀 캐릭터를 조금 크게 */
+.tile.red:not(.hidden) .animal img{
+  width:150% !important;
+  height:110% !important;
+}
+.animal{
+  position:relative;
+}
+
+.redName{
+  position:absolute;
+  left:50%;
+  bottom:-4px;
+  transform:translateX(-50%);
+
+  color:white;
+  font-size:17px;
+  font-weight:700;
+  line-height:1;
+
+  text-shadow:
+    -2px -2px 0 #8b0000,
+     2px -2px 0 #8b0000,
+    -2px  2px 0 #8b0000,
+     2px  2px 0 #8b0000;
+
+  z-index:10;
+}
+.tile.wrong::after{
+  content:"❌";
+  position:absolute;
+  font-size:45px;
+  z-index:50;
+}
