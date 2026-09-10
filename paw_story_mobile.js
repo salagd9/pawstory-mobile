@@ -153,7 +153,7 @@ style.textContent = [
 '#mainScreen{position:relative;width:100vw;max-width:1365px;margin:0 auto;overflow:hidden}',
 '#mainImage{display:block;width:100%;height:auto}',
 '#game{display:none}',
-'#mainStart{position:absolute;left:1.1%;top:90.3%;width:18.3%;height:8%;border:0;background:transparent;cursor:pointer;z-index:20}',
+'#mainStart{position:absolute;left:0;top:0;width:100%;height:100%;border:0;background:transparent;cursor:pointer;z-index:9999;touch-action:manipulation}',
 '#mainStart:active,#mainStart:focus,#mainStart:hover{background:transparent!important;box-shadow:none!important;outline:none!important;filter:none!important;opacity:1!important}',
 '#mainStart::-moz-focus-inner{border:0;padding:0}',
 '#game{max-width:800px;margin:auto;padding:15px;text-align:center}',
