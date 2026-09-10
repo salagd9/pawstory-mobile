@@ -218,7 +218,7 @@ style.textContent = [
 '.rpsChoice:disabled{filter:grayscale(.6);opacity:.55;cursor:default}',
 
 '@keyframes rpsPop{0%{transform:scale(.4) rotate(-20deg)}60%{transform:scale(1.25) rotate(8deg)}100%{transform:scale(1)}}',
-'@media(max-width:500px){.tile{height:auto}.animal{font-size:29px;line-height:32px}h1{font-size:28px}.pieceName{font-size:11px}}'
+'@media(max-width:1000px){.tile{height:auto}.animal{font-size:29px;line-height:32px}h1{font-size:28px}.pieceName{font-size:11px}}'
 ].join('\n');
 
 document.head.appendChild(style);
