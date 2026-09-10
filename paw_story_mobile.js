@@ -340,7 +340,10 @@ function openRPS(){
     document.getElementById('rpsOverlay');
 
   overlay.style.display = 'flex';
-
+setTimeout(
+  fitMobileRPS,
+  100
+);
   document.getElementById('playerHand').textContent = '❔';
   document.getElementById('aiHand').textContent = '❔';
 
@@ -15805,7 +15808,144 @@ document.getElementById('mainStart').onclick=function(){
   rpsActive = false;
 
   newGame();
+setTimeout(
+  fitMobileGame,
+  100
+);
 speakWelcome();
 
   say('포스토리 암기게임에 오신 것을 환영합니다. AI 대국 버튼을 눌러 선을 먼저 결정해 주세요.');
 };
+/* =====================================================
+   모바일 가로화면 자동 맞춤
+===================================================== */
+
+function fitMobileGame(){
+
+  var game =
+    document.getElementById('game');
+
+  if(
+    !game ||
+    game.style.display === 'none'
+  ){
+    return;
+  }
+
+  /* 먼저 원래 크기로 계산 */
+  game.style.transform = 'none';
+
+  var screenW =
+    window.innerWidth * 0.96;
+
+  var screenH =
+    window.innerHeight * 0.90;
+
+  var gameW =
+    game.scrollWidth;
+
+  var gameH =
+    game.scrollHeight;
+
+  var scale =
+    Math.min(
+      screenW / gameW,
+      screenH / gameH,
+      1
+    );
+
+  game.style.transformOrigin =
+    'top center';
+
+  game.style.transform =
+    'scale(' + scale + ')';
+
+  console.log(
+    '📱 게임화면 자동축소:',
+    scale
+  );
+}
+
+
+function fitMobileRPS(){
+
+  var box =
+    document.getElementById('rpsBox');
+
+  var overlay =
+    document.getElementById('rpsOverlay');
+
+  if(
+    !box ||
+    !overlay ||
+    overlay.style.display === 'none'
+  ){
+    return;
+  }
+
+  box.style.transform = 'none';
+
+  var screenW =
+    window.innerWidth * 0.92;
+
+  var screenH =
+    window.innerHeight * 0.86;
+
+  var boxW =
+    box.scrollWidth;
+
+  var boxH =
+    box.scrollHeight;
+
+  var scale =
+    Math.min(
+      screenW / boxW,
+      screenH / boxH,
+      1
+    );
+
+  box.style.transformOrigin =
+    'center center';
+
+  box.style.transform =
+    'scale(' + scale + ')';
+
+  console.log(
+    '✊ 가위바위보 자동축소:',
+    scale
+  );
+}
+
+
+/* 휴대폰 회전할 때 다시 맞춤 */
+window.addEventListener(
+  'resize',
+  function(){
+
+    setTimeout(
+      function(){
+
+        fitMobileGame();
+        fitMobileRPS();
+
+      },
+      100
+    );
+  }
+);
+
+window.addEventListener(
+  'orientationchange',
+  function(){
+
+    setTimeout(
+      function(){
+
+        fitMobileGame();
+        fitMobileRPS();
+
+      },
+      300
+    );
+  }
+);
