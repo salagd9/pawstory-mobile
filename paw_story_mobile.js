@@ -874,19 +874,21 @@ function speakWelcome(){
   );
 
   speech.lang = 'ko-KR';
-speech.rate = 0.9;
-var voices = window.speechSynthesis.getVoices();
+  speech.rate = 0.9;
+  speech.volume = 1;
 
-for(var i=0; i<voices.length; i++){
+  var voices = window.speechSynthesis.getVoices();
 
-  if(
-    voices[i].lang === 'ko-KR' &&
-    voices[i].name.toLowerCase().includes('female')
-  ){
-    speech.voice = voices[i];
-    break;
+  /* 한국어 음성이 있으면 사용 */
+  for(var i = 0; i < voices.length; i++){
+
+    if(voices[i].lang.indexOf('ko') === 0){
+      speech.voice = voices[i];
+      break;
+    }
   }
-}
+
+  window.speechSynthesis.cancel();
   window.speechSynthesis.speak(speech);
 }
 
