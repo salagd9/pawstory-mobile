@@ -1,0 +1,10 @@
+{
+  "name": "Paw Story",
+  "short_name": "Paw Story",
+  "description": "동물 장기 암기게임",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#06172c",
+  "orientation": "landscape"
+}
