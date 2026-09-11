@@ -57,6 +57,17 @@ document.body.innerHTML =
 
   '</div>' +
 '</div>';
+document.getElementById('backMain').onclick = function(){
+
+  playClickSound();
+
+  welcomeSound.pause();
+  welcomeSound.currentTime = 0;
+
+  document.getElementById('game').style.display = 'none';
+  document.getElementById('mainMenu').style.display = 'flex';
+};
+
 /* 장기알 탁 소리 */
 var gameAudioCtx = null;
 var takSound = new Audio('./sound/tak.mp3');
