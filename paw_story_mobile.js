@@ -160,7 +160,7 @@ style.textContent = [
 '#mainStart:active,#mainStart:focus,#mainStart:hover{background:transparent!important;box-shadow:none!important;outline:none!important;filter:none!important;opacity:1!important}',
 '#mainStart::-moz-focus-inner{border:0;padding:0}',
 '#game{max-width:800px;margin:auto;padding:2px;text-align:center}',
-'#board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(4,1fr);gap:4px;width:760px;height:380px;min-width:760px;max-width:760px;padding:6px;background:#70451f;border-radius:15px;box-sizing:border-box}',
+'#board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(4,1fr);gap:4px;width:760px;height:760px;min-width:760px;max-width:760px;padding:6px;background:#70451f;border-radius:15px;box-sizing:border-box}',
 '#boardWrap{display:grid;grid-template-columns:140px 760px 140px;gap:10px;align-items:stretch;justify-content:center;width:1060px;box-sizing:border-box}',
 '#capturedLeft,#capturedRight{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(8,1fr);gap:2px;background:#70451f;padding:4px;border-radius:8px;height:100%;box-sizing:border-box}',
 
@@ -170,7 +170,7 @@ style.textContent = [
   '#capturedLeft .miniTile.hint:after,#capturedRight .miniTile.hint:after{content:""}',
 '.miniPieceName{font-size:13px;font-weight:bold;color:white;text-align:center}',
   '#capturedArea{margin:12px 0;padding:10px;background:#29294f;border-radius:12px;color:#ffd21c}',
-'.tile{aspect-ratio:1/1;height:auto;border-radius:8px;border:2px solid #8888c9;background:#484873;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none}',
+'.tile{width:100%;height:100%;border-radius:8px;border:2px solid #8888c9;background:#484873;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;box-sizing:border-box}',
 '.tile.hidden{background:#484873;border-color:#8888c9}',
 '.tile.hidden:after{content:"🐾";width:48px;height:48px;background:#704a25;border:3px solid #d4ad5b;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-sizing:border-box}',
 '.tile.blue{background:linear-gradient(#3555a5,#202f69);border-color:#70a5ff}',
