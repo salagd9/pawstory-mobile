@@ -66,6 +66,7 @@ document.getElementById('backMain').onclick = function(){
 
   document.getElementById('game').style.display = 'none';
   document.getElementById('mainMenu').style.display = 'flex';
+checkOrientation();
 };
 var rotateNotice = document.createElement('div');
 
@@ -92,9 +93,18 @@ rotateNotice.style.fontWeight = 'bold';
 rotateNotice.style.zIndex = '9999999';
 
 document.body.appendChild(rotateNotice);
+
 function checkOrientation(){
 
-  if(window.innerHeight > window.innerWidth){
+  var mainMenu = document.getElementById('mainMenu');
+
+  var gameStarted =
+    mainMenu.style.display === 'none';
+
+  if(
+    gameStarted &&
+    window.innerHeight > window.innerWidth
+  ){
     rotateNotice.style.display = 'flex';
   }else{
     rotateNotice.style.display = 'none';
@@ -15844,7 +15854,7 @@ document.getElementById('mainStart').onclick=function(){
 
   document.getElementById('mainMenu').style.display='none';
   document.getElementById('game').style.display='block';
-
+checkOrientation();
   /* 아직 AI 대국 시작 전 */
   aiMode = false;
   aiVsAiMode = false;
