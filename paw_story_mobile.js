@@ -147,6 +147,9 @@ function playVictorySound(){
 
 var style = document.createElement('style');
 style.textContent = [
+'html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#000;overscroll-behavior:none;touch-action:manipulation}',
+'body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}',
+'#game h1,#game .sub,#turn,#msg{display:none!important}',
 '@keyframes flagWave{0%{transform:perspective(220px) rotateY(0deg) skewY(0deg) scaleX(1)}15%{transform:perspective(220px) rotateY(-16deg) skewY(5deg) scaleX(.94)}30%{transform:perspective(220px) rotateY(10deg) skewY(-4deg) scaleX(1.04)}45%{transform:perspective(220px) rotateY(-12deg) skewY(3deg) scaleX(.96)}60%{transform:perspective(220px) rotateY(14deg) skewY(-5deg) scaleX(1.05)}75%{transform:perspective(220px) rotateY(-8deg) skewY(3deg) scaleX(.97)}90%{transform:perspective(220px) rotateY(6deg) skewY(-2deg) scaleX(1.02)}100%{transform:perspective(220px) rotateY(0deg) skewY(0deg) scaleX(1)}}',
 '@keyframes victoryFeather{0%{transform:translate(0,0) rotate(0deg);opacity:0}15%{opacity:1}40%{transform:translate(18px,-30px) rotate(70deg);opacity:1}70%{transform:translate(-14px,10px) rotate(150deg);opacity:.9}100%{transform:translate(22px,65px) rotate(260deg);opacity:0}}', 
 '#mainMenu{display:flex;justify-content:center;background:#06172c;min-height:100vh;width:100%;overflow:hidden}',
@@ -156,7 +159,7 @@ style.textContent = [
 '#mainStart{position:absolute;left:0;top:0;width:100%;height:100%;border:0;background:transparent;cursor:pointer;z-index:9999;touch-action:manipulation}',
 '#mainStart:active,#mainStart:focus,#mainStart:hover{background:transparent!important;box-shadow:none!important;outline:none!important;filter:none!important;opacity:1!important}',
 '#mainStart::-moz-focus-inner{border:0;padding:0}',
-'#game{max-width:800px;margin:auto;padding:15px;text-align:center}',
+'#game{max-width:800px;margin:auto;padding:2px;text-align:center}',
 '#boardWrap{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%}',
 '#board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(4,1fr);gap:2px;width:100%;padding:4px;background:#70451f;border-radius:10px;box-sizing:border-box}',
 '#boardWrap{display:grid;grid-template-columns:11vw 76vw 11vw;gap:1vw;align-items:stretch;justify-content:center;width:100%;box-sizing:border-box}',
@@ -15832,37 +15835,53 @@ function fitMobileGame(){
     return;
   }
 
-  /* 먼저 원래 크기로 계산 */
+  /* 기준 가로형 게임 화면 */
+  game.style.position = 'fixed';
+  game.style.left = '50%';
+  game.style.top = '50%';
+
+  game.style.width = '1100px';
+  game.style.maxWidth = 'none';
+
+  game.style.margin = '0';
   game.style.transform = 'none';
+  game.style.transformOrigin = 'center center';
 
-  var screenW =
-    window.innerWidth * 0.96;
+  /* 실제 휴대폰에서 보이는 화면 크기 */
+  var vw =
+    window.visualViewport
+    ? window.visualViewport.width
+    : window.innerWidth;
 
-  var screenH =
-    window.innerHeight * 0.90;
+  var vh =
+    window.visualViewport
+    ? window.visualViewport.height
+    : window.innerHeight;
 
+  /* 게임 원래 크기 */
   var gameW =
     game.scrollWidth;
 
   var gameH =
     game.scrollHeight;
 
+  /* 가로/세로 중 작은 비율에 맞춤 */
   var scale =
     Math.min(
-      screenW / gameW,
-      screenH / gameH,
-      1
+      vw / gameW,
+      vh / gameH
     );
 
-  game.style.transformOrigin =
-    'top center';
-
   game.style.transform =
-    'scale(' + scale + ')';
+    'translate(-50%,-50%) scale(' +
+    scale +
+    ')';
 
   console.log(
-    '📱 게임화면 자동축소:',
-    scale
+    '📱 고정 가로 게임 비율:',
+    scale,
+    gameW,
+    gameH
   );
 }
 
@@ -15883,13 +15902,28 @@ function fitMobileRPS(){
     return;
   }
 
+  /* 팝업도 항상 같은 원본 크기 */
+  box.style.width = '520px';
+  box.style.maxWidth = 'none';
+
+  box.style.position = 'absolute';
+  box.style.left = '50%';
+  box.style.top = '50%';
+
+  box.style.margin = '0';
   box.style.transform = 'none';
+  box.style.transformOrigin =
+    'center center';
 
-  var screenW =
-    window.innerWidth * 0.92;
+  var vw =
+    window.visualViewport
+    ? window.visualViewport.width
+    : window.innerWidth;
 
-  var screenH =
-    window.innerHeight * 0.86;
+  var vh =
+    window.visualViewport
+    ? window.visualViewport.height
+    : window.innerHeight;
 
   var boxW =
     box.scrollWidth;
@@ -15899,53 +15933,38 @@ function fitMobileRPS(){
 
   var scale =
     Math.min(
-      screenW / boxW,
-      screenH / boxH,
-      1
+      vw * 0.94 / boxW,
+      vh * 0.94 / boxH
     );
 
-  box.style.transformOrigin =
-    'center center';
-
   box.style.transform =
-    'scale(' + scale + ')';
+    'translate(-50%,-50%) scale(' +
+    scale +
+    ')';
 
   console.log(
-    '✊ 가위바위보 자동축소:',
+    '✊ 고정 가위바위보 비율:',
     scale
   );
 }
+window.addEventListener('resize', function(){
 
+  setTimeout(function(){
 
-/* 휴대폰 회전할 때 다시 맞춤 */
-window.addEventListener(
-  'resize',
-  function(){
+    fitMobileGame();
+    fitMobileRPS();
 
-    setTimeout(
-      function(){
+  }, 100);
 
-        fitMobileGame();
-        fitMobileRPS();
+});
 
-      },
-      100
-    );
-  }
-);
+window.addEventListener('orientationchange', function(){
 
-window.addEventListener(
-  'orientationchange',
-  function(){
+  setTimeout(function(){
 
-    setTimeout(
-      function(){
+    fitMobileGame();
+    fitMobileRPS();
 
-        fitMobileGame();
-        fitMobileRPS();
+  }, 300);
 
-      },
-      300
-    );
-  }
-);
+});
