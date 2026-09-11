@@ -2494,8 +2494,8 @@ img.onerror = function(){ alert('승리 이미지 불러오기 실패: ' + img.s
     img.src = './images/win_red.png';
   }
 
-  img.style.width = '90%';
-  img.style.maxWidth = '600px';
+  img.style.width = '55%';
+  img.style.maxWidth = '320px';
   img.style.height = 'auto';
   img.style.borderRadius = '20px';
 
@@ -15800,6 +15800,7 @@ document.getElementById('hint').onclick=function(){
 document.getElementById('mainStart').onclick=function(){
 
   playClickSound();
+  speakWelcome();
 
   document.getElementById('mainMenu').style.display='none';
   document.getElementById('game').style.display='block';
@@ -15814,7 +15815,7 @@ setTimeout(
   fitMobileGame,
   100
 );
-speakWelcome();
+
 
   say('포스토리 암기게임에 오신 것을 환영합니다. AI 대국 버튼을 눌러 선을 먼저 결정해 주세요.');
 };
