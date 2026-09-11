@@ -62,6 +62,9 @@ var gameAudioCtx = null;
 var takSound = new Audio('./sound/tak.mp3');
 takSound.preload = 'auto';
 takSound.volume = 0.7;
+var welcomeSound = new Audio('./welcome.mp3.mp3');
+welcomeSound.preload = 'auto';
+welcomeSound.volume = 1;
 var victorySound = new Audio('./sound/victory.mp3');
 victorySound.preload = 'auto';
 victorySound.volume = 0.8;
@@ -869,27 +872,13 @@ function say(text){
 }
 function speakWelcome(){
 
-  var speech = new SpeechSynthesisUtterance(
-    '포스토리 암기게임에 오신 것을 환영합니다. AI 대국 버튼을 눌러 먼저 선을 결정해 주세요.'
-  );
+  welcomeSound.pause();
+  welcomeSound.currentTime = 0;
 
-  speech.lang = 'ko-KR';
-  speech.rate = 0.9;
-  speech.volume = 1;
+  welcomeSound.play().catch(function(err){
+    console.log('환영 음성 재생 실패:', err);
+  });
 
-  var voices = window.speechSynthesis.getVoices();
-
-  /* 한국어 음성이 있으면 사용 */
-  for(var i = 0; i < voices.length; i++){
-
-    if(voices[i].lang.indexOf('ko') === 0){
-      speech.voice = voices[i];
-      break;
-    }
-  }
-
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(speech);
 }
 
 /* 타일 클릭 */
