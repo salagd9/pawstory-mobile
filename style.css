@@ -41,8 +41,8 @@
 
 /* 실제 캐릭터 이미지 */
 .tile:not(.hidden) .animal img{
-  width:80px !important;
-  height:80px !important;
+  width:70px !important;
+  height:70px !important;
 
   object-fit:contain !important;
 
