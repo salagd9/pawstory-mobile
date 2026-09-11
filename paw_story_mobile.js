@@ -1,4 +1,3 @@
-alert("GAME JS START");
 /* PAW STORY - 한국식 동물 장기 */
 
 document.body.innerHTML =
@@ -173,7 +172,7 @@ style.textContent = [
   '#capturedArea{margin:12px 0;padding:10px;background:#29294f;border-radius:12px;color:#ffd21c}',
 '.tile{width:100%;height:auto;min-width:0;min-height:0;border-radius:8px;border:2px solid #8888c9;background:#484873;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;box-sizing:border-box;overflow:hidden}',
 '.tile.hidden{background:#484873;border-color:#8888c9}',
-'.'.tile.hidden:after{content:"🐾";width:32px;height:44px;max-width:82%;max-height:82%;background:#704a25;border:2px solid #d4ad5b;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;box-sizing:border-box}',
+'.tile.hidden:after{content:"🐾";width:44px;height:44px;max-width:82%;max-height:82%;background:#704a25;border:2px solid #d4ad5b;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;box-sizing:border-box}',
 '.tile.blue{background:linear-gradient(#3555a5,#202f69);border-color:#70a5ff}',
 '.tile.red{background:linear-gradient(#a94545,#682727);border-color:#ff7777}',
 '.tile.selected{outline:5px solid #ffe000;transform:scale(1.04);z-index:2}',
