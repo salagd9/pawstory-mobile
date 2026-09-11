@@ -185,7 +185,7 @@ style.textContent = [
  '.animal img{max-width:68px;max-height:68px;object-fit:contain;display:block;margin:auto}',
 '.pieceName{font-size:13px;font-weight:bold;margin-top:3px}',
 '.hanja{font-size:18px}',
-'.info{margin:15px 0;color:#ccc}',
+'.info{display:none!important}',
 'button{border:0;background:#ffd21c;color:#222;font-size:17px;font-weight:bold;padding:12px 25px;border-radius:25px;cursor:pointer;transition:transform .08s ease,box-shadow .08s ease;box-shadow:0 5px 0 #b68d00}',
 'button:active{transform:translateY(4px) scale(0.97);box-shadow:0 1px 0 #b68d00}',
 '.rule{margin-top:15px;padding:12px;background:#29294f;border-radius:12px;line-height:1.8;font-size:14px}',
