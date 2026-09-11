@@ -170,7 +170,7 @@ style.textContent = [
   '#capturedLeft .miniTile.hint:after,#capturedRight .miniTile.hint:after{content:""}',
 '.miniPieceName{font-size:13px;font-weight:bold;color:white;text-align:center}',
   '#capturedArea{margin:12px 0;padding:10px;background:#29294f;border-radius:12px;color:#ffd21c}',
-'.tile{width:100%;height:auto;min-height:0;border-radius:8px;border:2px solid #8888c9;background:#484873;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;box-sizing:border-box}',
+'.tile{width:100%;height:100%;border-radius:8px;border:2px solid #8888c9;background:#484873;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;box-sizing:border-box}',
 '.tile.hidden{background:#484873;border-color:#8888c9}',
 '.tile.hidden:after{content:"🐾";width:48px;height:48px;background:#704a25;border:3px solid #d4ad5b;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-sizing:border-box}',
 '.tile.blue{background:linear-gradient(#3555a5,#202f69);border-color:#70a5ff}',
@@ -182,7 +182,7 @@ style.textContent = [
 '.redName{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);font-size:15px;line-height:15px;font-weight:bold;text-align:center;color:white;z-index:5}',
 '.character{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}',
   
-  '.animal img{max-width:85px;max-height:85px;object-fit:contain;display:block;margin:auto}',
+ '.animal img{max-width:68px;max-height:68px;object-fit:contain;display:block;margin:auto}',
 '.pieceName{font-size:13px;font-weight:bold;margin-top:3px}',
 '.hanja{font-size:18px}',
 '.info{margin:15px 0;color:#ccc}',
