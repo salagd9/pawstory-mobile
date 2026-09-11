@@ -15865,11 +15865,8 @@ function fitMobileGame(){
     game.scrollHeight;
 
   /* 가로/세로 중 작은 비율에 맞춤 */
-  var scale =
-    Math.min(
-      vw / gameW,
-      vh / gameH
-    );
+ var scale =
+  vw / gameW;
 
   game.style.transform =
     'translate(-50%,-50%) scale(' +
