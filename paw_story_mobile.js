@@ -67,7 +67,15 @@ document.getElementById('backMain').onclick = function(){
   document.getElementById('game').style.display = 'none';
   document.getElementById('mainMenu').style.display = 'flex';
 };
+var rotateNotice = document.createElement('div');
 
+rotateNotice.id = 'rotateNotice';
+
+rotateNotice.innerHTML =
+  '<div class="phone">📱↻</div>' +
+  '<div>휴대폰을 가로로 돌려주세요</div>';
+
+document.body.appendChild(rotateNotice);
 /* 장기알 탁 소리 */
 var gameAudioCtx = null;
 var takSound = new Audio('./sound/tak.mp3');
