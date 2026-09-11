@@ -182,7 +182,7 @@ style.textContent = [
 '.redName{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);font-size:15px;line-height:15px;font-weight:bold;text-align:center;color:white;z-index:5}',
 '.character{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}',
   
- '.animal img{max-width:44px;max-height:44px;object-fit:contain;display:block;margin:auto}',
+ '.animal img{max-width:20px;max-height:20px;object-fit:contain;display:block;margin:auto}',
 '.pieceName{font-size:13px;font-weight:bold;margin-top:3px}',
 '.hanja{font-size:18px}',
 '.info{margin:15px 0;color:#ccc}',
