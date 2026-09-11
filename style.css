@@ -156,8 +156,8 @@
 }
 
 .tile:not(.hidden) .animal img {
-  width: 35px !important;
-  height: 35px !important;
+  width: 50px !important;
+  height: 50px !important;
 
   object-fit: contain !important;
 
