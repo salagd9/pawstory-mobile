@@ -1,3 +1,4 @@
+alert("GAME JS START");
 /* PAW STORY - 한국식 동물 장기 */
 
 document.body.innerHTML =
