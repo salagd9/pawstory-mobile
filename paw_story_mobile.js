@@ -160,9 +160,8 @@ style.textContent = [
 '#mainStart:active,#mainStart:focus,#mainStart:hover{background:transparent!important;box-shadow:none!important;outline:none!important;filter:none!important;opacity:1!important}',
 '#mainStart::-moz-focus-inner{border:0;padding:0}',
 '#game{max-width:800px;margin:auto;padding:2px;text-align:center}',
-'#boardWrap{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%}',
-'#board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(4,1fr);gap:2px;width:100%;padding:4px;background:#70451f;border-radius:10px;box-sizing:border-box}',
-'#boardWrap{display:grid;grid-template-columns:11vw 76vw 11vw;gap:1vw;align-items:stretch;justify-content:center;width:100%;box-sizing:border-box}',
+'#board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(4,90px);gap:4px;width:760px;min-width:760px;max-width:760px;padding:6px;background:#70451f;border-radius:15px;box-sizing:border-box}',
+'#boardWrap{display:grid;grid-template-columns:140px 760px 140px;gap:10px;align-items:stretch;justify-content:center;width:1060px;box-sizing:border-box}',
 '#capturedLeft,#capturedRight{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(8,1fr);gap:2px;background:#70451f;padding:4px;border-radius:8px;height:100%;box-sizing:border-box}',
 
 '#capturedLeft .miniTile,#capturedRight .miniTile{height:auto;min-height:0;aspect-ratio:1/1;border-radius:6px;border:2px solid #d4ad5b;background:#704a25;display:flex;align-items:center;justify-content:center;box-sizing:border-box}',
@@ -221,7 +220,7 @@ style.textContent = [
 '.rpsChoice:disabled{filter:grayscale(.6);opacity:.55;cursor:default}',
 
 '@keyframes rpsPop{0%{transform:scale(.4) rotate(-20deg)}60%{transform:scale(1.25) rotate(8deg)}100%{transform:scale(1)}}',
-'@media(max-width:1000px){.tile{height:auto}.animal{font-size:29px;line-height:32px}h1{font-size:28px}.pieceName{font-size:11px}}'
+'@media(max-width:1000px){.animal{font-size:29px;line-height:32px}h1{font-size:28px}.pieceName{font-size:11px}}'
 ].join('\n');
 
 document.head.appendChild(style);
