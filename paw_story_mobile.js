@@ -15869,9 +15869,9 @@ function fitMobileGame(){
   vw / gameW;
 
   game.style.transform =
-    'translate(-50%,-50%) scale(' +
-    scale +
-    ')';
+  'translate(-50%,-50%) scaleX(' +
+  scale +
+  ')';
 
   console.log(
     '📱 고정 가로 게임 비율:',
