@@ -72,10 +72,41 @@ var rotateNotice = document.createElement('div');
 rotateNotice.id = 'rotateNotice';
 
 rotateNotice.innerHTML =
-  '<div class="phone">📱↻</div>' +
+  '<div style="font-size:70px;margin-bottom:20px;">📱↻</div>' +
   '<div>휴대폰을 가로로 돌려주세요</div>';
 
+rotateNotice.style.position = 'fixed';
+rotateNotice.style.left = '0';
+rotateNotice.style.top = '0';
+rotateNotice.style.width = '100vw';
+rotateNotice.style.height = '100vh';
+rotateNotice.style.background = '#06172c';
+rotateNotice.style.color = 'white';
+rotateNotice.style.display = 'none';
+rotateNotice.style.flexDirection = 'column';
+rotateNotice.style.alignItems = 'center';
+rotateNotice.style.justifyContent = 'center';
+rotateNotice.style.textAlign = 'center';
+rotateNotice.style.fontSize = '24px';
+rotateNotice.style.fontWeight = 'bold';
+rotateNotice.style.zIndex = '9999999';
+
 document.body.appendChild(rotateNotice);
+function checkOrientation(){
+
+  if(window.innerHeight > window.innerWidth){
+    rotateNotice.style.display = 'flex';
+  }else{
+    rotateNotice.style.display = 'none';
+  }
+
+}
+
+checkOrientation();
+
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', checkOrientation);
+
 /* 장기알 탁 소리 */
 var gameAudioCtx = null;
 var takSound = new Audio('./sound/tak.mp3');
