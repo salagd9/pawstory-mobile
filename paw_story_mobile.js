@@ -14081,7 +14081,7 @@ if(!situation.kingInDanger){
     }
   }
 
- if(bestCannonCapture){
+if(bestCannonCapture){
 
   var cannonTarget =
     board[bestCannonCapture.to];
@@ -14097,7 +14097,7 @@ if(!situation.kingInDanger){
 
 
   /* =========================================
-     1. 상대 왕 / 사/포는
+     1. 상대 왕 / 사 / 포는
         잡고 바로 죽더라도 희생 허용
   ========================================= */
   if(
@@ -14106,7 +14106,7 @@ if(!situation.kingInDanger){
     (
       cannonTarget.type === 'king' ||
       cannonTarget.type === 'advisor' ||
-    cannonTarget.type === 'cannon'
+      cannonTarget.type === 'cannon'
     )
   ){
 
@@ -14128,7 +14128,6 @@ if(!situation.kingInDanger){
     cannonPunished &&
     cannonTarget &&
     cannonTarget.type === 'soldier'
- cannonPunished &&
   ){
 
     var myKingIndexForCannon = -1;
@@ -14152,7 +14151,6 @@ if(!situation.kingInDanger){
 
     if(myKingIndexForCannon !== -1){
 
-      /* 그 졸이 실제로 내 왕을 잡을 수 있는 상태인지 */
       if(
         canMove(
           bestCannonCapture.to,
@@ -14199,7 +14197,8 @@ if(!situation.kingInDanger){
 
 
   /* =========================================
-     4. 그 외에는 공개 포 즉시공격 중단
+     4. 그 외에는 이 로직 중단
+        다음 AI 판단으로 넘어감
   ========================================= */
   console.log(
     '🚫 공개 포 즉시공격 중단:',
