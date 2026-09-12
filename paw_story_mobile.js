@@ -797,47 +797,47 @@ tile.appendChild(debugIndex);
   '<div class="character">' +
     '<div class="animal">' +
 
-    (p.team === 'blue' && p.type === 'king'
-  ? '<img src="/images/blue_king.png">'
+   (p.team === 'blue' && p.type === 'king'
+  ? '<img src="./images/images/blue_king.png">'
 
 : p.team === 'blue' && p.type === 'advisor'
-  ? '<img src="./images/blue_advisor.png">'
+  ? '<img src="./images/images/blue_advisor.png">'
 
 : p.team === 'blue' && p.type === 'elephant'
-  ? '<img src="./images/blue_elephant.png">'
+  ? '<img src="./images/images/blue_elephant.png">'
 
 : p.team === 'blue' && p.type === 'horse'
-  ? '<img src="./images/blue_horse.png">'
+  ? '<img src="./images/images/blue_horse.png">'
 
 : p.team === 'blue' && p.type === 'chariot'
-  ? '<img src="./images/blue_chariot.png">'
+  ? '<img src="./images/images/blue_chariot.png">'
 
 : p.team === 'blue' && p.type === 'cannon'
-  ? '<img src="./images/blue_cannon.png">'
+  ? '<img src="./images/images/blue_cannon.png">'
 
 : p.team === 'blue' && p.type === 'soldier'
-  ? '<img src="./images/blue_soldier.png">'
+  ? '<img src="./images/images/blue_soldier.png">'
 
 : p.team === 'red' && p.type === 'king'
-  ? '<img src="./images/red_king.png">'
+  ? '<img src="./images/images/red_king.png">'
 
 : p.team === 'red' && p.type === 'advisor'
-  ? '<img src="./images/red_advisor.png">'
+  ? '<img src="./images/images/red_advisor.png">'
 
 : p.team === 'red' && p.type === 'elephant'
-  ? '<img src="./images/red_elephant.png">'
+  ? '<img src="./images/images/red_elephant.png">'
 
 : p.team === 'red' && p.type === 'horse'
-  ? '<img src="./images/red_horse.png">'
+  ? '<img src="./images/images/red_horse.png">'
 
 : p.team === 'red' && p.type === 'chariot'
-  ? '<img src="./images/red_chariot.png">'
+  ? '<img src="./images/images/red_chariot.png">'
 
 : p.team === 'red' && p.type === 'cannon'
-  ? '<img src="./images/red_cannon.png">'
+  ? '<img src="./images/images/red_cannon.png">'
 
 : p.team === 'red' && p.type === 'soldier'
-  ? '<img src="./images/red_soldier.png">'
+  ? '<img src="./images/images/red_soldier.png">'
 
 : p.emoji) +
 (p.team === 'red' && p.type !== 'advisor'
