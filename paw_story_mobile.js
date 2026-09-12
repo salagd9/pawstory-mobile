@@ -14212,15 +14212,7 @@ if(bestCannonCapture){
     '이유=잡고 바로 죽으며 희생가치 없음'
   );
 }
-      '→',
-      bestCannonCapture.to,
-      '가치=',
-      bestCannonCaptureValue
-    );
-
-    return bestCannonCapture;
-  }
-}
+    
   /* =========================================
      1. 현재 왕이 즉시 위험
   ========================================= */
