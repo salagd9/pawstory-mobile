@@ -3088,28 +3088,44 @@ console.log('전체 행동 횟수:', totalActionCount);
     )
   ){
 
-    var safeAlternative = [];
+  var safeAlternative = [];
 
-    for(var i=0; i<board.length; i++){
+var enemy =
+  team === 'red'
+  ? 'blue'
+  : 'red';
 
-      if(
-        !board[i] ||
-        board[i].revealed
-      ){
-        continue;
-      }
+for(var i=0; i<board.length; i++){
 
-      if(
-        isLockedKingAdjacentRevealForbidden(
-          team,
-          i
-        )
-      ){
-        continue;
-      }
+  if(
+    !board[i] ||
+    board[i].revealed
+  ){
+    continue;
+  }
 
-      safeAlternative.push(i);
-    }
+  /* 내 왕 주변 위험 알 제외 */
+  if(
+    isLockedKingAdjacentRevealForbidden(
+      team,
+      i
+    )
+  ){
+    continue;
+  }
+
+  /* 상대 포가 바로 공격 가능한 알 제외 */
+  if(
+    isRevealDangerousByEnemyCannon(
+      team,
+      i
+    )
+  ){
+    continue;
+  }
+
+  /* 공개된 상대 기물 바로 옆 알 제외 */
+  var ir = Math.floor(i / 4);
 
     if(safeAlternative.length > 0){
 
