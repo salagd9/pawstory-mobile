@@ -8651,6 +8651,16 @@ function findEmergencyKingBlockReveal(team){
         rr * 4 + cc;
 
       /* 미오픈 알만 */
+/* 왕 바로 옆 오픈 금지칸이면
+   긴급 졸 차단 후보에서도 제외 */
+if(
+  isLockedKingAdjacentRevealForbidden(
+    team,
+    index
+  )
+){
+  continue;
+}
       if(
         !board[index] ||
         board[index].revealed
