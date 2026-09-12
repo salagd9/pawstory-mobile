@@ -209,11 +209,7 @@
 
   box-shadow:none !important;
 }
-/* 레드팀 캐릭터를 조금 크게 */
-.tile.red:not(.hidden) .animal img{
-  width:150% !important;
-  height:110% !important;
-}
+
 .animal{
   position:relative;
 }
