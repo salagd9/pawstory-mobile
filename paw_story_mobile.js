@@ -3308,6 +3308,7 @@ if(safeReveal.length > 0){
     );
   }
 }
+}
     board[action.index].revealed = true;
 markLastAction([action.index]);
 /* AI가 선공으로 첫 알을 열었다면
