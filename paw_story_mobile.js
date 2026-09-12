@@ -13624,7 +13624,93 @@ if(followAggressiveTarget){
   '🧠 상대 기물 정보:',
   getKnownEnemyStatus(team)
 );
+/* =====================================================
+   공개된 내 포가 지금 상대를 잡을 수 있으면
+   일반 알 오픈보다 포 공격 우선
+   단, 내 왕이 즉시 위험한 경우는 왕 보호가 우선
+===================================================== */
 
+if(!situation.kingInDanger){
+
+  var bestCannonCapture = null;
+  var bestCannonCaptureValue = -1;
+
+  for(var cannonFrom=0;
+      cannonFrom<board.length;
+      cannonFrom++){
+
+    var myCannon =
+      board[cannonFrom];
+
+    if(
+      !myCannon ||
+      !myCannon.revealed ||
+      myCannon.team !== team ||
+      myCannon.type !== 'cannon'
+    ){
+      continue;
+    }
+
+    for(var cannonTo=0;
+        cannonTo<board.length;
+        cannonTo++){
+
+      var cannonTarget =
+        board[cannonTo];
+
+      if(
+        !cannonTarget ||
+        !cannonTarget.revealed ||
+        cannonTarget.team === team
+      ){
+        continue;
+      }
+
+      if(
+        !canCannon(
+          cannonFrom,
+          cannonTo
+        )
+      ){
+        continue;
+      }
+
+      var cannonTargetValue =
+        masterPieceValue(
+          cannonTarget
+        );
+
+      if(
+        cannonTargetValue >
+        bestCannonCaptureValue
+      ){
+        bestCannonCaptureValue =
+          cannonTargetValue;
+
+        bestCannonCapture = {
+          type:'capture',
+          reason:'revealedCannonImmediateAttack',
+          from:cannonFrom,
+          to:cannonTo
+        };
+      }
+    }
+  }
+
+  if(bestCannonCapture){
+
+    console.log(
+      '💥 공개 포 즉시공격 최우선:',
+      bestCannonCapture.from,
+      '→',
+      bestCannonCapture.to,
+      '가치=',
+      bestCannonCaptureValue
+    );
+
+    return bestCannonCapture;
+  }
+}
   /* =========================================
      1. 현재 왕이 즉시 위험
   ========================================= */
