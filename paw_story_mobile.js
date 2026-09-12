@@ -3370,6 +3370,47 @@ for(var k=0; k<board.length; k++){
 if(myKingAdjacent){
   continue;
 }
+/* 공개된 내 포 위/아래/양옆 알은
+   졸 보호 대체 오픈 후보에서 제외 */
+var nearMyCannon = false;
+
+var sr2 = Math.floor(s / 4);
+var sc2 = s % 4;
+
+for(var cp=0; cp<board.length; cp++){
+
+  var myCannonPiece = board[cp];
+
+  if(
+    !myCannonPiece ||
+    !myCannonPiece.revealed ||
+    myCannonPiece.team !== team ||
+    myCannonPiece.type !== 'cannon'
+  ){
+    continue;
+  }
+
+  var cpr = Math.floor(cp / 4);
+  var cpc = cp % 4;
+
+  if(
+    Math.abs(sr2 - cpr) +
+    Math.abs(sc2 - cpc) === 1
+  ){
+    nearMyCannon = true;
+    break;
+  }
+}
+
+if(nearMyCannon){
+
+  console.log(
+    '💣 졸 보호 대체 후보 제외: 내 포 주변',
+    s
+  );
+
+  continue;
+}
     safeReveal.push(s);
   }
 
