@@ -275,19 +275,19 @@
 }
 /* 상대가 방금 행동한 칸 깜빡임 */
 .lastActionBlink{
-  animation:lastActionBlinkAnim 0.3s ease-in-out 4;
+  animation:lastActionBlinkAnim 0.3s ease-in-out 4 !important;
   z-index:20;
 }
 
 @keyframes lastActionBlinkAnim{
   0%,100%{
-    box-shadow:inset 0 0 0 5px transparent;
+    filter:brightness(1);
+    opacity:1;
   }
 
   50%{
-    box-shadow:
-      inset 0 0 0 5px #ffe600,
-      0 0 18px 8px rgba(255,230,0,0.9);
+    filter:brightness(2.2) saturate(1.8);
+    opacity:0.35;
   }
 }
 /* ===== 기물 크기 최종 통일 ===== */
