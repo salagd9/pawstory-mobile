@@ -798,7 +798,7 @@ tile.appendChild(debugIndex);
     '<div class="animal">' +
 
     (p.team === 'blue' && p.type === 'king'
-  ? '<img src="./images/blue_king.png">'
+  ? '<img src="/images/blue_king.png">'
 
 : p.team === 'blue' && p.type === 'advisor'
   ? '<img src="./images/blue_advisor.png">'
