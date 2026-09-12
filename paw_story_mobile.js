@@ -3333,6 +3333,7 @@ if(safeAlternative.length > 0){
     }
   }
 }
+}
   /* 알 뒤집기 */
   if(action.type === 'reveal'){
 /* 내 졸 바로 옆 알이면 다른 안전한 알로 변경 */
