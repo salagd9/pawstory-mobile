@@ -15841,41 +15841,6 @@ function canMove(from,to){
 /* 포 공격 규칙 */
 
 function canCannon(from,to){
-/* 상대 공개 포가 바로 공격할 수 있는 알인지 검사 */
-function isRevealDangerousByEnemyCannon(team, index){
-
-  var enemy =
-    team === 'red'
-    ? 'blue'
-    : 'red';
-
-  for(var i=0; i<board.length; i++){
-
-    var p = board[i];
-
-    if(
-      !p ||
-      !p.revealed ||
-      p.team !== enemy ||
-      p.type !== 'cannon'
-    ){
-      continue;
-    }
-
-    if(canCannon(i, index)){
-      console.log(
-        '💣 상대 포 위험 알 제외:',
-        index,
-        '상대 포 위치:',
-        i
-      );
-
-      return true;
-    }
-  }
-
-  return false;
-}
 
   var fr=Math.floor(from/4);
 
@@ -15926,6 +15891,43 @@ function isRevealDangerousByEnemyCannon(team, index){
 }
 
 
+/* 상대 공개 포가 바로 공격할 수 있는 알인지 검사 */
+
+function isRevealDangerousByEnemyCannon(team, index){
+
+  var enemy =
+    team === 'red'
+    ? 'blue'
+    : 'red';
+
+  for(var i=0; i<board.length; i++){
+
+    var p = board[i];
+
+    if(
+      !p ||
+      !p.revealed ||
+      p.team !== enemy ||
+      p.type !== 'cannon'
+    ){
+      continue;
+    }
+
+    if(canCannon(i, index)){
+
+      console.log(
+        '💣 상대 포 위험 알 제외:',
+        index,
+        '상대 포 위치:',
+        i
+      );
+
+      return true;
+    }
+  }
+
+  return false;
+}
 /* 새 게임 버튼 */
 
 document.getElementById('restart').onclick=function(){
