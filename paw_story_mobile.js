@@ -642,6 +642,7 @@ function playClickSound(){
 function newGame(){
 gameEnded = false;
 totalActionCount = 0;
+abandonedCannonTargets = [];
 capturedBlue = [];
 capturedRed = [];
 
@@ -687,6 +688,7 @@ if(
 }
 var lastActionCells = [];
 var lastActionFlash = false;
+var abandonedCannonTargets = [];
 function markLastAction(cells){
 
   lastActionCells = cells.slice();
@@ -3430,8 +3432,59 @@ if(safeReveal.length > 0){
   }
 }
 }
-    board[action.index].revealed = true;
+   board[action.index].revealed = true;
+
+/* 포찾기 중 내 포가 실제로 나왔는데
+   노리던 상대가 도망갈 수 있으면
+   그 상대에 대한 포찾기 포기 */
+if(
+  action.reason === 'findRealCannonForEnemy' &&
+  typeof action.targetIndex === 'number' &&
+  board[action.index] &&
+  board[action.index].team === team &&
+  board[action.index].type === 'cannon'
+){
+
+  if(
+    shouldGiveUpCannonSearch(
+      team,
+      action.index,
+      action.targetIndex
+    )
+  ){
+
+    console.log(
+      '🏳️ 포찾기 포기 결정:',
+      '포=', action.index,
+      '목표=', action.targetIndex
+    );
+
+    action.cannonSearchGiveUp = true;
+
+var abandonedTargetPiece =
+  board[action.targetIndex];
+
+if(
+  abandonedTargetPiece &&
+  abandonedCannonTargets.indexOf(
+    abandonedTargetPiece
+  ) === -1
+){
+  abandonedCannonTargets.push(
+    abandonedTargetPiece
+  );
+
+  console.log(
+    '🏳️ 이 상대에 대한 포찾기 완전 포기:',
+    action.targetIndex
+  );
+}
+
+  }
+}
+
 markLastAction([action.index]);
+
 /* AI가 선공으로 첫 알을 열었다면
    그 알의 색이 AI팀이 된다 */
 if(
@@ -5418,7 +5471,30 @@ var validTrappedCannonCandidates =
 /* 강한 상대 기물을 우선.
    같은 가치라면 도망불가 후보를 우선 */
 var finalCannonCandidates =
-  cannonSearchCandidates.slice();
+  cannonSearchCandidates.filter(
+    function(candidate){
+
+      var targetPiece =
+        board[candidate.targetIndex];
+
+      /* 이미 포찾기를 포기한 상대는 다시 노리지 않음 */
+      if(
+        targetPiece &&
+        abandonedCannonTargets.indexOf(
+          targetPiece
+        ) !== -1
+      ){
+        console.log(
+          '🏳️ 포찾기 후보 제외:',
+          candidate.targetIndex
+        );
+
+        return false;
+      }
+
+      return true;
+    }
+  );
 
 finalCannonCandidates.sort(function(a,b){
 
@@ -5498,7 +5574,10 @@ console.log(
 return {
   type:'reveal',
   reason:'findRealCannonForEnemy',
-  index:chosenCannonCandidate.index
+  index:chosenCannonCandidate.index,
+
+  /* 어떤 상대 기물을 잡으려고 포를 찾는지 기억 */
+  targetIndex:chosenCannonCandidate.targetIndex
 };
 
 }
@@ -16010,7 +16089,79 @@ function canCannon(from,to){
 
   return count===1;
 }
+/* =====================================================
+   포자리후보를 찾았지만 상대가 도망갈 수 있으면
+   포찾기 전략 포기
+===================================================== */
+function shouldGiveUpCannonSearch(team, cannonIndex, enemyIndex){
 
+  var cannon = board[cannonIndex];
+  var enemyPiece = board[enemyIndex];
+
+  if(
+    !cannon ||
+    !enemyPiece ||
+    !cannon.revealed ||
+    !enemyPiece.revealed
+  ){
+    return false;
+  }
+
+  if(
+    cannon.team !== team ||
+    cannon.type !== 'cannon'
+  ){
+    return false;
+  }
+
+  if(enemyPiece.team === team){
+    return false;
+  }
+
+  /* 현재 포가 상대를 공격할 수 없는 상태면
+     포찾기를 계속할 이유 없음 */
+  if(!canCannon(cannonIndex, enemyIndex)){
+
+    console.log(
+      '💣 포찾기 포기: 나온 포가 상대를 공격할 수 없음'
+    );
+
+    return true;
+  }
+
+  /* 상대가 한 칸이라도 도망갈 수 있는지 검사 */
+  for(var to=0; to<board.length; to++){
+
+    if(to === enemyIndex){
+      continue;
+    }
+
+    /* 빈칸 이동만 검사 */
+    if(board[to]){
+      continue;
+    }
+
+    if(
+      canMove(
+        enemyIndex,
+        to
+      )
+    ){
+
+      console.log(
+        '🏃 포찾기 포기: 상대 도망 가능',
+        enemyIndex,
+        '→',
+        to
+      );
+
+      return true;
+    }
+  }
+
+  /* 도망갈 곳이 없으면 포 전략 유지 */
+  return false;
+}
 
 /* 상대 공개 포가 바로 공격할 수 있는 알인지 검사 */
 
