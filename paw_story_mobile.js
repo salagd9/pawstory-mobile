@@ -3161,6 +3161,15 @@ if(
     ){
       continue;
     }
+/* 상대 포가 바로 잡을 수 있는 알은 대체 후보에서 제외 */
+if(
+  isRevealDangerousByEnemyCannon(
+    team,
+    s
+  )
+){
+  continue;
+}
 /* 공개된 상대 기물 바로 옆 알은 제외 */
 var enemySide =
   team === 'red' ? 'blue' : 'red';
@@ -3241,20 +3250,61 @@ if(myKingAdjacent){
     safeReveal.push(s);
   }
 
-  /* 다른 안전한 미오픈 알이 있으면 그쪽으로 변경 */
-  if(safeReveal.length > 0){
+ /* 다른 안전한 미오픈 알이 있으면
+   랜덤이 아니라 점수가 가장 높은 알 선택 */
+if(safeReveal.length > 0){
 
-    action.index =
-      safeReveal[
-        Math.floor(
-          Math.random() *
-          safeReveal.length
-        )
-      ];
+  var bestSafeIndex = null;
+  var bestSafeScore = -999999;
+
+  for(var b=0; b<safeReveal.length; b++){
+
+    var safeIndex = safeReveal[b];
+
+    var safeAction = {
+      type:'reveal',
+      reason:'safeRevealAfterSoldierProtection',
+      index:safeIndex
+    };
+
+    var safeScore =
+      masterScoreAction(
+        team,
+        safeAction
+      );
 
     console.log(
-      '🐶 졸 보호: 옆 알 오픈 취소 →',
-      action.index
+      '🧠 졸 보호 대체 후보:',
+      safeIndex,
+      '점수=',
+      safeScore
+    );
+
+    if(
+      safeScore >
+      bestSafeScore
+    ){
+      bestSafeScore =
+        safeScore;
+
+      bestSafeIndex =
+        safeIndex;
+    }
+  }
+
+  if(bestSafeIndex !== null){
+
+    action.index =
+      bestSafeIndex;
+
+    action.reason =
+      'safeRevealAfterSoldierProtection';
+
+    console.log(
+      '🐶 졸 보호 최종 대체 오픈 →',
+      action.index,
+      '점수=',
+      bestSafeScore
     );
   }
 }
@@ -15741,6 +15791,41 @@ function canMove(from,to){
 /* 포 공격 규칙 */
 
 function canCannon(from,to){
+/* 상대 공개 포가 바로 공격할 수 있는 알인지 검사 */
+function isRevealDangerousByEnemyCannon(team, index){
+
+  var enemy =
+    team === 'red'
+    ? 'blue'
+    : 'red';
+
+  for(var i=0; i<board.length; i++){
+
+    var p = board[i];
+
+    if(
+      !p ||
+      !p.revealed ||
+      p.team !== enemy ||
+      p.type !== 'cannon'
+    ){
+      continue;
+    }
+
+    if(canCannon(i, index)){
+      console.log(
+        '💣 상대 포 위험 알 제외:',
+        index,
+        '상대 포 위치:',
+        i
+      );
+
+      return true;
+    }
+  }
+
+  return false;
+}
 
   var fr=Math.floor(from/4);
 
