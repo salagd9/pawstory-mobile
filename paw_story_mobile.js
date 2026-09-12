@@ -355,7 +355,8 @@ var totalActionCount = 0;
 /* 바로 직전 이동 기억 */
 var lastMoveFrom = -1;
 var lastMoveTo = -1;
-
+var lastRedMove = null;
+var lastBlueMove = null;
 var hintUseCount = 0;
 var hintVisible = false;
 var capturedBlue = [];
@@ -3647,6 +3648,18 @@ if(
     var moving = board[action.from];
 lastMoveFrom = action.from;
 lastMoveTo = action.to;
+if(team === 'red'){
+  lastRedMove = {
+    from:action.from,
+    to:action.to
+  };
+}
+else{
+  lastBlueMove = {
+    from:action.from,
+    to:action.to
+  };
+}
     board[action.to] = moving;
     board[action.from] = null;
 markLastAction([action.from, action.to]);
@@ -11227,7 +11240,26 @@ function masterFreeAdvisorSpace(team){
           continue;
         }
 
+/* 같은 팀 기물이 직전 자기 자리로 되돌아가는 것 금지 */
+var myLastMove =
+  team === 'red'
+  ? lastRedMove
+  : lastBlueMove;
 
+if(
+  myLastMove &&
+  myLastMove.from === to &&
+  myLastMove.to === blockerIndex
+){
+  console.log(
+    '🔁 사 공간 확보 왕복 금지:',
+    blockerIndex,
+    '→',
+    to
+  );
+
+  continue;
+}
         /* =============================================
            실제로 이동했다고 잠깐 가정해서
            그 기물이 새 자리에서 죽는지 검사
