@@ -685,6 +685,8 @@ if(
   aiMove();
 }
 }
+var lastActionCells = [];
+var lastActionFlash = false;
 /* 한자 */
 
 var hanjaMap = {
@@ -853,7 +855,9 @@ tile.appendChild(debugIndex);
 
       tile.classList.add('selected');
     }
-
+if(lastActionFlash && lastActionCells.indexOf(index) !== -1){
+  tile.classList.add('lastActionBlink');
+}
     tile.onclick=function(){
 
   clickTile(index);
@@ -984,7 +988,13 @@ if(p && !p.revealed){
 
   p.revealed = true;
   playPieceTak();
+lastActionCells = [index];
+lastActionFlash = true;
 
+setTimeout(function(){
+  lastActionFlash = false;
+  draw();
+},1200);
   /* 첫 오픈이면 그 말을 연 사람의 팀으로 확정 */
   if(aiMode && !teamsAssigned){
 
@@ -1211,18 +1221,26 @@ playPieceTak();
   }
 
 
-  /* 이동이나 공격 성공했을 때만 턴 변경 */
+ /* 이동이나 공격 성공했을 때만 턴 변경 */
 
-  selected=null;
+lastActionCells = [fromIndex, index];
+lastActionFlash = true;
 
-  turn =
-    turn==='blue'
-    ? 'red'
-    : 'blue';
+selected = null;
 
+turn =
+  turn === 'blue'
+  ? 'red'
+  : 'blue';
+
+draw();
+
+setTimeout(function(){
+  lastActionFlash = false;
   draw();
-  if(aiMode && turn===aiTeam) aiMove();
-}
+},1200);
+
+if(aiMode && turn===aiTeam) aiMove();
 
      function isDangerAfterMove(from,to){
 
@@ -3239,6 +3257,8 @@ if(myKingAdjacent){
   }
 }
     board[action.index].revealed = true;
+lastActionCells = [action.index];
+lastActionFlash = true;
 /* AI가 선공으로 첫 알을 열었다면
    그 알의 색이 AI팀이 된다 */
 if(
@@ -3276,7 +3296,8 @@ if(
 
     board[action.to] = moving;
     board[action.from] = null;
-
+lastActionCells = [action.from, action.to];
+lastActionFlash = true;
     playPieceTak();
 
     say('🤖 AI ' + moving.name + ' 이동!');
@@ -3298,7 +3319,8 @@ if(
 
     board[action.to] = attacker;
     board[action.from] = null;
-
+lastActionCells = [action.from, action.to];
+lastActionFlash = true;
     playPieceTak();
 
     say(
@@ -3322,7 +3344,10 @@ if(
 turn = enemyTeam(team);
 
 draw();
-
+setTimeout(function(){
+  lastActionFlash = false;
+  draw();
+},1200);
 /* AI끼리 대국이면 다음 AI 자동 실행 */
 if(
   aiVsAiMode &&
