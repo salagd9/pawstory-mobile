@@ -3242,18 +3242,96 @@ if(safeAlternative.length > 0){
     '오픈 취소'
   );
 
-  action = {
-    type:'reveal',
-    reason:'lockedKingSafeAlternative',
-    index:
-      safeAlternative[
-        Math.floor(
-          Math.random() *
-          safeAlternative.length
-        )
-      ]
-  };
-}
+  /* =========================================
+     1순위:
+     공개된 상대 포의 위/아래/양옆 알 중
+     이미 안전후보로 통과한 칸 우선
+  ========================================= */
+
+  var enemyCannonAroundAction =
+    masterOpenAroundEnemyCannon(
+      team
+    );
+
+  if(
+    enemyCannonAroundAction &&
+    safeAlternative.indexOf(
+      enemyCannonAroundAction.index
+    ) !== -1
+  ){
+
+    console.log(
+      '💣 왕 보호 대체 → 상대 포 주변 오픈 우선:',
+      enemyCannonAroundAction.index
+    );
+
+    action = {
+      type:'reveal',
+      reason:'enemyCannonAroundPriority',
+      index:
+        enemyCannonAroundAction.index
+    };
+  }
+
+  /* =========================================
+     상대 포 주변에 안전한 알이 없을 때만
+     일반 안전후보 선택
+  ========================================= */
+
+  else{
+
+    var bestLockedSafeIndex = null;
+    var bestLockedSafeScore = -999999;
+
+    for(
+      var ls=0;
+      ls<safeAlternative.length;
+      ls++
+    ){
+
+      var lockedSafeIndex =
+        safeAlternative[ls];
+
+      var lockedSafeAction = {
+        type:'reveal',
+        reason:'lockedKingSafeAlternative',
+        index:lockedSafeIndex
+      };
+
+      var lockedSafeScore =
+        masterScoreAction(
+          team,
+          lockedSafeAction
+        );
+
+      if(
+        lockedSafeScore >
+        bestLockedSafeScore
+      ){
+        bestLockedSafeScore =
+          lockedSafeScore;
+
+        bestLockedSafeIndex =
+          lockedSafeIndex;
+      }
+    }
+
+    if(bestLockedSafeIndex !== null){
+
+      console.log(
+        '👑 왕 보호 일반 안전 대체:',
+        bestLockedSafeIndex,
+        '점수=',
+        bestLockedSafeScore
+      );
+
+      action = {
+        type:'reveal',
+        reason:'lockedKingSafeAlternative',
+        index:bestLockedSafeIndex
+      };
+    }
+  }
 }
   /* 알 뒤집기 */
   if(action.type === 'reveal'){
