@@ -8593,15 +8593,91 @@ function findEmergencyKingBlockReveal(team){
 
 
   if(bestIndex === -1){
-    return null;
+  return null;
+}
+
+/* 긴급보호라도 공개 기물의 안전한 공격/압박이 있으면 그 수 우선 */
+var tacticalActions = [];
+
+for(var from=0; from<board.length; from++){
+
+  var myPiece = board[from];
+
+  if(
+    !myPiece ||
+    !myPiece.revealed ||
+    myPiece.team !== team
+  ){
+    continue;
   }
 
+  for(var to=0; to<board.length; to++){
 
-  return {
-    type:'reveal',
-    index:bestIndex,
-    reason:'emergencyKingBlockSoldier'
-  };
+    var target = board[to];
+
+    if(
+      !target ||
+      !target.revealed ||
+      target.team === team
+    ){
+      continue;
+    }
+
+    var canTake = false;
+
+    if(myPiece.type === 'cannon'){
+      canTake = canCannon(from, to);
+    }
+    else{
+      canTake =
+        canMove(from, to) &&
+        canCapture(myPiece, target);
+    }
+
+    if(!canTake){
+      continue;
+    }
+
+    if(
+      isCaptureImmediatelyPunished(
+        team,
+        from,
+        to
+      )
+    ){
+      continue;
+    }
+
+    tacticalActions.push({
+      type:'capture',
+      from:from,
+      to:to,
+      reason:'emergencyTacticalCapture',
+      targetValue:masterPieceValue(target)
+    });
+  }
+}
+
+if(tacticalActions.length > 0){
+
+  tacticalActions.sort(function(a,b){
+    return b.targetValue - a.targetValue;
+  });
+
+  console.log(
+    '⚔️ 긴급보호 중 공개 기물 공격 우선:',
+    tacticalActions[0]
+  );
+
+  return tacticalActions[0];
+}
+
+/* 공격 수가 없을 때만 알 오픈 */
+return {
+  type:'reveal',
+  index:bestIndex,
+  reason:'emergencyKingBlockSoldier'
+};
 }
 function findAdvisorCannonPreDefenseReveal(team){
 
