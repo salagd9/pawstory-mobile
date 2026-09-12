@@ -14689,7 +14689,90 @@ function masterClearPathForPowerPiece(team){
       if(blocker.type === 'king'){
         continue;
       }
+/* 상대 포가 지금 왕/사를 잡을 수 있고,
+   이 blocker가 그 포를 바로 되잡을 수 있다면
+   길비키기로 움직이지 않는다 */
+var keepForCannonRecapture = false;
 
+var enemyForRecapture =
+  team === 'red' ? 'blue' : 'red';
+
+for(var ec=0; ec<board.length; ec++){
+
+  var enemyCannonForRecapture =
+    board[ec];
+
+  if(
+    !enemyCannonForRecapture ||
+    !enemyCannonForRecapture.revealed ||
+    enemyCannonForRecapture.team !== enemyForRecapture ||
+    enemyCannonForRecapture.type !== 'cannon'
+  ){
+    continue;
+  }
+
+  /* 이 포가 현재 powerPiece를 잡을 수 있는지 */
+  if(
+    !canCannon(
+      ec,
+      powerIndex
+    )
+  ){
+    continue;
+  }
+
+  /* 포가 powerPiece를 먹고
+     powerIndex로 들어왔다고 가정 */
+  var oldPowerPiece =
+    board[powerIndex];
+
+  var oldCannonPlace =
+    board[ec];
+
+  board[powerIndex] =
+    enemyCannonForRecapture;
+
+  board[ec] =
+    null;
+
+
+  var canRecaptureCannon =
+    canMove(
+      blockerIndex,
+      powerIndex
+    ) &&
+    canCapture(
+      blocker,
+      enemyCannonForRecapture
+    );
+
+
+  /* 반드시 원상복구 */
+  board[ec] =
+    oldCannonPlace;
+
+  board[powerIndex] =
+    oldPowerPiece;
+
+
+  if(canRecaptureCannon){
+
+    keepForCannonRecapture = true;
+
+    console.log(
+      '💣🛡 포 복수 담당 기물 유지:',
+      '보호기물=', powerIndex,
+      '복수기물=', blockerIndex,
+      '상대포=', ec
+    );
+
+    break;
+  }
+}
+
+if(keepForCannonRecapture){
+  continue;
+}
 
       /* =====================================
          이 아군이 갈 수 있는 빈칸 검사
