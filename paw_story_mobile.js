@@ -3088,7 +3088,7 @@ console.log('전체 행동 횟수:', totalActionCount);
     )
   ){
 
-  var safeAlternative = [];
+ var safeAlternative = [];
 
 var enemy =
   team === 'red'
@@ -3126,28 +3126,72 @@ for(var i=0; i<board.length; i++){
 
   /* 공개된 상대 기물 바로 옆 알 제외 */
   var ir = Math.floor(i / 4);
+  var ic = i % 4;
 
-    if(safeAlternative.length > 0){
+  var enemyAdjacent = false;
 
-      console.log(
-        '👑 왕 갇힘 보호:',
-        action.index,
-        '오픈 취소'
-      );
+  var aroundEnemy = [
+    [ir-1, ic],
+    [ir+1, ic],
+    [ir, ic-1],
+    [ir, ic+1]
+  ];
 
-      action = {
-        type:'reveal',
-        reason:'lockedKingSafeAlternative',
-        index:
-          safeAlternative[
-            Math.floor(
-              Math.random() *
-              safeAlternative.length
-            )
-          ]
-      };
+  for(var e=0; e<aroundEnemy.length; e++){
+
+    var er = aroundEnemy[e][0];
+    var ec = aroundEnemy[e][1];
+
+    if(
+      er < 0 || er >= 8 ||
+      ec < 0 || ec >= 4
+    ){
+      continue;
+    }
+
+    var enemyIndex =
+      er * 4 + ec;
+
+    var enemyPiece =
+      board[enemyIndex];
+
+    if(
+      enemyPiece &&
+      enemyPiece.revealed &&
+      enemyPiece.team === enemy
+    ){
+      enemyAdjacent = true;
+      break;
     }
   }
+
+  if(enemyAdjacent){
+    continue;
+  }
+
+  safeAlternative.push(i);
+}
+
+if(safeAlternative.length > 0){
+
+  console.log(
+    '👑 왕 갇힘 보호:',
+    action.index,
+    '오픈 취소'
+  );
+
+  action = {
+    type:'reveal',
+    reason:'lockedKingSafeAlternative',
+    index:
+      safeAlternative[
+        Math.floor(
+          Math.random() *
+          safeAlternative.length
+        )
+      ]
+  };
+}
   /* 알 뒤집기 */
   if(action.type === 'reveal'){
 /* 내 졸 바로 옆 알이면 다른 안전한 알로 변경 */
