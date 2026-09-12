@@ -14081,11 +14081,138 @@ if(!situation.kingInDanger){
     }
   }
 
-  if(bestCannonCapture){
+ if(bestCannonCapture){
+
+  var cannonTarget =
+    board[bestCannonCapture.to];
+
+  var cannonPunished =
+    isCaptureImmediatelyPunished(
+      team,
+      bestCannonCapture.from,
+      bestCannonCapture.to
+    );
+
+  var allowCannonSacrifice = false;
+
+
+  /* =========================================
+     1. 상대 왕 / 사/포는
+        잡고 바로 죽더라도 희생 허용
+  ========================================= */
+  if(
+    cannonPunished &&
+    cannonTarget &&
+    (
+      cannonTarget.type === 'king' ||
+      cannonTarget.type === 'advisor' ||
+    cannonTarget.type === 'cannon'
+    )
+  ){
+
+    allowCannonSacrifice = true;
+
+    console.log(
+      '💣🔥 포 희생 허용:',
+      cannonTarget.type,
+      '제거 우선'
+    );
+  }
+
+
+  /* =========================================
+     2. 상대 졸이 현재 내 왕을 위협 중이면
+        포가 죽더라도 졸 제거 허용
+  ========================================= */
+  if(
+    cannonPunished &&
+    cannonTarget &&
+    cannonTarget.type === 'soldier'
+ cannonPunished &&
+  ){
+
+    var myKingIndexForCannon = -1;
+
+    for(var ck=0; ck<board.length; ck++){
+
+      var myKingForCannon =
+        board[ck];
+
+      if(
+        myKingForCannon &&
+        myKingForCannon.revealed &&
+        myKingForCannon.team === team &&
+        myKingForCannon.type === 'king'
+      ){
+        myKingIndexForCannon = ck;
+        break;
+      }
+    }
+
+
+    if(myKingIndexForCannon !== -1){
+
+      /* 그 졸이 실제로 내 왕을 잡을 수 있는 상태인지 */
+      if(
+        canMove(
+          bestCannonCapture.to,
+          myKingIndexForCannon
+        ) &&
+        canCapture(
+          cannonTarget,
+          board[myKingIndexForCannon]
+        )
+      ){
+
+        allowCannonSacrifice = true;
+
+        console.log(
+          '💣👑 포 희생 허용:',
+          '왕 위협 졸 제거',
+          bestCannonCapture.to
+        );
+      }
+    }
+  }
+
+
+  /* =========================================
+     3. 안전한 공격이거나
+        허용된 희생이면 실행
+  ========================================= */
+  if(
+    !cannonPunished ||
+    allowCannonSacrifice
+  ){
 
     console.log(
       '💥 공개 포 즉시공격 최우선:',
       bestCannonCapture.from,
+      '→',
+      bestCannonCapture.to,
+      '가치=',
+      bestCannonCaptureValue
+    );
+
+    return bestCannonCapture;
+  }
+
+
+  /* =========================================
+     4. 그 외에는 공개 포 즉시공격 중단
+  ========================================= */
+  console.log(
+    '🚫 공개 포 즉시공격 중단:',
+    bestCannonCapture.from,
+    '→',
+    bestCannonCapture.to,
+    '목표=',
+    cannonTarget
+      ? cannonTarget.type
+      : 'unknown',
+    '이유=잡고 바로 죽으며 희생가치 없음'
+  );
+}
       '→',
       bestCannonCapture.to,
       '가치=',
