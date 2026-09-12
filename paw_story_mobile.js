@@ -797,46 +797,49 @@ tile.appendChild(debugIndex);
   '<div class="character">' +
     '<div class="animal">' +
 
-      (p.team === 'blue' && p.type === 'king'
-  ? '<img src="https://i.ibb.co/Zzv6XgrF/file-0000000032148206ac083e6130067e27.png">'
+    (p.team === 'blue' && p.type === 'king'
+  ? '<img src="./images/blue_king.png">'
 
 : p.team === 'blue' && p.type === 'advisor'
-  ? '<img src="https://i.ibb.co/F2z7Fg4/file-00000000fe64820692db11216dfd52bb.png">'
+  ? '<img src="./images/blue_advisor.png">'
 
 : p.team === 'blue' && p.type === 'elephant'
-  ? '<img src="https://i.ibb.co/9mG0LBS4/file-00000000d1408209952ae63c82d306e2.png">'
+  ? '<img src="./images/blue_elephant.png">'
 
 : p.team === 'blue' && p.type === 'horse'
-  ? '<img src="https://i.ibb.co/vg1ztVX/file-00000000426c8209b265bc9bf78f8ae8.png">'
+  ? '<img src="./images/blue_horse.png">'
 
 : p.team === 'blue' && p.type === 'chariot'
-  ? '<img src="https://i.ibb.co/21wy6Rwc/file-000000003b448211b05634b2f55c1713.png">'
+  ? '<img src="./images/blue_chariot.png">'
 
 : p.team === 'blue' && p.type === 'cannon'
-  ? '<img src="https://i.ibb.co/CGjyQzd/file-000000009d84820b978c47349ced09e3.png">'
+  ? '<img src="./images/blue_cannon.png">'
 
-  : p.team === 'blue' && p.type === 'soldier'
-  ? '<img src="https://i.ibb.co/ZRp11N9B/file-00000000c220822fa7e25d15128a2b0b.png">'     
+: p.team === 'blue' && p.type === 'soldier'
+  ? '<img src="./images/blue_soldier.png">'
 
- : p.team === 'red' && p.type === 'king'
-  ? '<img src="https://i.ibb.co/qLdkYkjJ/file-0000000091a88207bb19e5cd5924ba06.png">'      
+: p.team === 'red' && p.type === 'king'
+  ? '<img src="./images/red_king.png">'
 
-  : p.team === 'red' && p.type === 'advisor'
-  ? '<img src="https://i.ibb.co/pvZLxkry/file-00000000b5548206b0df6181f521a305.png">'     
-   : p.team === 'red' && p.type === 'horse'
-  ? '<img src="https://i.ibb.co/MwX6ZJY/file-00000000ecc481f8a2db1a30da1be17f.png">'  
+: p.team === 'red' && p.type === 'advisor'
+  ? '<img src="./images/red_advisor.png">'
+
 : p.team === 'red' && p.type === 'elephant'
-  ? '<img src="https://i.ibb.co/KctKSKW5/file-000000002f508209a949be423ea62d11.png">'
-    : p.team === 'red' && p.type === 'chariot'
-  ? '<img src="https://i.ibb.co/yFNY0WmP/file-00000000ce388206a95fd8c1c7ca20ce.png">'   
-   : p.team === 'red' && p.type === 'cannon'
-  ? '<img src="https://i.ibb.co/zVvK12zq/file-00000000b33c82068ec8c0014551f729.png">'   
-    : p.team === 'red' && p.type === 'soldier'
-  ? '<img src="https://i.ibb.co/PKyZsRz/file-000000009f3482099632831bcc0d4ccb.png">'
+  ? '<img src="./images/red_elephant.png">'
 
-   
-     : p.emoji) +
+: p.team === 'red' && p.type === 'horse'
+  ? '<img src="./images/red_horse.png">'
 
+: p.team === 'red' && p.type === 'chariot'
+  ? '<img src="./images/red_chariot.png">'
+
+: p.team === 'red' && p.type === 'cannon'
+  ? '<img src="./images/red_cannon.png">'
+
+: p.team === 'red' && p.type === 'soldier'
+  ? '<img src="./images/red_soldier.png">'
+
+: p.emoji) +
 (p.team === 'red' && p.type !== 'advisor'
   ? '<div class="redName">' + p.name + '</div>'
   : '')+
