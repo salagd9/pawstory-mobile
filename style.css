@@ -84,8 +84,8 @@
 .tile.hidden::before {
   content: "" !important;
 
-  width: 50px !important;
-  height: 50px !important;
+  width: 45px !important;
+  height: 45px !important;
 
   background-image:
     url("https://i.ibb.co/5hH56SSC/image.png") !important;
