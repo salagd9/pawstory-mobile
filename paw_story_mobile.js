@@ -12390,7 +12390,159 @@ function masterNearestEnemyDistance(team, from){
 
   return nearest;
 }
+/* =====================================================
+   졸의 상대 왕 압박
 
+   공개된 내 졸이 안전하게 상대 왕에게 가까워질 수 있으면
+   계속 왕 쪽으로 압박한다.
+===================================================== */
+function findSoldierKingPressureMove(team){
+
+  var enemy =
+    team === 'red' ? 'blue' : 'red';
+
+  var enemyKingIndex = -1;
+
+  /* 공개된 상대 왕 찾기 */
+  for(var k=0; k<board.length; k++){
+
+    var kp = board[k];
+
+    if(
+      kp &&
+      kp.revealed &&
+      kp.team === enemy &&
+      kp.type === 'king'
+    ){
+      enemyKingIndex = k;
+      break;
+    }
+  }
+
+  if(enemyKingIndex === -1){
+    return null;
+  }
+
+
+  var bestAction = null;
+  var bestDistance = 999;
+
+
+  /* 내 공개 졸 검사 */
+  for(var from=0; from<board.length; from++){
+
+    var soldier = board[from];
+
+    if(
+      !soldier ||
+      !soldier.revealed ||
+      soldier.team !== team ||
+      soldier.type !== 'soldier'
+    ){
+      continue;
+    }
+
+
+    var beforeDistance =
+      masterBoardDistance(
+        from,
+        enemyKingIndex
+      );
+
+
+    /* 졸이 이동 가능한 빈칸 검사 */
+    for(var to=0; to<board.length; to++){
+
+      if(board[to]){
+        continue;
+      }
+
+      if(
+        !canMove(
+          from,
+          to
+        )
+      ){
+        continue;
+      }
+
+
+      var afterDistance =
+        masterBoardDistance(
+          to,
+          enemyKingIndex
+        );
+
+
+      /* 왕에게 가까워지는 이동만 */
+      if(
+        afterDistance >=
+        beforeDistance
+      ){
+        continue;
+      }
+
+
+      var oldFrom = board[from];
+      var oldTo = board[to];
+
+      /* 이동했다고 가정 */
+      board[to] = oldFrom;
+      board[from] = null;
+
+
+      /* 이동 후 다른 상대에게 바로 잡히는지 */
+      var unsafe =
+        isMyPieceInImmediateDanger(
+          team,
+          to
+        );
+
+
+      /* 원상복구 */
+      board[from] = oldFrom;
+      board[to] = oldTo;
+
+
+      if(unsafe){
+        continue;
+      }
+
+
+      /* 상대 왕에 더 가까운 자리 우선 */
+      if(
+        afterDistance <
+        bestDistance
+      ){
+
+        bestDistance =
+          afterDistance;
+
+        bestAction = {
+          type:'move',
+          from:from,
+          to:to,
+          reason:'soldierPressureEnemyKing',
+          score:
+            afterDistance === 1
+            ? 900
+            : 650
+        };
+      }
+    }
+  }
+
+
+  if(bestAction){
+
+    console.log(
+      '🐶👑 졸 상대왕 압박:',
+      bestAction
+    );
+  }
+
+  return bestAction;
+}
 /* =====================================================
    강한 기물의 길막 추격
 
@@ -13758,6 +13910,25 @@ if(followAggressiveTarget){
   '🧠 상대 기물 정보:',
   getKnownEnemyStatus(team)
 );
+/* 내 왕이 위험하지 않으면
+   안전한 졸 왕압박을 알 오픈보다 우선 */
+if(!situation.kingInDanger){
+
+  var soldierKingPressure =
+    findSoldierKingPressureMove(
+      team
+    );
+
+  if(soldierKingPressure){
+
+    console.log(
+      '🐶👑 졸 왕압박 최우선 실행:',
+      soldierKingPressure
+    );
+
+    return soldierKingPressure;
+  }
+}
 /* =====================================================
    공개된 내 포가 지금 상대를 잡을 수 있으면
    일반 알 오픈보다 포 공격 우선
