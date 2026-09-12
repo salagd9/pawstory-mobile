@@ -348,8 +348,14 @@ var pieces = [
 
 
 var board = [];
+
 /* 새 게임 시작 후 전체 행동 횟수 */
 var totalActionCount = 0;
+
+/* 바로 직전 이동 기억 */
+var lastMoveFrom = -1;
+var lastMoveTo = -1;
+
 var hintUseCount = 0;
 var hintVisible = false;
 var capturedBlue = [];
@@ -3639,7 +3645,8 @@ if(
   else if(action.type === 'move'){
 
     var moving = board[action.from];
-
+lastMoveFrom = action.from;
+lastMoveTo = action.to;
     board[action.to] = moving;
     board[action.from] = null;
 markLastAction([action.from, action.to]);
@@ -14753,7 +14760,20 @@ function masterClearPathForPowerPiece(team){
           score += 100;
         }
 
+/* 바로 직전 자리로 되돌아가는 왕복 이동 금지 */
+if(
+  lastMoveFrom === to &&
+  lastMoveTo === blockerIndex
+){
+  console.log(
+    '🔁 왕복 이동 금지:',
+    blockerIndex,
+    '→',
+    to
+  );
 
+  continue;
+}
         candidates.push({
 
           action:{
