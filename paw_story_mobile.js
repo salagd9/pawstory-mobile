@@ -13997,9 +13997,38 @@ if(followAggressiveTarget){
   getKnownEnemyStatus(team)
 );
 /* 내 왕이 위험하지 않으면
-   안전한 졸 왕압박을 알 오픈보다 우선 */
+   1순위 강한 기물 압박
+   2순위 졸 왕압박 */
 if(!situation.kingInDanger){
 
+  /* =========================================
+     1. 강한 기물이 이동해서
+        상대를 실제로 압박할 수 있으면 우선
+  ========================================= */
+  var pressureActions =
+    getMasterActions(team);
+
+  var strongPressureMove =
+    chooseBlockingPursuitMove(
+      team,
+      pressureActions
+    );
+
+  if(strongPressureMove){
+
+    console.log(
+      '🔥 강한 기물 압박을 졸보다 우선:',
+      strongPressureMove
+    );
+
+    return strongPressureMove;
+  }
+
+
+  /* =========================================
+     2. 강한 기물 압박이 없을 때만
+        졸이 상대 왕 압박
+  ========================================= */
   var soldierKingPressure =
     findSoldierKingPressureMove(
       team
@@ -14008,7 +14037,7 @@ if(!situation.kingInDanger){
   if(soldierKingPressure){
 
     console.log(
-      '🐶👑 졸 왕압박 최우선 실행:',
+      '🐶👑 졸 왕압박 실행:',
       soldierKingPressure
     );
 
