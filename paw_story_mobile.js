@@ -13996,7 +13996,20 @@ if(followAggressiveTarget){
 }
   var situation =
     getBoardSituation(team);
+var cannonTargetReveal =
+  masterRevealNearCannonTarget(
+    team
+  );
 
+if(cannonTargetReveal){
+
+  console.log(
+    '💣 상대 포 공격 대비 주변 알 오픈:',
+    cannonTargetReveal
+  );
+
+  return cannonTargetReveal;
+}
   console.log(
     '🎯 마스터 상황판:',
     '왕위험=', situation.kingInDanger,
@@ -14879,7 +14892,256 @@ if(
    왕은 사용하지 않는다.
    여러 후보가 있으면 가치가 낮은 기물 우선.
 ===================================================== */
+/* =====================================================
+   상대 포에게 지금 잡힐 내 기물이 있으면
+   그 기물 상/하/좌/우의 미오픈 알 중
+   가장 안전한 알을 먼저 연다.
 
+   여러 기물이 동시에 위험하면
+   더 중요한 내 기물부터 처리.
+===================================================== */
+
+function masterRevealNearCannonTarget(team){
+
+  var enemy =
+    team === 'red' ? 'blue' : 'red';
+
+  var threatenedPieces = [];
+
+
+  /* =========================================
+     1. 상대 공개 포가 지금 잡을 수 있는
+        내 공개 기물 전부 찾기
+  ========================================= */
+
+  for(var cannonIndex=0;
+      cannonIndex<board.length;
+      cannonIndex++){
+
+    var enemyCannon =
+      board[cannonIndex];
+
+    if(
+      !enemyCannon ||
+      !enemyCannon.revealed ||
+      enemyCannon.team !== enemy ||
+      enemyCannon.type !== 'cannon'
+    ){
+      continue;
+    }
+
+
+    for(var targetIndex=0;
+        targetIndex<board.length;
+        targetIndex++){
+
+      var myPiece =
+        board[targetIndex];
+
+      if(
+        !myPiece ||
+        !myPiece.revealed ||
+        myPiece.team !== team
+      ){
+        continue;
+      }
+
+
+      if(
+        !canCannon(
+          cannonIndex,
+          targetIndex
+        )
+      ){
+        continue;
+      }
+
+
+      threatenedPieces.push({
+
+        cannonIndex:
+          cannonIndex,
+
+        targetIndex:
+          targetIndex,
+
+        targetValue:
+          masterPieceValue(
+            myPiece
+          ),
+
+        targetType:
+          myPiece.type
+      });
+    }
+  }
+
+
+  if(threatenedPieces.length === 0){
+    return null;
+  }
+
+
+  /* =========================================
+     2. 더 중요한 내 기물이 위험한 것부터
+  ========================================= */
+
+  threatenedPieces.sort(function(a,b){
+
+    return (
+      b.targetValue -
+      a.targetValue
+    );
+  });
+
+
+  /* =========================================
+     3. 위험 기물 하나씩 보면서
+        상하좌우 안전 미오픈 알 찾기
+  ========================================= */
+
+  for(var t=0;
+      t<threatenedPieces.length;
+      t++){
+
+    var threatened =
+      threatenedPieces[t];
+
+    var doomedIndex =
+      threatened.targetIndex;
+
+    var tr =
+      Math.floor(
+        doomedIndex / 4
+      );
+
+    var tc =
+      doomedIndex % 4;
+
+
+    var around = [
+      [tr-1, tc],
+      [tr+1, tc],
+      [tr, tc-1],
+      [tr, tc+1]
+    ];
+
+
+    var bestIndex = -1;
+    var bestScore = -999999;
+
+
+    for(var a=0;
+        a<around.length;
+        a++){
+
+      var r =
+        around[a][0];
+
+      var c =
+        around[a][1];
+
+
+      if(
+        r < 0 || r >= 8 ||
+        c < 0 || c >= 4
+      ){
+        continue;
+      }
+
+
+      var index =
+        r * 4 + c;
+
+
+      /* 미오픈 알만 */
+      if(
+        !board[index] ||
+        board[index].revealed
+      ){
+        continue;
+      }
+
+
+      /* 상대 포가 이 알도 바로 공격할 수 있으면 제외 */
+      if(
+        isRevealDangerousByEnemyCannon(
+          team,
+          index
+        )
+      ){
+        continue;
+      }
+
+
+      /* 왕 바로 옆 오픈 금지에 걸리면 제외 */
+      if(
+        isLockedKingAdjacentRevealForbidden(
+          team,
+          index
+        )
+      ){
+        continue;
+      }
+
+
+      var testAction = {
+        type:'reveal',
+        index:index,
+        reason:'revealNearCannonTarget'
+      };
+
+
+      var score =
+        masterScoreAction(
+          team,
+          testAction
+        );
+
+
+      if(
+        score >
+        bestScore
+      ){
+        bestScore =
+          score;
+
+        bestIndex =
+          index;
+      }
+    }
+
+
+    /* 이 위험 기물 주변에
+       안전한 알이 하나라도 있으면 실행 */
+    if(bestIndex !== -1){
+
+      console.log(
+        '💣🛡 포에게 죽을 기물 주변 안전 오픈:',
+        '상대포=',
+        threatened.cannonIndex,
+        '내기물=',
+        doomedIndex,
+        '종류=',
+        threatened.targetType,
+        '오픈=',
+        bestIndex,
+        '점수=',
+        bestScore
+      );
+
+
+      return {
+        type:'reveal',
+        index:bestIndex,
+        reason:'revealNearCannonTarget'
+      };
+    }
+  }
+
+
+  return null;
+}
 function masterBlockCannonAttackOnKing(team){
 
   var enemy =
