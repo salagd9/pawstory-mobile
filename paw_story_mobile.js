@@ -687,6 +687,16 @@ if(
 }
 var lastActionCells = [];
 var lastActionFlash = false;
+function markLastAction(cells){
+
+  lastActionCells = cells.slice();
+  lastActionFlash = true;
+
+  setTimeout(function(){
+    lastActionFlash = false;
+    draw();
+  },1200);
+}
 /* 한자 */
 
 var hanjaMap = {
@@ -3249,7 +3259,7 @@ if(myKingAdjacent){
   }
 }
     board[action.index].revealed = true;
-
+markLastAction([action.index]);
 /* AI가 선공으로 첫 알을 열었다면
    그 알의 색이 AI팀이 된다 */
 if(
@@ -3287,7 +3297,7 @@ if(
 
     board[action.to] = moving;
     board[action.from] = null;
-
+markLastAction([action.from, action.to]);
     playPieceTak();
 
     say('🤖 AI ' + moving.name + ' 이동!');
@@ -3309,7 +3319,7 @@ if(
 
     board[action.to] = attacker;
     board[action.from] = null;
-
+markLastAction([action.from, action.to]);
     playPieceTak();
 
     say(
