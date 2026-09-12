@@ -277,3 +277,46 @@
     margin-bottom:20px;
   }
 }
+/* 상대가 방금 행동한 칸 깜빡임 */
+.lastActionBlink{
+  animation:lastActionBlinkAnim 0.3s ease-in-out 4;
+  z-index:20;
+}
+
+@keyframes lastActionBlinkAnim{
+  0%,100%{
+    box-shadow:inset 0 0 0 5px transparent;
+  }
+
+  50%{
+    box-shadow:
+      inset 0 0 0 5px #ffe600,
+      0 0 18px 8px rgba(255,230,0,0.9);
+  }
+}
+/* ===== 기물 이미지 크기 최종 고정 ===== */
+
+.tile .character {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile .animal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.tile .animal img {
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
+  display: block;
+}
