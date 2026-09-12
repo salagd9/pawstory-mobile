@@ -1,0 +1,2 @@
+performance.mark("js-parse-end:code-menu-af7f291dc9514e9e.js");
+export const __rspack_esm_id="e3p";export const __rspack_esm_ids=["e3p"];export const __webpack_modules__={ZP(){}};import{__webpack_require__ as s}from"./wp-runtime-41a4e8bac76f7718.js";import*as _ from"./code-menu-af7f291dc9514e9e.js";s.C(_),s(s.s="ZP");
