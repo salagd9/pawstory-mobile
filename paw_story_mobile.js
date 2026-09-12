@@ -988,13 +988,9 @@ if(p && !p.revealed){
 
   p.revealed = true;
   playPieceTak();
-lastActionCells = [index];
-lastActionFlash = true;
 
-setTimeout(function(){
-  lastActionFlash = false;
-  draw();
-},1200);
+
+
   /* 첫 오픈이면 그 말을 연 사람의 팀으로 확정 */
   if(aiMode && !teamsAssigned){
 
@@ -1223,8 +1219,7 @@ playPieceTak();
 
  /* 이동이나 공격 성공했을 때만 턴 변경 */
 
-lastActionCells = [fromIndex, index];
-lastActionFlash = true;
+
 
 selected = null;
 
@@ -1235,14 +1230,11 @@ turn =
 
 draw();
 
-setTimeout(function(){
-  lastActionFlash = false;
-  draw();
-},1200);
-
 if(aiMode && turn===aiTeam) aiMove();
 
-     function isDangerAfterMove(from,to){
+}
+
+function isDangerAfterMove(from,to){
 
   var movingPiece=board[from];
   var targetPiece=board[to];
@@ -3257,8 +3249,7 @@ if(myKingAdjacent){
   }
 }
     board[action.index].revealed = true;
-lastActionCells = [action.index];
-lastActionFlash = true;
+
 /* AI가 선공으로 첫 알을 열었다면
    그 알의 색이 AI팀이 된다 */
 if(
@@ -3296,8 +3287,7 @@ if(
 
     board[action.to] = moving;
     board[action.from] = null;
-lastActionCells = [action.from, action.to];
-lastActionFlash = true;
+
     playPieceTak();
 
     say('🤖 AI ' + moving.name + ' 이동!');
@@ -3319,8 +3309,7 @@ lastActionFlash = true;
 
     board[action.to] = attacker;
     board[action.from] = null;
-lastActionCells = [action.from, action.to];
-lastActionFlash = true;
+
     playPieceTak();
 
     say(
@@ -3344,10 +3333,7 @@ lastActionFlash = true;
 turn = enemyTeam(team);
 
 draw();
-setTimeout(function(){
-  lastActionFlash = false;
-  draw();
-},1200);
+
 /* AI끼리 대국이면 다음 AI 자동 실행 */
 if(
   aiVsAiMode &&
