@@ -2940,16 +2940,76 @@ if(
       continue;
     }
 
-    if(
-      isRevealDangerousBecauseEnemySoldierCanKillKing(
-        team,
-        k
-      )
-    ){
-      continue;
-    }
+   if(
+  isRevealDangerousBecauseEnemySoldierCanKillKing(
+    team,
+    k
+  )
+){
+  continue;
+}
 
-    safeKingReveal.push(k);
+/* 상대 포가 바로 공격 가능한 알 제외 */
+if(
+  isRevealDangerousByEnemyCannon(
+    team,
+    k
+  )
+){
+  continue;
+}
+
+/* 공개된 상대 기물 바로 옆 알 제외 */
+var kr = Math.floor(k / 4);
+var kc = k % 4;
+
+var enemyTeamForSafeKing =
+  team === 'red'
+  ? 'blue'
+  : 'red';
+
+var enemyAdjacentForSafeKing = false;
+
+var aroundSafeKing = [
+  [kr-1, kc],
+  [kr+1, kc],
+  [kr, kc-1],
+  [kr, kc+1]
+];
+
+for(var se=0; se<aroundSafeKing.length; se++){
+
+  var ser = aroundSafeKing[se][0];
+  var sec = aroundSafeKing[se][1];
+
+  if(
+    ser < 0 || ser >= 8 ||
+    sec < 0 || sec >= 4
+  ){
+    continue;
+  }
+
+  var enemySafeIndex =
+    ser * 4 + sec;
+
+  var enemySafePiece =
+    board[enemySafeIndex];
+
+  if(
+    enemySafePiece &&
+    enemySafePiece.revealed &&
+    enemySafePiece.team === enemyTeamForSafeKing
+  ){
+    enemyAdjacentForSafeKing = true;
+    break;
+  }
+}
+
+if(enemyAdjacentForSafeKing){
+  continue;
+}
+
+safeKingReveal.push(k);
   }
 
   if(safeKingReveal.length > 0){
