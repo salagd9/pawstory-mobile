@@ -8871,7 +8871,56 @@ function findPreemptiveRevealAroundPotentialEnemyCannon(team){
       ){
         continue;
       }
+/* 공개된 상대 기물 바로 옆 알은 선제오픈 금지 */
+var rr = Math.floor(revealIndex / 4);
+var rc = revealIndex % 4;
 
+var enemyAdjacent = false;
+
+var aroundEnemy = [
+  [rr-1, rc],
+  [rr+1, rc],
+  [rr, rc-1],
+  [rr, rc+1]
+];
+
+for(var e=0; e<aroundEnemy.length; e++){
+
+  var er = aroundEnemy[e][0];
+  var ec = aroundEnemy[e][1];
+
+  if(
+    er < 0 || er >= 8 ||
+    ec < 0 || ec >= 4
+  ){
+    continue;
+  }
+
+  var enemyIndex =
+    er * 4 + ec;
+
+  var enemyPiece =
+    board[enemyIndex];
+
+  if(
+    enemyPiece &&
+    enemyPiece.revealed &&
+    enemyPiece.team === enemy
+  ){
+    enemyAdjacent = true;
+    break;
+  }
+}
+
+if(enemyAdjacent){
+
+  console.log(
+    '🚫 선제오픈 제외: 상대 공개 기물 바로 옆',
+    revealIndex
+  );
+
+  continue;
+}
 
       /* 기존 왕 위험 오픈 제외 */
       if(
