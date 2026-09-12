@@ -7134,7 +7134,7 @@ function masterPieceValue(piece){
     chariot:500,
     elephant:400,
     horse:300,
-    cannon:250,
+    cannon:550,
     soldier:100
   };
 
@@ -12367,9 +12367,10 @@ function chooseBlockingPursuitMove(team, actions){
       masterPieceValue(hunter);
 
 
-    /* 가장 가까운 약한 상대 찾기 */
-    var targetIndex = -1;
-    var targetDistance = 999;
+  /* 잡을 가치가 높은 상대 우선 */
+var targetIndex = -1;
+var targetDistance = 999;
+var targetBestValue = -1;
 
     for(var e=0; e<board.length; e++){
 
@@ -12408,11 +12409,27 @@ function chooseBlockingPursuitMove(team, actions){
         Math.abs(fr-er) +
         Math.abs(fc-ec);
 
-      if(dist < targetDistance){
+     /* 왕은 마를 추격 대상으로 잡지 않음 */
+if(
+  hunter.type === 'king' &&
+  target.type === 'horse'
+){
+  continue;
+}
 
-        targetDistance = dist;
-        targetIndex = e;
-      }
+/* 1순위: 상대 기물 가치가 높은 쪽 */
+/* 2순위: 같은 가치면 가까운 쪽 */
+if(
+  targetValue > targetBestValue ||
+  (
+    targetValue === targetBestValue &&
+    dist < targetDistance
+  )
+){
+  targetBestValue = targetValue;
+  targetDistance = dist;
+  targetIndex = e;
+}
     }
 
 
