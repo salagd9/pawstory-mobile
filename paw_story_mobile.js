@@ -15029,13 +15029,11 @@ console.log(
 );
 
 console.log(
-  '⚔️ 공개 상대 기물 즉시 공격 후보 등록:',
+  '⚔️ 공개 상대 기물 즉시 공격 최우선 실행:',
   captureAction
 );
 
-specialCandidates.push(captureAction);
-
-continue;
+return captureAction;
   
 }
 /* =====================================================
