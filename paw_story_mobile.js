@@ -8,7 +8,8 @@ document.body.innerHTML =
     '<img id="mainImage" src="images/images/main.png">' +
 '<img id="mainProfilePhoto" style="position:absolute;left:78.2%;top:30%;width:18%;height:7%;object-fit:cover;border-radius:6px;z-index:20;display:none;">' +
 '<div id="mainProfileName" style="position:absolute;left:78.2%;top:37.2%;width:18%;height:2.2%;background:#1687ed;border-radius:5px;display:flex;align-items:center;justify-content:center;text-align:center;color:white;font-size:11px;font-weight:bold;z-index:21;"></div>' +
-  '<button id="mainStart"></button>' +
+ '<div id="mainProfileRecord" style="position:absolute;left:83%;top:39.8%;width:13%;height:2%;background:#fff;display:flex;align-items:center;justify-content:center;color:#222;font-size:10px;font-weight:bold;z-index:21;">0승 0패</div>' +
+ '<button id="mainStart"></button>' +
     '<button id="profileBtn" style="position:absolute;left:78%;top:26.5%;width:18%;height:18%;background:transparent;border:0;box-shadow:none;z-index:9999;cursor:pointer;"></button>' +
   '</div>' +
 '</div>' +
@@ -143,6 +144,8 @@ var savedLosses = Number(localStorage.getItem('pawLosses') || 0);
 
 document.getElementById('profileRecord').textContent =
   '전적 ' + savedWins + '승 ' + savedLosses + '패';
+document.getElementById('mainProfileRecord').textContent =
+  savedWins + '승 ' + savedLosses + '패';
 document.getElementById('mainScreen').onclick = function(){
   document.getElementById('profileUpload').click();
 };
