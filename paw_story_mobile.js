@@ -220,7 +220,7 @@ style.textContent = [
 '#mainScreen{position:relative;width:800px;max-width:100vw;height:100vh;height:100dvh;margin:0 auto;overflow:hidden;background:#06172c}',
 '#mainImage{display:block;width:100%;height:100%;object-fit:fill;object-position:center top}',
 '#game{display:none}',
-'#mainStart{position:absolute;left:3%;top:45.5%;width:38%;height:6.5%;border:0;background:transparent;cursor:pointer;z-index:9999;touch-action:manipulation}',
+'#mainStart{position:absolute;left:3%;top:45.5%;width:24%;height:4.5%;border:0;background:transparent;cursor:pointer;z-index:9999;touch-action:manipulation}',
 '#mainStart:active,#mainStart:focus,#mainStart:hover{background:transparent!important;box-shadow:none!important;outline:none!important;filter:none!important;opacity:1!important}',
 '#mainStart::-moz-focus-inner{border:0;padding:0}',
 '#game{max-width:800px;margin:auto;padding:2px;text-align:center}',
