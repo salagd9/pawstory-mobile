@@ -14777,25 +14777,9 @@ actions = actions.filter(function(action){
     action
   );
 });
-/* AI 후보 점수는 아직 선택에 사용하지 않고 콘솔 확인만 */
-console.log('🧠 ===== AI 행동 후보 점수 =====');
 
-for(var scoreI=0; scoreI<actions.length; scoreI++){
-
-  console.log(
-    '후보=',
-    actions[scoreI],
-    '점수=',
-    masterScoreAction(
-      team,
-      actions[scoreI]
-    )
-  );
-}
-
-console.log('🧠 =========================');
-  if(actions.length === 0){
-    return null;
+if(actions.length === 0){
+ return null;
   }
 /* =====================================================
    💣 포 공격 최우선
@@ -17875,34 +17859,4 @@ function fitMobileRPS(){
       vh * 0.94 / boxH
     );
 
-  box.style.transform =
-    'translate(-50%,-50%) scale(' +
-    scale +
-    ')';
-
-  console.log(
-    '✊ 고정 가위바위보 비율:',
-    scale
-  );
-}
-window.addEventListener('resize', function(){
-
-  setTimeout(function(){
-
-    fitMobileGame();
-    fitMobileRPS();
-
-  }, 100);
-
-});
-
-window.addEventListener('orientationchange', function(){
-
-  setTimeout(function(){
-
-    fitMobileGame();
-    fitMobileRPS();
-
-  }, 300);
-
-});
+       
