@@ -107,6 +107,19 @@ document.getElementById('profileUpload').onchange = function(e){
 
   reader.readAsDataURL(file);
 };
+document.getElementById('profileName').onclick = function(){
+
+  var newName = prompt(
+    '새 프로필 이름을 입력하세요',
+    this.textContent.replace(' ✏️','')
+  );
+
+  if(!newName){
+    return;
+  }
+
+  this.textContent = newName + ' ✏️';
+};
 document.getElementById('mainScreen').onclick = function(){
   document.getElementById('profileUpload').click();
 };
