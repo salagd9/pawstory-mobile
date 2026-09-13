@@ -3017,16 +3017,13 @@ function getMasterActions(team){
 
 /* 행동 실행 */
 function executeMasterAction(team,action){
-console.log(
-  '🔍 실제 실행 직전 행동:',
-  action
-);
-function executeMasterAction(team, action){
 
   console.log(
     '🔍 실제 실행 직전 행동:',
     action
   );
+
+  console.log('AI 행동:', action);
 
   if(action && action.type === 'reveal'){
     console.log(
@@ -3037,26 +3034,22 @@ function executeMasterAction(team, action){
     );
   }
 
-  console.log('AI 행동:', action);
-
   if(!action){
+
+    console.log(
+      '⚠️ AI 행동 없음 - 사람에게 턴 넘김'
+    );
+
+    selected = null;
+
+    turn = enemyTeam(team);
+
+    draw();
+
     return;
   }
-console.log('AI 행동:', action);
- if(!action){
 
-  console.log(
-    '⚠️ AI 행동 없음 - 사람에게 턴 넘김'
-  );
-
-  selected = null;
-
-  turn = enemyTeam(team);
-
-  draw();
-
-  return;
-}
+ 
 /* 10수 이후 사 주변 알은 최종적으로 피하기 */
 if(
   action.type === 'reveal' &&
