@@ -3021,6 +3021,27 @@ console.log(
   '🔍 실제 실행 직전 행동:',
   action
 );
+function executeMasterAction(team, action){
+
+  console.log(
+    '🔍 실제 실행 직전 행동:',
+    action
+  );
+
+  if(action && action.type === 'reveal'){
+    console.log(
+      '🥚 실제 알 오픈:',
+      '위치=', action.index,
+      '이유=', action.reason,
+      '전체action=', action
+    );
+  }
+
+  console.log('AI 행동:', action);
+
+  if(!action){
+    return;
+  }
 console.log('AI 행동:', action);
  if(!action){
 
