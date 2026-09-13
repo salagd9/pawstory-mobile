@@ -17171,6 +17171,7 @@ console.timeEnd('AI판단시간');
       action
     );
 
+console.log('✅ aiMove 실행 끝', 'turn=', turn, 'gameEnded=', gameEnded);
   },900);
 }
 
