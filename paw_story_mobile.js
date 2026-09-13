@@ -1096,7 +1096,16 @@ function speakWelcome(){
 /* 타일 클릭 */
 
 function clickTile(index){
-
+console.log(
+  '클릭됨',
+  'index=', index,
+  'selected=', selected,
+  'turn=', turn,
+  'aiTeam=', aiTeam,
+  'gameEnded=', gameEnded,
+  'rpsActive=', rpsActive,
+  'piece=', board[index]
+);
   if(gameEnded){
     return;
   }
