@@ -102,11 +102,18 @@ document.getElementById('profileUpload').onchange = function(e){
     document.getElementById('profilePhoto').src = event.target.result;
     document.getElementById('profilePhoto').style.display = 'block';
     document.getElementById('profilePhotoText').style.display = 'none';
-
+localStorage.setItem('pawProfilePhoto', event.target.result);
   };
 
   reader.readAsDataURL(file);
 };
+var savedPhoto = localStorage.getItem('pawProfilePhoto');
+
+if(savedPhoto){
+  document.getElementById('profilePhoto').src = savedPhoto;
+  document.getElementById('profilePhoto').style.display = 'block';
+  document.getElementById('profilePhotoText').style.display = 'none';
+}
 document.getElementById('profileName').onclick = function(){
 
   var newName = prompt(
