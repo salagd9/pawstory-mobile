@@ -3078,24 +3078,71 @@ if(
     ){
       continue;
     }
+/* 상대 왕/사가 한 번 움직이면
+   바로 잡힐 수 있는 위치의 알은 대체 오픈에서도 금지 */
+if(
+  isRevealDangerousByEnemyKingAdvisorNextMove(
+    team,
+    i
+  )
+){
+  console.log(
+    '🚫 사 보호 대체 알 제외 - 상대 왕/사 1수앞 위험:',
+    i
+  );
 
+  continue;
+}
     safeAdvisorReveal.push(i);
   }
 
   if(safeAdvisorReveal.length > 0){
 
-    console.log(
-      '🛡 사 보호: 주변 알 오픈 취소 → 다른 알 선택'
-    );
+  var bestAdvisorRevealIndex = -1;
+  var bestAdvisorRevealScore = -999999;
 
-    action.index =
-      safeAdvisorReveal[
-        Math.floor(
-          Math.random() *
-          safeAdvisorReveal.length
-        )
-      ];
+  for(var sar=0; sar<safeAdvisorReveal.length; sar++){
+
+    var advisorSafeIndex =
+      safeAdvisorReveal[sar];
+
+    var advisorSafeAction = {
+      type:'reveal',
+      reason:'safeRevealAfterAdvisorProtection',
+      index:advisorSafeIndex
+    };
+
+    var advisorSafeScore =
+      masterScoreAction(
+        team,
+        advisorSafeAction
+      );
+
+    if(
+      advisorSafeScore >
+      bestAdvisorRevealScore
+    ){
+      bestAdvisorRevealScore =
+        advisorSafeScore;
+
+      bestAdvisorRevealIndex =
+        advisorSafeIndex;
+    }
   }
+
+  console.log(
+    '🛡 사 보호: 위험 오픈 취소 → 최고점 안전 알 선택',
+    '기존=', action.index,
+    '대체=', bestAdvisorRevealIndex,
+    '점수=', bestAdvisorRevealScore
+  );
+
+  action.index =
+    bestAdvisorRevealIndex;
+
+  action.reason =
+    'safeRevealAfterAdvisorProtection';
+}
 }
 /* 상대 졸 옆 알에서 내 왕이 나올 위험 최종 차단 */
 if(
