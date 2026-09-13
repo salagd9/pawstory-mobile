@@ -2,12 +2,27 @@
 
 document.body.innerHTML =
 '<input type="file" id="profileUpload" accept="image/*" style="display:none">' +
+
 '<div id="mainMenu">' +
   '<div id="mainScreen">' +
-'<img id="mainImage" src="images/images/main.png">' +
+    '<img id="mainImage" src="images/images/main.png">' +
     '<button id="mainStart"></button>' +
-'<button id="profileBtn" style="position:absolute;left:78%;top:26.5%;width:18%;height:18%;background:transparent;border:0;box-shadow:none;z-index:9999;cursor:pointer;"></button>' +
+    '<button id="profileBtn" style="position:absolute;left:78%;top:26.5%;width:18%;height:18%;background:transparent;border:0;box-shadow:none;z-index:9999;cursor:pointer;"></button>' +
   '</div>' +
+'</div>' +
+
+'<div id="profilePage" style="display:none;min-height:100vh;background:#06172c;color:white;text-align:center;padding:30px;box-sizing:border-box;">' +
+
+  '<h2>🐾 내 프로필</h2>' +
+
+  '<div style="margin:20px auto;width:180px;height:180px;border-radius:25px;background:white;"></div>' +
+
+  '<div style="font-size:24px;font-weight:bold;margin:15px 0;">냥이로드</div>' +
+
+  '<div style="font-size:22px;margin:15px 0;">전적 0승 0패</div>' +
+
+  '<button id="profileBack">메인으로</button>' +
+
 '</div>' +
 
 '<div id="game">' +
@@ -58,6 +73,16 @@ document.body.innerHTML =
 
   '</div>' +
 '</div>';
+document.getElementById('profileBtn').onclick = function(e){
+  e.stopPropagation();
+  document.getElementById('mainMenu').style.display = 'none';
+  document.getElementById('profilePage').style.display = 'block';
+};
+
+document.getElementById('profileBack').onclick = function(){
+  document.getElementById('profilePage').style.display = 'none';
+  document.getElementById('mainMenu').style.display = 'flex';
+};
 document.getElementById('mainScreen').onclick = function(){
   document.getElementById('profileUpload').click();
 };
