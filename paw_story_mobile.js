@@ -513,10 +513,20 @@ function addRecord(result){
   localStorage.setItem('pawWins', wins);
   localStorage.setItem('pawLosses', losses);
 
+
+  // 프로필 페이지 전적
   var record = document.getElementById('profileRecord');
 
   if(record){
     record.textContent = '전적 ' + wins + '승 ' + losses + '패';
+  }
+
+
+  // 메인화면 내 정보 전적
+  var mainRecord = document.getElementById('mainProfileRecord');
+
+  if(mainRecord){
+    mainRecord.textContent = wins + '승 ' + losses + '패';
   }
 }
 
