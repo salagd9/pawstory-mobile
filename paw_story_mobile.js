@@ -19,7 +19,7 @@ document.body.innerHTML =
 
   '<div id="profileName" style="font-size:24px;font-weight:bold;margin:15px 0;cursor:pointer;">냥이로드 ✏️</div>' +
 
-  '<div style="font-size:22px;margin:15px 0;">전적 0승 0패</div>' +
+  '<div id="profileRecord" style="font-size:22px;margin:15px 0;">전적 0승 0패</div>' +
 
   '<button id="profileBack">메인으로</button>' +
 
@@ -133,6 +133,11 @@ var savedName = localStorage.getItem('pawProfileName');
 if(savedName){
   document.getElementById('profileName').textContent = savedName + ' ✏️';
 }
+var savedWins = Number(localStorage.getItem('pawWins') || 0);
+var savedLosses = Number(localStorage.getItem('pawLosses') || 0);
+
+document.getElementById('profileRecord').textContent =
+  '전적 ' + savedWins + '승 ' + savedLosses + '패';
 document.getElementById('mainScreen').onclick = function(){
   document.getElementById('profileUpload').click();
 };
@@ -480,7 +485,28 @@ function getHumanTeam(){
     ? 'blue'
     : 'red';
 }
+function addRecord(result){
 
+  var wins = Number(localStorage.getItem('pawWins') || 0);
+  var losses = Number(localStorage.getItem('pawLosses') || 0);
+
+  if(result === 'win'){
+    wins++;
+  }
+
+  if(result === 'loss'){
+    losses++;
+  }
+
+  localStorage.setItem('pawWins', wins);
+  localStorage.setItem('pawLosses', losses);
+
+  var record = document.getElementById('profileRecord');
+
+  if(record){
+    record.textContent = '전적 ' + wins + '승 ' + losses + '패';
+  }
+}
 
 /* 가위바위보 화면 열기 */
 function openRPS(){
@@ -2680,11 +2706,17 @@ function checkBlueWin(){
 
     draw();
 
-    say('🏆 🔵 블루 승!');
+   say('🏆 🔵 블루 승!');
 playVictorySound();
-    showBoardResult('블루 승');
+showBoardResult('블루 승');
 
-    return true;
+if(getHumanTeam() === 'blue'){
+  addRecord('win');
+}else{
+  addRecord('loss');
+}
+
+return true;
   }
 
   return false;
@@ -2700,11 +2732,17 @@ function checkRedWin(){
 
     draw();
 
-    say('🏆 🔴 레드 승!');
+   say('🏆 🔴 레드 승!');
 playVictorySound();
-    showBoardResult('레드 승');
+showBoardResult('레드 승');
 
-    return true;
+if(getHumanTeam() === 'red'){
+  addRecord('win');
+}else{
+  addRecord('loss');
+}
+
+return true;
   }
 
   return false;
