@@ -3731,6 +3731,11 @@ if(safeReveal.length > 0){
   }
 }
 }
+console.log(
+  '🥚 최종 실제 오픈:',
+  '위치=', action.index,
+  '이유=', action.reason
+);
    board[action.index].revealed = true;
 
 /* 포찾기 중 내 포가 실제로 나왔는데
@@ -12748,7 +12753,10 @@ function findSoldierKingPressureMove(team){
         from,
         enemyKingIndex
       );
-
+  /* 왕에서 너무 멀면 왕압박으로 취급하지 않음 */
+  if(beforeDistance > 3){
+    continue;
+  }
 
     /* 졸이 이동 가능한 빈칸 검사 */
     for(var to=0; to<board.length; to++){
