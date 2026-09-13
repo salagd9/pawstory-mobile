@@ -83,6 +83,30 @@ document.getElementById('profileBack').onclick = function(){
   document.getElementById('profilePage').style.display = 'none';
   document.getElementById('mainMenu').style.display = 'flex';
 };
+document.getElementById('profilePhotoBox').onclick = function(){
+  document.getElementById('profileUpload').click();
+};
+
+document.getElementById('profileUpload').onchange = function(e){
+
+  var file = e.target.files[0];
+
+  if(!file){
+    return;
+  }
+
+  var reader = new FileReader();
+
+  reader.onload = function(event){
+
+    document.getElementById('profilePhoto').src = event.target.result;
+    document.getElementById('profilePhoto').style.display = 'block';
+    document.getElementById('profilePhotoText').style.display = 'none';
+
+  };
+
+  reader.readAsDataURL(file);
+};
 document.getElementById('mainScreen').onclick = function(){
   document.getElementById('profileUpload').click();
 };
