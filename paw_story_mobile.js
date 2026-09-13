@@ -3022,9 +3022,20 @@ console.log(
   action
 );
 console.log('AI 행동:', action);
-  if(!action){
-    return;
-  }
+ if(!action){
+
+  console.log(
+    '⚠️ AI 행동 없음 - 사람에게 턴 넘김'
+  );
+
+  selected = null;
+
+  turn = enemyTeam(team);
+
+  draw();
+
+  return;
+}
 /* 10수 이후 사 주변 알은 최종적으로 피하기 */
 if(
   action.type === 'reveal' &&
