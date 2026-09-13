@@ -217,8 +217,7 @@ style.textContent = [
 '@keyframes victoryFeather{0%{transform:translate(0,0) rotate(0deg);opacity:0}15%{opacity:1}40%{transform:translate(18px,-30px) rotate(70deg);opacity:1}70%{transform:translate(-14px,10px) rotate(150deg);opacity:.9}100%{transform:translate(22px,65px) rotate(260deg);opacity:0}}', 
 '#mainMenu{display:flex;justify-content:center;align-items:flex-start;background:#06172c;min-height:100vh;width:100%;overflow:hidden}',
 
-'#mainScreen{position:relative;width:auto;height:100vh;height:100dvh;aspect-ratio:2/3;max-width:100vw;margin:0 auto;overflow:hidden;background:#06172c}',
-
+'#mainScreen{position:relative;width:min(100vw,700px);height:100vh;height:100dvh;margin:0 auto;overflow:hidden;background:#06172c}',
 '#mainImage{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}',
 '#game{display:none}',
 '#mainStart{position:absolute;left:1%;top:34%;width:25%;height:4.5%;border:0;background:transparent;cursor:pointer;z-index:9999;touch-action:manipulation}',
