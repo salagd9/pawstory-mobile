@@ -1,7 +1,7 @@
 /* PAW STORY - 한국식 동물 장기 */
 
 document.body.innerHTML =
-
+'<input type="file" id="profileUpload" accept="image/*" style="display:none">' +
 '<div id="mainMenu">' +
   '<div id="mainScreen">' +
 '<img id="mainImage" src="images/images/main.png">' +
@@ -57,6 +57,9 @@ document.body.innerHTML =
 
   '</div>' +
 '</div>';
+document.getElementById('mainScreen').onclick = function(){
+  document.getElementById('profileUpload').click();
+};
 document.getElementById('backMain').onclick = function(){
 
   playClickSound();
