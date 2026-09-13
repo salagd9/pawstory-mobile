@@ -8,7 +8,7 @@ document.body.innerHTML =
     '<img id="mainImage" src="images/images/main.png">' +
 '<img id="mainProfilePhoto" style="position:absolute;left:78.2%;top:30%;width:18%;height:7%;object-fit:cover;border-radius:6px;z-index:20;display:none;">' +
 '<div id="mainProfileName" style="position:absolute;left:78.2%;top:37.2%;width:18%;height:2.2%;background:#1687ed;border-radius:5px;display:flex;align-items:center;justify-content:center;text-align:center;color:white;font-size:11px;font-weight:bold;z-index:21;"></div>' +
- '<div id="mainProfileRecord" style="position:absolute;left:83%;top:39.8%;width:13%;height:2%;background:#fff;display:flex;align-items:center;justify-content:center;color:#222;font-size:10px;font-weight:bold;z-index:21;">0승 0패</div>' +
+ '<div id="mainProfileRecord" style="position:absolute;left:85%;top:39.8%;width:13%;height:2%;background:#fff;display:flex;align-items:center;justify-content:center;color:#222;font-size:10px;font-weight:bold;z-index:21;">0승 0패</div>' +
  '<button id="mainStart"></button>' +
     '<button id="profileBtn" style="position:absolute;left:78%;top:26.5%;width:18%;height:18%;background:transparent;border:0;box-shadow:none;z-index:9999;cursor:pointer;"></button>' +
   '</div>' +
@@ -105,7 +105,11 @@ document.getElementById('profileUpload').onchange = function(e){
     document.getElementById('profilePhoto').src = event.target.result;
     document.getElementById('profilePhoto').style.display = 'block';
     document.getElementById('profilePhotoText').style.display = 'none';
+
 localStorage.setItem('pawProfilePhoto', event.target.result);
+
+document.getElementById('mainProfilePhoto').src = event.target.result;
+document.getElementById('mainProfilePhoto').style.display = 'block';
   };
 
   reader.readAsDataURL(file);
