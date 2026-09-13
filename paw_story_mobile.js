@@ -17024,7 +17024,7 @@ if(specialCandidates.length > 0){
 
 /* 일반 대국 AI 실행 */
 function aiMove(){
-
+console.log('🤖 aiMove 호출', Date.now(), 'turn=', turn, 'aiTeam=', aiTeam);
   if(
     !aiMode ||
     aiVsAiMode ||
@@ -17044,10 +17044,10 @@ function aiMove(){
     ){
       return;
     }
-
+console.time('AI판단시간');
     var action =
       chooseMasterAction(aiTeam);
-
+console.timeEnd('AI판단시간');
     executeMasterAction(
       aiTeam,
       action
