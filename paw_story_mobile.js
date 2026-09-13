@@ -150,9 +150,7 @@ document.getElementById('profileRecord').textContent =
   '전적 ' + savedWins + '승 ' + savedLosses + '패';
 document.getElementById('mainProfileRecord').textContent =
   savedWins + '승 ' + savedLosses + '패';
-document.getElementById('mainScreen').onclick = function(){
-  document.getElementById('profileUpload').click();
-};
+
 document.getElementById('backMain').onclick = function(){
 
   playClickSound();
@@ -17464,7 +17462,7 @@ checkOrientation();
     console.log('음성 오류:', e);
   }
 
-  say('포스토리 암기게임에 오신 것을 환영합니다. AI 대국 버튼을 눌러 선을 먼저 결정해 주세요.');
+  say('포스토리 암기 게임에 오신 것을 환영합니다. AI 대국 버튼을 눌러 선을 결정해 주세요.');
 };
 /* =====================================================
    모바일 가로화면 자동 맞춤
