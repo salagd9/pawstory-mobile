@@ -6,7 +6,7 @@ document.body.innerHTML =
   '<div id="mainScreen">' +
 '<img id="mainImage" src="images/images/main.png">' +
     '<button id="mainStart"></button>' +
-'<button id="profileBtn" style="position:absolute;left:3%;top:25%;width:20%;height:20%;background:rgba(255,0,0,.3);border:0;box-shadow:none;z-index:9999;"></button>' +
+'<button id="profileBtn" style="position:absolute;left:76%;top:7%;width:18%;height:24%;background:rgba(255,0,0,.3);border:0;box-shadow:none;z-index:9999;cursor:pointer;"></button>' +
   '</div>' +
 '</div>' +
 
