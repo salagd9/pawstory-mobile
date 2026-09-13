@@ -4,7 +4,7 @@ document.body.innerHTML =
 
 '<div id="mainMenu">' +
   '<div id="mainScreen">' +
-    '<img id="mainImage" src="./images/main_vertical.png">' +
+  '<img id="mainImage" src="images/main_vertical.png">' +
     '<button id="mainStart"></button>' +
   '</div>' +
 '</div>' +
