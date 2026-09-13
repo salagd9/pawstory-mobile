@@ -7,7 +7,7 @@ document.body.innerHTML =
   '<div id="mainScreen">' +
     '<img id="mainImage" src="images/images/main.png">' +
 '<img id="mainProfilePhoto" style="position:absolute;left:78.2%;top:30%;width:18%;height:7%;object-fit:cover;border-radius:6px;z-index:20;display:none;">' +
-  '<div id="mainProfileName" style="position:absolute;left:79%;top:38.8%;width:16%;text-align:center;color:white;font-size:11px;font-weight:bold;z-index:21;"></div>' +
+'<div id="mainProfileName" style="position:absolute;left:78.2%;top:37.2%;width:18%;height:2.2%;background:#1687ed;border-radius:5px;display:flex;align-items:center;justify-content:center;text-align:center;color:white;font-size:11px;font-weight:bold;z-index:21;"></div>' +
   '<button id="mainStart"></button>' +
     '<button id="profileBtn" style="position:absolute;left:78%;top:26.5%;width:18%;height:18%;background:transparent;border:0;box-shadow:none;z-index:9999;cursor:pointer;"></button>' +
   '</div>' +
