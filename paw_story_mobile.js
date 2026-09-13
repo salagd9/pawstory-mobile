@@ -1,5 +1,5 @@
 /* PAW STORY - 한국식 동물 장기 */
-
+console.log('🔥 최신 JS 로드됨 - TEST 999');
 document.body.innerHTML =
 '<input type="file" id="profileUpload" accept="image/*" style="display:none">' +
 
