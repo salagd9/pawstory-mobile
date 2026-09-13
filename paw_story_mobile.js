@@ -14272,20 +14272,7 @@ if(followAggressiveTarget){
 }
   var situation =
     getBoardSituation(team);
-var cannonTargetReveal =
-  masterRevealNearCannonTarget(
-    team
-  );
 
-if(cannonTargetReveal){
-
-  console.log(
-    '💣 상대 포 공격 대비 주변 알 오픈:',
-    cannonTargetReveal
-  );
-
-  return cannonTargetReveal;
-}
   console.log(
     '🎯 마스터 상황판:',
     '왕위험=', situation.kingInDanger,
@@ -15384,7 +15371,14 @@ function masterRevealNearCannonTarget(team){
       [tr, tc-1],
       [tr, tc+1]
     ];
-
+console.log(
+  '🔍 포 공격받는 기물 주변검사:',
+  '위험기물=', doomedIndex,
+  '검사할칸=',
+  around.map(function(pos){
+    return pos[0] * 4 + pos[1];
+  })
+);
 
     var bestIndex = -1;
     var bestScore = -999999;
@@ -15420,7 +15414,21 @@ function masterRevealNearCannonTarget(team){
       ){
         continue;
       }
+/* 왕/사가 한 번 이동하면 바로 잡을 수 있는 알은 금지 */
+if(
+  isRevealDangerousByEnemyKingAdvisorNextMove(
+    team,
+    index
+  )
+){
+  console.log(
+    '🚫 포 대응 주변알 제외:',
+    index,
+    '이유=상대 왕/사가 한 번 이동 후 잡을 수 있음'
+  );
 
+  continue;
+}
 
       /* 상대 포가 이 알도 바로 공격할 수 있으면 제외 */
       if(
