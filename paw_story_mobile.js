@@ -17,7 +17,7 @@ document.body.innerHTML =
 
   '<div id="profilePhotoBox" style="margin:20px auto;width:180px;height:180px;border-radius:25px;background:white;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;"><span id="profilePhotoText" style="color:#555;font-size:16px;">사진 선택</span><img id="profilePhoto" style="display:none;width:100%;height:100%;object-fit:cover;"></div>' +
 
-  '<div style="font-size:24px;font-weight:bold;margin:15px 0;">냥이로드</div>' +
+  '<div id="profileName" style="font-size:24px;font-weight:bold;margin:15px 0;cursor:pointer;">냥이로드 ✏️</div>' +
 
   '<div style="font-size:22px;margin:15px 0;">전적 0승 0패</div>' +
 
