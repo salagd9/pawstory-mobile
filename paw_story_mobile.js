@@ -14173,6 +14173,42 @@ function findCannonInNextTurnDanger(team){
 function chooseMasterAction(team){
   var priorityCandidates = [];
   var deferredCapture = null;
+/* =====================================================
+   💣 상대 포 출현 절대 최우선 대응
+===================================================== */
+
+/* 1순위:
+   상대 포에게 지금 잡힐 수 있는
+   내 기물 주변 안전한 알 오픈 */
+var emergencyCannonTargetReveal =
+  masterRevealNearCannonTarget(team);
+
+if(emergencyCannonTargetReveal){
+
+  console.log(
+    '🚨💣 최우선 포 대응 - 공격받는 내 기물 주변 오픈:',
+    emergencyCannonTargetReveal
+  );
+
+  return emergencyCannonTargetReveal;
+}
+
+
+/* 2순위:
+   상대 포 자체의 상하좌우
+   안전한 미오픈 알 오픈 */
+var emergencyEnemyCannonAround =
+  masterOpenAroundEnemyCannonSafely(team);
+
+if(emergencyEnemyCannonAround){
+
+  console.log(
+    '🚨💣 최우선 포 대응 - 상대 포 주변 오픈:',
+    emergencyEnemyCannonAround
+  );
+
+  return emergencyEnemyCannonAround;
+}
 /* 이전 턴 적극압박의 목표가
    아직 잡을 수 있으면 최우선 후속 공격 */
 var followAggressiveTarget =
