@@ -119,7 +119,13 @@ document.getElementById('profileName').onclick = function(){
   }
 
   this.textContent = newName + ' ✏️';
+localStorage.setItem('pawProfileName', newName);
 };
+var savedName = localStorage.getItem('pawProfileName');
+
+if(savedName){
+  document.getElementById('profileName').textContent = savedName + ' ✏️';
+}
 document.getElementById('mainScreen').onclick = function(){
   document.getElementById('profileUpload').click();
 };
