@@ -6,6 +6,7 @@ document.body.innerHTML =
 '<div id="mainMenu">' +
   '<div id="mainScreen">' +
     '<img id="mainImage" src="images/images/main.png">' +
+'<img id="mainProfilePhoto" style="position:absolute;left:80.5%;top:31%;width:13%;height:9%;object-fit:cover;border-radius:8px;z-index:20;display:none;">' +
     '<button id="mainStart"></button>' +
     '<button id="profileBtn" style="position:absolute;left:78%;top:26.5%;width:18%;height:18%;background:transparent;border:0;box-shadow:none;z-index:9999;cursor:pointer;"></button>' +
   '</div>' +
@@ -113,6 +114,8 @@ if(savedPhoto){
   document.getElementById('profilePhoto').src = savedPhoto;
   document.getElementById('profilePhoto').style.display = 'block';
   document.getElementById('profilePhotoText').style.display = 'none';
+document.getElementById('mainProfilePhoto').src = savedPhoto;
+document.getElementById('mainProfilePhoto').style.display = 'block';
 }
 document.getElementById('profileName').onclick = function(){
 
