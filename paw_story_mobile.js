@@ -3669,6 +3669,22 @@ if(nearMyCannon){
 
   continue;
 }
+/* 상대 공개 왕/사가 한 번 움직이면
+   다음에 잡힐 수 있는 알은 대체 오픈에서도 제외 */
+if(
+  isRevealDangerousByEnemyKingAdvisorNextMove(
+    team,
+    s
+  )
+){
+
+  console.log(
+    '🚫 졸 보호 대체 후보 제외 - 상대 왕/사 1수앞 위험:',
+    s
+  );
+
+  continue;
+}
     safeReveal.push(s);
   }
 
@@ -9234,7 +9250,19 @@ function findSafeRevealAroundEnemyCannon(team){
       ){
         continue;
       }
+if(
+  isRevealDangerousByEnemyKingAdvisorNextMove(
+    team,
+    index
+  )
+){
+  console.log(
+    '🚫 대체 오픈 제외 - 상대 왕/사 1수앞 위험:',
+    index
+  );
 
+  continue;
+}
       if(
         isBadRevealNearEnemyPower(
           index,
@@ -16894,7 +16922,20 @@ var generalRevealCandidate = null;
       continue;
     }
 
+  /* 상대 왕/사가 한 번 움직이면 위험해지는 알 금지 */
+  if(
+    isRevealDangerousByEnemyKingAdvisorNextMove(
+      team,
+      actions[i].index
+    )
+  ){
+    console.log(
+      '🚫 일반 오픈 제외 - 상대 왕/사 1수앞 위험:',
+      actions[i].index
+    );
 
+    continue;
+  }
     reveals.push(actions[i]);
   }
 
@@ -17434,6 +17475,127 @@ function isRevealDangerousByEnemyCannon(team, index){
 
   return false;
 }
+/* =====================================================
+   공개 상대 왕/사 1수 앞 위험 알 검사
+
+   상대 왕/사가 한 번 이동한 뒤
+   다음 수에 해당 알 위치를 잡을 수 있게 된다면
+   그 알은 열지 않는다.
+
+   king = 화면상 깃발
+===================================================== */
+function isRevealDangerousByEnemyKingAdvisorNextMove(
+  team,
+  revealIndex
+){
+
+  var enemy =
+    team === 'red' ? 'blue' : 'red';
+
+
+  /* 상대 공개 왕/사 찾기 */
+  for(var from=0; from<board.length; from++){
+
+    var enemyPower =
+      board[from];
+
+    if(
+      !enemyPower ||
+      !enemyPower.revealed ||
+      enemyPower.team !== enemy ||
+      (
+        enemyPower.type !== 'king' &&
+        enemyPower.type !== 'advisor'
+      )
+    ){
+      continue;
+    }
+
+
+    /* =========================================
+       상대 왕/사가 한 번 이동할 수 있는
+       모든 빈칸 검사
+    ========================================= */
+
+    for(var moveTo=0;
+        moveTo<board.length;
+        moveTo++){
+
+      if(board[moveTo] !== null){
+        continue;
+      }
+
+      if(
+        !canMove(
+          from,
+          moveTo
+        )
+      ){
+        continue;
+      }
+
+
+      var oldFrom =
+        board[from];
+
+      var oldTo =
+        board[moveTo];
+
+
+      /* 상대 왕/사가 이동했다고 가정 */
+      board[moveTo] =
+        oldFrom;
+
+      board[from] =
+        null;
+
+
+      /*
+        그 자리에서 revealIndex까지
+        한 칸 이동 가능한가?
+
+        알 내용은 아직 모르므로
+        canCapture는 사용하지 않는다.
+
+        왕/사가 한 번 이동하면
+        그 알에 바로 붙을 수 있는 공간이면
+        위험 알로 처리.
+      */
+      var canReachRevealNext =
+        canMove(
+          moveTo,
+          revealIndex
+        );
+
+
+      /* 반드시 원상복구 */
+      board[from] =
+        oldFrom;
+
+      board[moveTo] =
+        oldTo;
+
+
+      if(canReachRevealNext){
+
+        console.log(
+          '🚫 왕/사 1수앞 위험 알:',
+          '알=', revealIndex,
+          '상대=', enemyPower.type,
+          '현재=', from,
+          '이동=', moveTo,
+          '→ 다음에 알 접근 가능'
+        );
+
+        return true;
+      }
+    }
+  }
+
+
+  return false;
+}
+
 /* 새 게임 버튼 */
 
 document.getElementById('restart').onclick=function(){
