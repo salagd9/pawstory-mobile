@@ -1189,7 +1189,13 @@ if(p && !p.revealed){
   /* 말 선택 */
 
   if(selected===null){
-
+console.log(
+  '🔵 선택분기 진입',
+  'index=', index,
+  'p=', p,
+  'p.team=', p ? p.team : null,
+  'turn=', turn
+);
     if(!p){
 
       return;
