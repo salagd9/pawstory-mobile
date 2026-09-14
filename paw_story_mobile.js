@@ -16536,19 +16536,7 @@ var aggressivePowerMove =
 console.log('🧪 aggressivePowerMove 원본 결과:', aggressivePowerMove);
 if(aggressivePowerMove){
   specialCandidates.push(aggressivePowerMove);
-}
-if(aggressivePowerMove){
 
-  console.log(
-    '🧠 특수후보 등록 - 적극압박:',
-    aggressivePowerMove,
-    '점수=',
-    masterScoreAction(
-      team,
-      aggressivePowerMove
-    )
-  );
-}
 /* =====================================================
    포 행동 후보 수집
 ===================================================== */
@@ -16757,16 +16745,7 @@ if(cannonFirst){
     }
     else{
 
-  console.log(
-    '🧠 특수후보 등록 - 포찾기:',
-    cannonFirst,
-    '점수=',
-    masterScoreAction(
-      team,
-      cannonFirst
-    )
-  );
-
+ 
   specialCandidates.push(
     cannonFirst
   );
@@ -16780,16 +16759,7 @@ var powerMiddleReveal =
 
 if(powerMiddleReveal){
 
-  console.log(
-    '🧠 특수후보 등록 - 차/포/마 주변오픈:',
-    powerMiddleReveal,
-    '점수=',
-    masterScoreAction(
-      team,
-      powerMiddleReveal
-    )
-  );
-
+ 
   specialCandidates.push(
     powerMiddleReveal
   );
@@ -16806,17 +16776,7 @@ var advisorFirst =
 
 if(advisorFirst){
 
-  console.log(
-    '🧠 특수후보 등록 - 사 공격행동:',
-    advisorFirst,
-    '점수=',
-    masterScoreAction(
-      team,
-      advisorFirst
-    )
-  );
-
-  specialCandidates.push(
+    specialCandidates.push(
     advisorFirst
   );
 }
@@ -16864,17 +16824,7 @@ if(kingAdvisorDefense.length > 0){
       ]
   };
 
-  console.log(
-    '🧠 특수후보 등록 - 왕/사 포방어:',
-    kingAdvisorDefenseAction,
-    '점수=',
-    masterScoreAction(
-      team,
-      kingAdvisorDefenseAction
-    )
-  );
-
-  specialCandidates.push(
+   specialCandidates.push(
     kingAdvisorDefenseAction
   );
 }
@@ -16889,17 +16839,7 @@ var safeGeneralReveal =
 
 if(safeGeneralReveal){
 
-  console.log(
-    '🧠 특수후보 등록 - 일반 안전오픈:',
-    safeGeneralReveal,
-    '점수=',
-    masterScoreAction(
-      team,
-      safeGeneralReveal
-    )
-  );
-
-  specialCandidates.push(
+    specialCandidates.push(
     safeGeneralReveal
   );
 }
@@ -16915,21 +16855,12 @@ if(safeGeneralReveal){
 
 if(deferredCapture){
 
-  console.log(
-    '🧠 특수후보 등록 - 보류 포획:',
-    deferredCapture,
-    '점수=',
-    masterScoreAction(
-      team,
-      deferredCapture
-    )
-  );
-
-  specialCandidates.push(
+   specialCandidates.push(
     deferredCapture
   );
 }
 var generalRevealCandidate = null;
+
   /* 일반 숨은 알 오픈 */
   var reveals = [];
 
@@ -16989,15 +16920,6 @@ var generalRevealCandidate = null;
     )
   ];
 
-console.log(
-  '🧠 특수후보 등록 - 일반 오픈:',
-  generalRevealCandidate,
-  '점수=',
-  masterScoreAction(
-    team,
-    generalRevealCandidate
-  )
-);
 
 specialCandidates.push(
   generalRevealCandidate
@@ -17046,17 +16968,6 @@ for(var c=0; c<actions.length; c++){
     }
   }
 
-
-  console.log(
-  '🧠 특수후보 등록 - 일반 포획:',
-  captureAction,
-  '점수=',
-  masterScoreAction(
-    team,
-    captureAction
-  )
-);
-
 specialCandidates.push(
   captureAction
 );
@@ -17072,16 +16983,7 @@ for(var m=0; m<actions.length; m++){
     continue;
   }
 
-  console.log(
-    '🧠 특수후보 등록 - 일반 이동:',
-    actions[m],
-    '점수=',
-    masterScoreAction(
-      team,
-      actions[m]
-    )
-  );
-
+ 
   specialCandidates.push(
     actions[m]
   );
