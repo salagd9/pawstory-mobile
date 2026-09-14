@@ -16536,7 +16536,7 @@ var aggressivePowerMove =
 console.log('🧪 aggressivePowerMove 원본 결과:', aggressivePowerMove);
 if(aggressivePowerMove){
   specialCandidates.push(aggressivePowerMove);
-
+}
 /* =====================================================
    포 행동 후보 수집
 ===================================================== */
