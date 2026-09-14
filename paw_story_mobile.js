@@ -14147,6 +14147,7 @@ function findCannonInNextTurnDanger(team){
   return -1;
 }
 function chooseMasterAction(team){ 
+console.log('🚩 chooseMasterAction 시작', team, performance.now());
 console.log(
   '🚨 MASTER 호출',
   'team=', team,
@@ -16899,6 +16900,12 @@ if(specialCandidates.length > 0){
 
   return bestSpecial.action;
 }
+
+console.log(
+  '🏁 chooseMasterAction 끝까지 도착',
+  team,
+  performance.now()
+);
   return null;
 }
 
