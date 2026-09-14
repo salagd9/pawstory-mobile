@@ -442,7 +442,7 @@ function getHumanTeam(){
     : 'red';
 }
 function addRecord(result){
-
+ return;
   var wins = Number(localStorage.getItem('pawWins') || 0);
   var losses = Number(localStorage.getItem('pawLosses') || 0);
 
