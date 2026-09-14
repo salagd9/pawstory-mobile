@@ -1236,12 +1236,29 @@ if(p && !p.revealed){
 
   /* 이동 가능한 위치인지 확인 */
 
-  if(!canMove(selected,index)){
+console.log(
+  '🟡 canMove 검사 직전',
+  'selected=', selected,
+  'index=', index
+);
 
-    say('❌ 그곳으로 이동할 수 없습니다.');
+var movePossible =
+  canMove(
+    selected,
+    index
+  );
 
-    return;
-  }
+console.log(
+  '🟢 canMove 검사 완료',
+  '결과=', movePossible
+);
+
+if(!movePossible){
+
+  say('❌ 그곳으로 이동할 수 없습니다.');
+
+  return;
+}
 
 
   /* 상대 말 공격 */
