@@ -2884,7 +2884,12 @@ function enemyTeam(team){
 
 /* 가능한 행동 만들기 */
 function getMasterActions(team){
-
+console.log(
+  '🧩 ACTIONS 생성',
+  'team=', team,
+  'turn=', turn,
+  'aiTeam=', aiTeam
+);
   var actions = [];
   var enemy = enemyTeam(team);
 
@@ -14141,7 +14146,14 @@ function findCannonInNextTurnDanger(team){
 
   return -1;
 }
-function chooseMasterAction(team){
+function chooseMasterAction(team){ 
+console.log(
+  '🚨 MASTER 호출',
+  'team=', team,
+  'turn=', turn,
+  'aiTeam=', aiTeam,
+  'aiVsAiMode=', aiVsAiMode
+);
   var priorityCandidates = [];
   var deferredCapture = null;
 /* =====================================================
