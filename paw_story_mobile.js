@@ -854,6 +854,7 @@ capturedRed[m].name +
   
 board.forEach(function(p,index){
     var tile=document.createElement('div');
+tile.setAttribute('data-index', index);
 var debugIndex = document.createElement('div');
 
 debugIndex.textContent = index;
@@ -949,11 +950,7 @@ tile.appendChild(debugIndex);
 if(lastActionFlash && lastActionCells.indexOf(index) !== -1){
   tile.classList.add('lastActionBlink');
 }
-    tile.onclick=function(){
-
-  clickTile(index);
-};
-
+    
 
 /* 디버그용 칸 번호 */
 var debugIndex =
@@ -1018,7 +1015,21 @@ boardEl.appendChild(tile);
     : '🔴 사자팀 차례';
   
 }
+document.getElementById('board').onclick = function(e){
 
+  var tile = e.target.closest('.tile');
+
+  if(!tile){
+    return;
+  }
+
+  var index =
+    Number(tile.getAttribute('data-index'));
+
+  console.log('🟣 보드 클릭:', index);
+
+  clickTile(index);
+};
 
 /* 메시지 */
 
