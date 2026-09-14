@@ -17858,5 +17858,37 @@ function fitMobileRPS(){
       vw * 0.94 / boxW,
       vh * 0.94 / boxH
     );
+box.style.transform =
+  'translate(-50%,-50%) scale(' +
+  scale +
+  ')';
 
+console.log(
+  '✊ 고정 가위바위보 비율:',
+  scale
+);
+
+}
+
+window.addEventListener('resize', function(){
+
+  setTimeout(function(){
+
+    fitMobileGame();
+    fitMobileRPS();
+
+  }, 100);
+
+});
+
+window.addEventListener('orientationchange', function(){
+
+  setTimeout(function(){
+
+    fitMobileGame();
+    fitMobileRPS();
+
+  }, 300);
+
+});
        
