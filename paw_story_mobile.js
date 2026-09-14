@@ -232,58 +232,6 @@ function playPieceTak(){
   });
 }
 
-/* 승리 팡파레 */
-function playVictorySound(){
-
-  var AudioContext =
-    window.AudioContext ||
-    window.webkitAudioContext;
-
-  var ctx = new AudioContext();
-
-  var notes = [
-    [523.25, 0.00, 0.18],
-    [659.25, 0.20, 0.18],
-    [783.99, 0.40, 0.18],
-    [1046.50, 0.60, 0.55]
-  ];
-
-  notes.forEach(function(note){
-
-    var osc = ctx.createOscillator();
-    var gain = ctx.createGain();
-
-    osc.type = 'triangle';
-    osc.frequency.value = note[0];
-
-    gain.gain.setValueAtTime(
-      0.001,
-      ctx.currentTime + note[1]
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-      0.35,
-      ctx.currentTime + note[1] + 0.03
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-      0.001,
-      ctx.currentTime + note[1] + note[2]
-    );
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start(ctx.currentTime + note[1]);
-
-    osc.stop(
-      ctx.currentTime +
-      note[1] +
-      note[2] +
-      0.05
-    );
-  });
-}
 function playVictorySound(){
 
   victorySound.pause();
@@ -466,8 +414,6 @@ var firstMover = null;
 var teamsAssigned = false;
 var lastRevealedBy = null;
 var lastRevealedIndex = null;
-var teamsAssigned = false;
-var firstMover = null;
 /* =====================================================
    가위바위보 선공 결정
 ===================================================== */
@@ -2145,6 +2091,7 @@ function getStrongerChance(myPiece){
 
   return strongerEnemy / hiddenEnemyTotal;
 }
+
 function evaluateBoard(team){
 
   var score=0;
@@ -3869,13 +3816,7 @@ if(
 }
     lastRevealedBy = team;
     lastRevealedIndex = action.index;
-/* 포를 찾으려고 열었는데 상대 포가 나왔는지 확인 */
-if(
-  board[action.index].type === 'cannon' &&
-  board[action.index].team !== team
-){
- 
-}
+
     playPieceTak();
 
     say('🤖 AI가 알을 뒤집었습니다!');
@@ -4474,15 +4415,7 @@ function masterFindCannonForImportantEnemy(team){
           candidates.push(index);
         }
 
-        console.log(
-          '포후보:',
-          index,
-          '대상:',
-          target.type,
-          '대상위치:',
-          targetIndex
-        );
-      }
+             }
     }
   }
 
@@ -5439,19 +5372,7 @@ if(enemyCannonAroundFirst){
 }
 var cannonSearchCandidates = [];
 var trappedCannonCandidates = [];
-for(var z=0; z<board.length; z++){
 
-  var testPiece = board[z];
-
-  if(
-    testPiece &&
-    !testPiece.revealed &&
-    testPiece.team === team &&
-    testPiece.type === 'cannon'
-  ){
-    console.log('숨은 내 포 발견:', z);
-  }
-}
 for(var targetIndex=0;
     targetIndex<board.length;
     targetIndex++){
@@ -5573,14 +5494,7 @@ if(
   }
 }
 
-console.log(
-  '포공격검사:',
-  '포=', index,
-  '상대=', targetIndex,
-  '상대종류=', target.type,
-  '중간개수=', middleCount
-);
-    
+   
 /* 중간에 정확히 하나만 있으면
        이 포가 상대 기물을 공격 가능 */
     if(middleCount === 1){
@@ -5821,12 +5735,6 @@ if(!alreadyAdded){
 /* 상대 기물이 현재 자리에서 도망갈 빈칸이 없으면
    더 강한 포 후보로 따로 저장 */
 
-
-console.log(
-  '도망불가 포후보:',
-  trappedCannonCandidates
-);
-console.log('1순위 포후보:', cannonSearchCandidates);
 /* 포 후보를 노리는 상대 기물 가치가 높은 순으로 정렬 */
 cannonSearchCandidates.sort(function(a,b){
   return b.targetValue - a.targetValue;
@@ -5835,15 +5743,6 @@ cannonSearchCandidates.sort(function(a,b){
 
 /* 도망불가 포 후보도
    같은 포 후보 정보와 연결 */
-var validTrappedCannonCandidates =
-  cannonSearchCandidates.filter(function(candidate){
-
-    return (
-      trappedCannonCandidates.indexOf(
-        candidate.index
-      ) !== -1
-    );
-  });
 
 
 /* 도망불가 후보가 있으면 우선,
@@ -7981,9 +7880,7 @@ function masterAdvisorFirstAction(team){
   var enemy =
     team === 'red' ? 'blue' : 'red';
 
-  var revealedCount = 0;
-  var enemyKingAdvisorRevealed = 0;
-
+ 
   for(var i=0; i<board.length; i++){
 
     var p = board[i];
@@ -7992,20 +7889,7 @@ function masterAdvisorFirstAction(team){
       continue;
     }
 
-    if(p.revealed){
-      revealedCount++;
-    }
-
-    if(
-      p.revealed &&
-      p.team === enemy &&
-      (
-        p.type === 'king' ||
-        p.type === 'advisor'
-      )
-    ){
-      enemyKingAdvisorRevealed++;
-    }
+   
   }
 
   /* 기물이 많이 공개됐는데
@@ -8124,6 +8008,7 @@ if(totalActionCount >= 10){
       ]
   };
 }
+
 /* =====================================================
    차 / 포 / 마 공격적 주변 오픈
 
@@ -8602,9 +8487,7 @@ function findMostValuableEndangeredPiece(team){
       continue;
     }
 
-    var value =
-      masterPieceValue(piece);
-
+  
   /* 위험한 기물 중
    단순 기물값이 아니라 "긴급도"가 가장 높은 기물 선택 */
 
@@ -11761,17 +11644,12 @@ function isPieceInactive(index){
   /* 움직임도 없고 공격도 없음 */
   return true;
 }
+
 function getActionPriority(type, team, action) {
 
     var score = 0;
 
-    // 나중에 여기서 행동 종류별 점수를 계산한다.
-console.log(
-  '🧠 우선순위 계산:',
-  'type=', type,
-  'action=', action
-);
-    switch (type) {
+       switch (type) {
 
         case 'kingEscape':
             score += 10000;
@@ -12353,12 +12231,7 @@ board[action.to] =
 
 board[action.from] =
   null;
-    /* 실제로 이동했다고 가정 */
-    board[action.to] =
-      piece;
-
-    board[action.from] =
-      null;
+    
 /* =================================================
    적극 이동 강제 안전검사
 
@@ -12488,8 +12361,7 @@ if(
 
 
     var score = 0;
-/* 이동 후 압박도 계산용 */
-var afterPressure = 0;
+
 /* 이 이동이 실제로 노리는 상대 기억용 */
 var bestTargetIndex = -1;
 var bestTargetValue = -1;
@@ -14017,9 +13889,9 @@ function masterCaptureWeakerEnemyNextToPowerPiece(team){
     );
   }
 
-
   return bestAction;
 }
+
 /* =====================================================
    적극압박 후속 공격
 
@@ -14125,6 +13997,8 @@ function masterFollowAggressiveTarget(team){
     to:to
   };
 }
+
+
 /* =====================================================
    내 공개 포가
    상대의 1회 이동 후 바로 잡힐 위험인지 검사
@@ -16505,15 +16379,6 @@ if(endangeredIndex !== -1){
    👑🥷🚩 공개 왕 / 사 / 차 적극 압박 이동
 ===================================================== */
 
-if(aggressivePowerMove){
-
-  console.log(
-    '🔥 왕/사/차 적극 압박 이동:',
-    aggressivePowerMove
-  );
-
-  return aggressivePowerMove;
-}
  var blockingPursuitMove =
   chooseBlockingPursuitMove(
     team,
