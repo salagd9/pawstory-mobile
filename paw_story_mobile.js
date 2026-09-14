@@ -14238,6 +14238,7 @@ if(followAggressiveTarget){
 
   return followAggressiveTarget;
 }
+console.log('🧭 A구간 통과');
   var situation =
     getBoardSituation(team);
 
