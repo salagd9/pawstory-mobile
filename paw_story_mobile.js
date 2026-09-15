@@ -17692,6 +17692,7 @@ console.log(
 
 }
 
+/*
 window.addEventListener('resize', function(){
 
   setTimeout(function(){
@@ -17702,6 +17703,7 @@ window.addEventListener('resize', function(){
   }, 100);
 
 });
+*/
 
 window.addEventListener('orientationchange', function(){
 
