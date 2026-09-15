@@ -1213,7 +1213,7 @@ console.log(
 
     say('🐾 '+p.name+' 선택! 이동할 곳을 눌러주세요.');
 
-    //draw();
+    draw();
 
     return;
   }
