@@ -1,8 +1,6 @@
 /* PAW STORY - 한국식 동물 장기 */
 console.log('🔥 최신 JS 로드됨 - TEST 999');
-console.log = function(){};
-console.time = function(){};
-console.timeEnd = function(){};
+
 document.body.innerHTML =
 '<input type="file" id="profileUpload" accept="image/*" style="display:none">' +
 
@@ -1215,7 +1213,7 @@ console.log(
 
     say('🐾 '+p.name+' 선택! 이동할 곳을 눌러주세요.');
 
-    draw();
+    //draw();
 
     return;
   }
