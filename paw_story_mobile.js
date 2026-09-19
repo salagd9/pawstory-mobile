@@ -34,7 +34,9 @@ document.body.innerHTML =
 '<p class="sub">타일을 뒤집고 동물 장기를 시작하세요!</p>' +
 '<div id="turn"></div>' +
 '<div id="msg">타일을 하나 뒤집어 보세요!</div>' +
+'<div id="teamBar"></div>' +
 '<div id="boardWrap">' +
+  '<div id="teamBanner"></div>' +
   '<div id="capturedLeft"></div>' +
   '<div id="board"></div>' +
   '<div id="capturedRight"></div>' +
@@ -267,15 +269,15 @@ style.textContent = [
 '#mainStart:active,#mainStart:focus,#mainStart:hover{background:transparent!important;box-shadow:none!important;outline:none!important;filter:none!important;opacity:1!important}',
 '#mainStart::-moz-focus-inner{border:0;padding:0}',
 '#game{max-width:800px;margin:auto;padding:2px;text-align:center}',
-'#board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(4,1fr);gap:4px;width:760px;height:220px;min-width:760px;max-width:760px;padding:6px;background:#70451f;border-radius:15px;box-sizing:border-box}',
-'#boardWrap{display:grid;grid-template-columns:140px 760px 140px;gap:10px;align-items:stretch;justify-content:center;width:1060px;box-sizing:border-box}',
-'#capturedLeft,#capturedRight{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(8,1fr);gap:2px;background:#70451f;padding:4px;border-radius:8px;height:220px;box-sizing:border-box}',
+'#board{display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(4,1fr);gap:4px;width:840px;height:230px;min-width:840px;max-width:840px;padding:6px;background:#70451f;border-radius:15px;box-sizing:border-box}',
+'#boardWrap{display:grid;grid-template-columns:100px 840px 100px;gap:10px;align-items:stretch;justify-content:center;width:1060px;box-sizing:border-box}',
+'#capturedLeft,#capturedRight{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(8,1fr);gap:2px;background:#70451f;padding:4px;border-radius:8px;height:230px;box-sizing:border-box}',
 
 '#capturedLeft .miniTile,#capturedRight .miniTile{width:100%;height:100%;min-height:0;border-radius:6px;border:2px solid #d4ad5b;background:#704a25;display:flex;align-items:center;justify-content:center;box-sizing:border-box}',
- '#capturedLeft .miniTile:after,#capturedRight .miniTile:after{content:"🐾";font-size:14px}',
+ '#capturedLeft .miniTile:after,#capturedRight .miniTile:after{content:"🐾";font-size:12px}',
 '#capturedLeft .miniTile.empty:after,#capturedRight .miniTile.empty:after{content:""}',
   '#capturedLeft .miniTile.hint:after,#capturedRight .miniTile.hint:after{content:""}',
-'.miniPieceName{font-size:13px;font-weight:bold;color:white;text-align:center}',
+'.miniPieceName{font-size:11px;font-weight:bold;color:white;text-align:center}',
   '#capturedArea{margin:12px 0;padding:10px;background:#29294f;border-radius:12px;color:#ffd21c}',
 '.tile{width:100%;height:auto;min-width:0;min-height:0;border-radius:8px;border:2px solid #8888c9;background:#484873;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;box-sizing:border-box;overflow:hidden}',
 '.tile.hidden{background:#484873;border-color:#8888c9}',
@@ -295,6 +297,28 @@ style.textContent = [
 '.info{display:none!important}',
 'button{border:0;background:#ffd21c;color:#222;font-size:17px;font-weight:bold;padding:12px 25px;border-radius:25px;cursor:pointer;transition:transform .08s ease,box-shadow .08s ease;box-shadow:0 5px 0 #b68d00}',
 'button:active{transform:translateY(4px) scale(0.97);box-shadow:0 1px 0 #b68d00}',
+'#game>button{font-size:14px;padding:8px 14px;border-radius:18px;margin:4px 2px;box-shadow:0 4px 0 #b68d00}',
+'#game>button:active{transform:translateY(3px) scale(.97);box-shadow:0 1px 0 #b68d00}',
+/* 내 팀 표시 */
+'#teamBar{display:none;justify-content:center;align-items:center;gap:14px;margin:0 auto 6px;width:1060px;box-sizing:border-box}',
+'#teamBar.show{display:flex}',
+'#teamBar .teamChip{display:flex;align-items:center;gap:8px;padding:5px 16px;border-radius:18px;border:3px solid transparent;background:#1b2436;color:#cfd6e4;font-size:17px;font-weight:bold;opacity:.55;transition:opacity .2s,transform .2s}',
+'#teamBar .teamChip.blue{border-color:#2f80ff}',
+'#teamBar .teamChip.red{border-color:#ff3b30}',
+'#teamBar .teamChip.mine{opacity:.85}',
+'#teamBar .teamChip.active{opacity:1;transform:scale(1.06)}',
+'#teamBar .teamChip.blue.active{background:#2f80ff;color:#fff}',
+'#teamBar .teamChip.red.active{background:#ff3b30;color:#fff}',
+'#teamBar .who{font-size:13px;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,.18)}',
+'#teamBar .teamChip.mine .who{background:#ffd21c;color:#222}',
+'#teamBar .turnText{font-size:15px;font-weight:bold;color:#ffd21c;min-width:110px;text-align:center}',
+'#teamBar .guide{font-size:15px;font-weight:bold;color:#ffd21c}',
+'#boardWrap{position:relative}',
+'#teamBanner{display:none;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:60;padding:16px 34px;border-radius:20px;font-size:30px;font-weight:bold;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.45);pointer-events:none;white-space:nowrap}',
+'#teamBanner.blue{background:#2f80ff}',
+'#teamBanner.red{background:#ff3b30}',
+'#teamBanner.show{display:block;animation:teamBannerPop 2.2s ease forwards}',
+'@keyframes teamBannerPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}12%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}20%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0}}',
 '.rule{margin-top:15px;padding:12px;background:#29294f;border-radius:12px;line-height:1.8;font-size:14px}',
 '#rpsOverlay{display:none;position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(3,10,25,.78);z-index:999999;align-items:center;justify-content:center;backdrop-filter:blur(4px)}',
 
@@ -401,6 +425,11 @@ var lastMoveFrom = -1;
 var lastMoveTo = -1;
 var lastRedMove = null;
 var lastBlueMove = null;
+var recentVisiblePositions = [];
+var aiRevealStreak = {
+  blue:0,
+  red:0
+};
 var hintUseCount = 0;
 var hintVisible = false;
 var capturedBlue = [];
@@ -411,10 +440,41 @@ var turn = 'blue';
 var aiMode = false;
 var aiTeam = 'red';
 var aiVsAiMode = false;
+var aiThinkDelay = 900;
+var blueAiThinkDelay = 500;
+var autoMatchMaxActions = 300;
+var autoMatchFinishedReason = null;
 var firstMover = null;
 var teamsAssigned = false;
 var lastRevealedBy = null;
 var lastRevealedIndex = null;
+
+/* 재현 가능한 대국과 AI 회귀 테스트를 위한 난수 발생기 */
+var systemRandom = Math.random.bind(Math);
+var gameRandomSeed = null;
+
+function setGameRandomSeed(seed){
+  if(seed === null || typeof seed === 'undefined'){
+    gameRandomSeed = null;
+    return;
+  }
+
+  gameRandomSeed = (Number(seed) >>> 0) || 1;
+}
+
+function gameRandom(){
+  if(gameRandomSeed === null){
+    return systemRandom();
+  }
+
+  gameRandomSeed =
+    (gameRandomSeed * 1664525 + 1013904223) >>> 0;
+
+  return gameRandomSeed / 4294967296;
+}
+
+/* 기존 AI의 모든 무작위 선택도 같은 시드로 재현한다. */
+Math.random = gameRandom;
 /* =====================================================
    가위바위보 선공 결정
 ===================================================== */
@@ -723,6 +783,29 @@ function newGame(){
 gameEnded = false;
 totalActionCount = 0;
 abandonedCannonTargets = [];
+recentVisiblePositions = [];
+aiRevealStreak = {
+  blue:0,
+  red:0
+};
+aiQuietStreak = {
+  blue:0,
+  red:0
+};
+
+teamAnnounced = false;
+
+var oldTeamBanner = document.getElementById('teamBanner');
+
+if(oldTeamBanner){
+  oldTeamBanner.className = '';
+}
+
+/* 자동 대국이 아니면 실제 난수로 되돌린다.
+   콘솔에서 지정한 시드가 일반 대국에 남지 않게 한다. */
+if(!aiVsAiMode){
+  setGameRandomSeed(null);
+}
 capturedBlue = [];
 capturedRed = [];
 
@@ -753,6 +836,7 @@ if(oldResult){
   selected=null;
 
 turn = 'blue';
+  rememberVisiblePosition(turn);
   say('🔀 말이 섞였습니다! 타일을 뒤집으세요.');
 
   draw();
@@ -856,22 +940,6 @@ capturedRed[m].name +
 board.forEach(function(p,index){
     var tile=document.createElement('div');
 tile.setAttribute('data-index', index);
-var debugIndex = document.createElement('div');
-
-debugIndex.textContent = index;
-
-debugIndex.style.position = 'absolute';
-debugIndex.style.left = '4px';
-debugIndex.style.top = '2px';
-debugIndex.style.fontSize = '11px';
-debugIndex.style.fontWeight = 'bold';
-debugIndex.style.color = '#ffff00';
-debugIndex.style.zIndex = '50';
-debugIndex.style.pointerEvents = 'none';
-
-tile.style.position = 'relative';
-
-tile.appendChild(debugIndex);
     tile.className='tile';
 
     if(!p){
@@ -951,45 +1019,6 @@ tile.appendChild(debugIndex);
 if(lastActionFlash && lastActionCells.indexOf(index) !== -1){
   tile.classList.add('lastActionBlink');
 }
-    
-
-/* 디버그용 칸 번호 */
-var debugIndex =
-  document.createElement('div');
-
-debugIndex.textContent =
-  index;
-
-debugIndex.style.position =
-  'absolute';
-
-debugIndex.style.left =
-  '4px';
-
-debugIndex.style.top =
-  '2px';
-
-debugIndex.style.fontSize =
-  '11px';
-
-debugIndex.style.fontWeight =
-  'bold';
-
-debugIndex.style.color =
-  '#ffff00';
-
-debugIndex.style.zIndex =
-  '50';
-
-debugIndex.style.pointerEvents =
-  'none';
-
-tile.style.position =
-  'relative';
-
-tile.appendChild(
-  debugIndex
-);
 
 /* 스마트폰용:
    내부 게임판은 기존 4 x 8 그대로 두고
@@ -1014,7 +1043,94 @@ boardEl.appendChild(tile);
     turn==='blue'
     ? '🔵 호랑이팀 차례'
     : '🔴 사자팀 차례';
-  
+
+  updateTeamBar();
+}
+
+/* =====================================================
+   내 팀 표시
+
+   팀은 첫 번째로 뒤집은 기물의 색으로 매판 정해진다.
+   판 위에 나와 컴퓨터의 팀, 지금 누구 차례인지를 항상 보여주고
+   팀이 정해지는 순간 한 번 크게 알린다.
+===================================================== */
+
+var teamAnnounced = false;
+
+function teamLabel(team){
+  return team === 'blue'
+    ? '🔵 호랑이팀'
+    : '🔴 사자팀';
+}
+
+function updateTeamBar(){
+  var bar = document.getElementById('teamBar');
+
+  if(!bar){
+    return;
+  }
+
+  if(!aiMode || aiVsAiMode){
+    bar.className = '';
+    bar.innerHTML = '';
+    return;
+  }
+
+  bar.className = 'show';
+
+  if(!teamsAssigned){
+    bar.innerHTML =
+      '<span class="guide">첫 번째로 뒤집은 기물의 색이 그 사람의 팀이 됩니다</span>';
+    return;
+  }
+
+  var humanTeam = getHumanTeam();
+
+  var chip = function(team){
+    var mine = team === humanTeam;
+    var active = !gameEnded && turn === team;
+
+    return (
+      '<span class="teamChip ' + team +
+      (mine ? ' mine' : '') +
+      (active ? ' active' : '') + '">' +
+      '<span class="who">' + (mine ? '나' : '컴퓨터') + '</span>' +
+      teamLabel(team) +
+      '</span>'
+    );
+  };
+
+  var turnText =
+    gameEnded
+    ? '게임 종료'
+    : (turn === humanTeam ? '▶ 내 차례' : '컴퓨터 차례 ◀');
+
+  /* 왼쪽 포획칸이 파랑, 오른쪽이 빨강이므로 같은 순서로 놓는다. */
+  bar.innerHTML =
+    chip('blue') +
+    '<span class="turnText">' + turnText + '</span>' +
+    chip('red');
+
+  if(!teamAnnounced){
+    teamAnnounced = true;
+    showTeamBanner(humanTeam);
+  }
+}
+
+function showTeamBanner(humanTeam){
+  var banner = document.getElementById('teamBanner');
+
+  if(!banner){
+    return;
+  }
+
+  banner.textContent =
+    '당신은 ' + teamLabel(humanTeam) + '입니다';
+
+  /* 애니메이션을 처음부터 다시 재생한다. */
+  banner.className = '';
+  void banner.offsetWidth;
+  banner.className = 'show ' + humanTeam;
 }
 document.getElementById('board').onclick = function(e){
 
@@ -2721,10 +2837,12 @@ function checkBlueWin(){
 playVictorySound();
 showBoardResult('블루 승');
 
-if(getHumanTeam() === 'blue'){
-  addRecord('win');
-}else{
-  addRecord('loss');
+if(!aiVsAiMode){
+  if(getHumanTeam() === 'blue'){
+    addRecord('win');
+  }else{
+    addRecord('loss');
+  }
 }
 
 return true;
@@ -2747,10 +2865,12 @@ function checkRedWin(){
 playVictorySound();
 showBoardResult('레드 승');
 
-if(getHumanTeam() === 'red'){
-  addRecord('win');
-}else{
-  addRecord('loss');
+if(!aiVsAiMode){
+  if(getHumanTeam() === 'red'){
+    addRecord('win');
+  }else{
+    addRecord('loss');
+  }
 }
 
 return true;
@@ -2919,12 +3039,14 @@ function enemyTeam(team){
 
 /* 가능한 행동 만들기 */
 function getMasterActions(team){
+if(!aiSearchSilent){
 console.log(
   '🧩 ACTIONS 생성',
   'team=', team,
   'turn=', turn,
   'aiTeam=', aiTeam
 );
+}
   var actions = [];
   var enemy = enemyTeam(team);
 
@@ -3028,6 +3150,11 @@ function executeMasterAction(team,action){
     );
 
     selected = null;
+
+    if(aiVsAiMode){
+      gameEnded = true;
+      autoMatchFinishedReason = 'noLegalAction';
+    }
 
     turn = enemyTeam(team);
 
@@ -3349,6 +3476,21 @@ if(
 }
 totalActionCount++;
 console.log('전체 행동 횟수:', totalActionCount);
+
+if(action.type === 'reveal'){
+  aiRevealStreak[team]++;
+}
+else{
+  aiRevealStreak[team] = 0;
+}
+
+if(action.type === 'capture'){
+  aiQuietStreak[team] = 0;
+}
+else{
+  aiQuietStreak[team]++;
+}
+
   /* =================================================
      최고 우선 왕 보호
      어떤 AI 로직이 선택했더라도 마지막에 강제 차단
@@ -3925,8 +4067,10 @@ markLastAction([action.from, action.to]);
   }
 
 
-  selected = null;
+selected = null;
 turn = enemyTeam(team);
+
+rememberVisiblePosition(turn);
 
 draw();
 
@@ -3935,6 +4079,16 @@ if(
   aiVsAiMode &&
   !gameEnded
 ){
+
+  if(totalActionCount >= autoMatchMaxActions){
+    gameEnded = true;
+    autoMatchFinishedReason = 'maxActions';
+    console.log(
+      '⏹ 자동 대국 최대 행동 수 도달:',
+      autoMatchMaxActions
+    );
+    return;
+  }
 
   if(turn === aiTeam){
     aiMove();
@@ -14181,7 +14335,7 @@ function findCannonInNextTurnDanger(team){
 
   return -1;
 }
-function chooseMasterAction(team){ 
+function chooseMasterActionLegacy(team){
 console.log('🚩 chooseMasterAction 시작', team, performance.now());
 console.log(
   '🚨 MASTER 호출',
@@ -16945,13 +17099,1401 @@ console.log(
   return null;
 }
 
+/* =====================================================
+   공개 정보 전술 검사
+
+   기존 규칙 기반 AI가 특정 전략에서 너무 일찍 return하여
+   눈앞의 승리나 안전한 고가치 포획을 놓치는 문제를 보정한다.
+   미공개 기물의 실제 team/type은 평가에 사용하지 않는다.
+===================================================== */
+
+/* 탐색 중에는 후보 생성 로그를 찍지 않는다. */
+var aiSearchSilent = false;
+
+/* 팀별 연속 비포획 행동 수. 판이 맴도는 것을 감지한다. */
+var aiQuietStreak = {
+  blue:0,
+  red:0
+};
+
+var AI_QUIET_STREAK_LIMIT = 10;
+var AI_RECENT_POSITION_LIMIT = 60;
+
+function captureLeavesKingInImmediateDanger(team, action){
+  if(!action || action.type !== 'capture'){
+    return false;
+  }
+
+  var oldFrom = board[action.from];
+  var oldTo = board[action.to];
+
+  board[action.to] = oldFrom;
+  board[action.from] = null;
+
+  var dangerKing = findDangerKing(team);
+
+  board[action.from] = oldFrom;
+  board[action.to] = oldTo;
+
+  return dangerKing !== -1;
+}
+
+function getVisiblePositionKey(nextTurn){
+  var cells = board.map(function(piece){
+    if(!piece){
+      return '.';
+    }
+
+    if(!piece.revealed){
+      return 'H';
+    }
+
+    return (
+      piece.team.charAt(0) +
+      ':' +
+      piece.type
+    );
+  });
+
+  return nextTurn + '|' + cells.join(',');
+}
+
+function rememberVisiblePosition(nextTurn){
+  recentVisiblePositions.push(
+    getVisiblePositionKey(nextTurn)
+  );
+
+  if(recentVisiblePositions.length > AI_RECENT_POSITION_LIMIT){
+    recentVisiblePositions.shift();
+  }
+}
+
+/* 이동 후 판 상태가 최근에 몇 번 나왔는지 센다. */
+function countRecentPositionRepeats(team, action){
+  if(!action || action.type !== 'move'){
+    return 0;
+  }
+
+  var oldFrom = board[action.from];
+  var oldTo = board[action.to];
+
+  board[action.to] = oldFrom;
+  board[action.from] = null;
+
+  var key =
+    getVisiblePositionKey(enemyTeam(team));
+
+  board[action.from] = oldFrom;
+  board[action.to] = oldTo;
+
+  var count = 0;
+
+  for(var i=0; i<recentVisiblePositions.length; i++){
+    if(recentVisiblePositions[i] === key){
+      count++;
+    }
+  }
+
+  return count;
+}
+
+function actionRepeatsRecentPosition(team, action){
+  return countRecentPositionRepeats(team, action) > 0;
+}
+
+function countHiddenBoardPieces(){
+  var count = 0;
+
+  for(var i=0; i<board.length; i++){
+    if(board[i] && !board[i].revealed){
+      count++;
+    }
+  }
+
+  return count;
+}
+
+function countRevealedTeamPieces(team){
+  var count = 0;
+
+  for(var i=0; i<board.length; i++){
+    var piece = board[i];
+
+    if(
+      piece &&
+      piece.revealed &&
+      piece.team === team
+    ){
+      count++;
+    }
+  }
+
+  return count;
+}
+
+/* 한동안 포획 없이 이동만 이어졌고 아직 열 알이 남아 있으면
+   판을 진행시키기 위해 공개 쪽으로 무게를 옮긴다. */
+function shouldBreakStall(team){
+  return (
+    countHiddenBoardPieces() > 0 &&
+    aiQuietStreak[team] >= AI_QUIET_STREAK_LIMIT
+  );
+}
+
+function findImmediateWinningCapture(team){
+  var enemy = enemyTeam(team);
+
+  if(countAlivePieces(enemy) !== 1){
+    return null;
+  }
+
+  var actions = getMasterActions(team);
+
+  for(var i=0; i<actions.length; i++){
+    var action = actions[i];
+
+    if(action.type !== 'capture'){
+      continue;
+    }
+
+    var target = board[action.to];
+
+    if(
+      target &&
+      target.revealed &&
+      target.team === enemy
+    ){
+      action.reason = 'immediateWinningCapture';
+      return action;
+    }
+  }
+
+  return null;
+}
+
+/* =====================================================
+   한 칸 연속 교환 계산
+
+   잡은 칸에서 양쪽이 가장 싼 기물부터 번갈아 되잡는다고 보고
+   최종 득실을 계산한다. 각 단계에서 잡는 쪽은 손해면 멈출 수 있다.
+   예: 내 사가 상대 차를 잡음 → 상대 사가 되잡음 → 내 다른 사가 다시 잡음
+   이 경우 되잡힘 하나만 보면 손해지만 실제로는 차와 사를 얻는다.
+===================================================== */
+
+var useExchangeEvaluation = true;
+
+/* index 칸의 기물을 side 팀이 잡을 수 있는 공개 기물 중 가장 싼 것 */
+function findCheapestAttacker(side, index){
+  var target = board[index];
+  var best = -1;
+  var bestValue = 999999;
+
+  if(!target){
+    return -1;
+  }
+
+  for(var i=0; i<board.length; i++){
+    var piece = board[i];
+
+    if(
+      i === index ||
+      !piece ||
+      !piece.revealed ||
+      piece.team !== side
+    ){
+      continue;
+    }
+
+    if(!canMove(i, index) || !canCapture(piece, target)){
+      continue;
+    }
+
+    var value = baseStrategicValue(piece);
+
+    if(value < bestValue){
+      bestValue = value;
+      best = i;
+    }
+  }
+
+  return best;
+}
+
+function staticExchangeGain(team, from, to){
+  var changes = [];
+  var gains = [];
+  var side = team;
+  var attackerIndex = from;
+  var depth = 0;
+
+  gains[0] = baseStrategicValue(board[to]);
+
+  while(true){
+    changes.push({
+      from: attackerIndex,
+      to: to,
+      oldFrom: board[attackerIndex],
+      oldTo: board[to]
+    });
+
+    board[to] = board[attackerIndex];
+    board[attackerIndex] = null;
+
+    side = enemyTeam(side);
+    attackerIndex = findCheapestAttacker(side, to);
+
+    if(attackerIndex === -1 || depth >= 30){
+      break;
+    }
+
+    depth++;
+    gains[depth] =
+      baseStrategicValue(board[to]) -
+      gains[depth - 1];
+  }
+
+  /* 판을 원래대로 되돌린다. */
+  for(var c=changes.length - 1; c>=0; c--){
+    board[changes[c].from] = changes[c].oldFrom;
+    board[changes[c].to] = changes[c].oldTo;
+  }
+
+  /* 뒤에서부터: 잡는 쪽은 손해면 멈춘다. */
+  for(var d=gains.length - 1; d>0; d--){
+    gains[d - 1] = -Math.max(-gains[d - 1], gains[d]);
+  }
+
+  return gains[0];
+}
+
+/* team이 지금 둘 수 있는 포획 중 연속 교환 결과가 가장 좋은 이득 */
+function bestExchangeGainFor(team){
+  var actions = getMasterActions(team);
+  var best = 0;
+
+  for(var i=0; i<actions.length; i++){
+    var action = actions[i];
+
+    if(action.type !== 'capture'){
+      continue;
+    }
+
+    var gain =
+      staticExchangeGain(team, action.from, action.to);
+
+    if(gain > best){
+      best = gain;
+    }
+  }
+
+  return best;
+}
+
+/* 연속 교환까지 계산해서 손해면 손해 교환이다.
+   상대 사를 왕 앞으로 유인하는 희생 전술만 예외로 둔다. */
+function isLosingTrade(team, action){
+  if(!action || action.type !== 'capture'){
+    return false;
+  }
+
+  if(action.reason === 'sacrificePieceToExposeAdvisor'){
+    return false;
+  }
+
+  var attacker = board[action.from];
+  var target = board[action.to];
+
+  if(!attacker || !target){
+    return false;
+  }
+
+  if(
+    !isCaptureImmediatelyPunished(
+      team,
+      action.from,
+      action.to
+    )
+  ){
+    return false;
+  }
+
+  if(useExchangeEvaluation){
+    if(staticExchangeGain(team, action.from, action.to) >= 0){
+      return false;
+    }
+
+    /* 교환으로는 손해여도, 잡은 결과 내 기물이 더 이상 잡히지 않게
+       되면(질 수 없는 상태) 손해 교환으로 보지 않는다. */
+    return !captureCreatesUncapturable(team, action);
+  }
+
+  return (
+    masterPieceValue(target) <
+    masterPieceValue(attacker)
+  );
+}
+
+function findBestVisibleTacticalCapture(team){
+  var actions = getMasterActions(team);
+  var bestAction = null;
+  var bestScore = -999999;
+
+  for(var i=0; i<actions.length; i++){
+    var action = actions[i];
+
+    if(action.type !== 'capture'){
+      continue;
+    }
+
+    var attacker = board[action.from];
+    var target = board[action.to];
+
+    if(!attacker || !target || !target.revealed){
+      continue;
+    }
+
+    if(isBadMasterAction(team, action)){
+      continue;
+    }
+
+    if(captureLeavesKingInImmediateDanger(team, action)){
+      continue;
+    }
+
+    /* 불리한 즉시 교환은 기존 전문 전술 판단에 맡긴다. */
+    if(isLosingTrade(team, action)){
+      continue;
+    }
+
+    var punished =
+      isCaptureImmediatelyPunished(
+        team,
+        action.from,
+        action.to
+      );
+
+    var score = masterScoreAction(team, action);
+
+    if(!punished){
+      score += 250;
+    }
+
+    if(target.type === 'king'){
+      score += 700;
+    }
+    else if(target.type === 'advisor'){
+      score += 350;
+    }
+    else if(target.type === 'chariot'){
+      score += 250;
+    }
+
+    if(score > bestScore){
+      bestScore = score;
+      bestAction = action;
+    }
+  }
+
+  if(!bestAction || bestScore < 650){
+    return null;
+  }
+
+  bestAction.reason = 'visibleTacticalCapture';
+  bestAction.tacticalScore = bestScore;
+
+  return bestAction;
+}
+
+function chooseBestScoredLegalAction(team){
+  var actions = getMasterActions(team);
+  var bestAction = null;
+  var bestScore = -999999;
+
+  for(var i=0; i<actions.length; i++){
+    var action = actions[i];
+
+    if(isBadMasterAction(team, action)){
+      continue;
+    }
+
+    if(actionRepeatsRecentPosition(team, action)){
+      continue;
+    }
+
+    if(isLosingTrade(team, action)){
+      continue;
+    }
+
+    var score = masterScoreAction(team, action);
+
+    if(score > bestScore){
+      bestScore = score;
+      bestAction = action;
+    }
+  }
+
+  return bestAction;
+}
+
+/* 기존 규칙의 위험 감점(왕 직격 -800, 상대 포 -400)이
+   붙지 않은 공개 후보 중 가장 점수가 높은 것 */
+function findBestSafeReveal(team){
+  var actions = getMasterActions(team);
+  var bestAction = null;
+  var bestScore = -150;
+
+  for(var i=0; i<actions.length; i++){
+    var action = actions[i];
+
+    if(action.type !== 'reveal'){
+      continue;
+    }
+
+    if(isBadMasterAction(team, action)){
+      continue;
+    }
+
+    var score = masterScoreAction(team, action);
+
+    if(score > bestScore){
+      bestScore = score;
+      bestAction = action;
+    }
+  }
+
+  return bestAction;
+}
+
+/* 기존 규칙 AI의 선택에 전술 검사(즉시 승리, 안전한 포획,
+   손해 교환 제외, 반복 회피)를 붙인 후보.
+   choosePositionSearchAction이 형세 탐색의 기준 후보로 사용한다. */
+function chooseRuleCandidateAction(team){
+  var winningCapture =
+    findImmediateWinningCapture(team);
+
+  if(winningCapture){
+    return winningCapture;
+  }
+
+  var tacticalCapture =
+    findBestVisibleTacticalCapture(team);
+
+  var legacyAction =
+    chooseMasterActionLegacy(team);
+
+  if(
+    tacticalCapture &&
+    (
+      !legacyAction ||
+      legacyAction.type !== 'capture'
+    )
+  ){
+    return tacticalCapture;
+  }
+
+  var legacyUsable =
+    legacyAction &&
+    !isLosingTrade(team, legacyAction) &&
+    !actionRepeatsRecentPosition(team, legacyAction) &&
+    masterScoreAction(team, legacyAction) > -999999;
+
+  /* 이동만 계속되어 판이 맴돌면 안전한 공개로 진행시킨다. */
+  if(
+    legacyUsable &&
+    legacyAction.type === 'move' &&
+    shouldBreakStall(team)
+  ){
+    var stallReveal = findBestSafeReveal(team);
+
+    if(stallReveal){
+      stallReveal.reason = 'stallBreakReveal';
+      return stallReveal;
+    }
+  }
+
+  if(legacyUsable){
+    return legacyAction;
+  }
+
+  var correctedAction =
+    chooseBestScoredLegalAction(team);
+
+  if(correctedAction){
+    return correctedAction;
+  }
+
+  /* 모든 대안이 위험하거나 최근 상태를 반복한다면
+     턴을 멈추지 말고 기존 AI의 최선 수를 실행한다. */
+  return legacyAction;
+}
+
+/* =====================================================
+   형세판단
+
+   기존 masterPieceValue의 왕 10000은 규칙 판단용이다.
+   이 게임은 왕을 잡아도 끝나지 않으므로 형세 평가에서는
+   왕을 강한 기물 하나로만 본다.
+===================================================== */
+
+function baseStrategicValue(piece){
+  if(!piece){
+    return 0;
+  }
+
+  if(piece.type === 'king'){
+    return 1500;
+  }
+
+  return masterPieceValue(piece);
+}
+
+/* 상성 기물의 상황별 가치
+
+   이 게임은 서열 위에 상성 둘이 얹혀 있다.
+   - 사는 왕·사·포만 잡을 수 있다 → 상대 사가 살아 있으면 내 포가 귀하다
+   - 왕은 왕·졸·포만 잡을 수 있다 → 상대 왕이 살아 있으면 내 졸이 귀하다
+   포·졸을 고정값(550·100)으로 보면 AI가 이 기물을 쉽게 버린다.
+   양 팀 생존 수는 포획 목록에서 계산하므로 숨은 알의 정체를 읽지 않는다. */
+var useContextualPieceValues = true;
+var strategicValueContext = null;
+
+function buildValueContext(){
+  var ctx = {
+    blue:{ king:1, advisor:2, cannon:2, soldier:5 },
+    red:{ king:1, advisor:2, cannon:2, soldier:5 }
+  };
+
+  var lists = [capturedBlue, capturedRed];
+
+  for(var l=0; l<lists.length; l++){
+    var list = lists[l];
+
+    for(var i=0; i<list.length; i++){
+      var dead = list[i];
+
+      if(ctx[dead.team][dead.type] !== undefined){
+        ctx[dead.team][dead.type]--;
+      }
+    }
+  }
+
+  return ctx;
+}
+
+function strategicPieceValue(piece, ownerTeam){
+  if(!piece){
+    return 0;
+  }
+
+  var owner = ownerTeam || piece.team;
+
+  if(!useContextualPieceValues || !owner){
+    return baseStrategicValue(piece);
+  }
+
+  var ctx = strategicValueContext || buildValueContext();
+  var mine = ctx[owner];
+  var theirs = ctx[enemyTeam(owner)];
+
+  if(piece.type === 'cannon'){
+    /* 상대 사가 남아 있으면 포가 사를 잡는 거의 유일한 수단이라
+       마지막 포는 더 귀하게 본다. 다만 사(600)보다 높이면
+       사와 포를 둘 다 잡을 수 있을 때 포를 골라 어색해 보이므로
+       사보다 낮게 둔다. */
+    if(theirs.advisor > 0){
+      return mine.cannon <= 1 ? 700 : 550;
+    }
+
+    return 550;
+  }
+
+  if(piece.type === 'soldier'){
+    /* 상대 왕이 살아 있으면 졸은 왕을 잡는 기물.
+       남은 졸이 적을수록 귀하다 (1개 500, 2개 300, 5개 180). */
+    if(theirs.king > 0){
+      return 100 + Math.round(600 / Math.max(1, mine.soldier));
+    }
+
+    return 100;
+  }
+
+  if(piece.type === 'advisor'){
+    /* 상대에게 포·왕이 없으면 내 사를 잡을 기물은 상대 사뿐이다. */
+    return (
+      600 +
+      (theirs.cannon === 0 ? 250 : 0) +
+      (theirs.king === 0 ? 150 : 0)
+    );
+  }
+
+  if(piece.type === 'king'){
+    /* 상대에게 졸·포가 없으면 내 왕을 잡을 기물은 상대 왕뿐이다. */
+    return (
+      1500 +
+      (theirs.soldier === 0 && theirs.cannon === 0 ? 300 : 0)
+    );
+  }
+
+  return baseStrategicValue(piece);
+}
+
+/* 포획된 기물의 가치는 잡힌 시점의 기본값으로 센다. */
+function sumStrategicValues(pieceList){
+  var total = 0;
+
+  for(var i=0; i<pieceList.length; i++){
+    total += baseStrategicValue(pieceList[i]);
+  }
+
+  return total;
+}
+
+function sumRemainingStrategicValues(remainingTeam, ownerTeam){
+  var total = 0;
+
+  for(var type in remainingTeam){
+    if(remainingTeam[type] <= 0){
+      continue;
+    }
+
+    total +=
+      remainingTeam[type] *
+      strategicPieceValue({type:type}, ownerTeam);
+  }
+
+  return total;
+}
+
+function countVisibleMobility(team){
+  var actions = getMasterActions(team);
+  var count = 0;
+
+  for(var i=0; i<actions.length; i++){
+    if(actions[i].type !== 'reveal'){
+      count++;
+    }
+  }
+
+  return count;
+}
+
+/* =====================================================
+   잡히지 않는 기물
+
+   이 게임은 상대 기물이 0개가 되어야 이긴다. 상대에게 남은 기물
+   (판 위의 공개 기물 + 아직 숨은 구성) 중 어느 것으로도 잡을 수 없는
+   내 기물이 하나라도 있으면, 그 팀은 질 수 없다.
+   예: 상대 왕·포가 모두 잡힌 뒤 상대의 마지막 졸을 잡으면
+       내 왕은 더 이상 잡히지 않는다.
+   숨은 구성은 원래 구성에서 공개·포획된 것을 뺀 공개 정보다.
+===================================================== */
+
+var UNCAPTURABLE_BONUS = 2500;
+
+function remainingTypesOf(team){
+  var types = {};
+  var remaining = getRemainingPieces();
+
+  for(var i=0; i<board.length; i++){
+    var piece = board[i];
+
+    if(piece && piece.revealed && piece.team === team){
+      types[piece.type] = true;
+    }
+  }
+
+  for(var type in remaining[team]){
+    if(remaining[team][type] > 0){
+      types[type] = true;
+    }
+  }
+
+  return types;
+}
+
+function canTypeEverCapture(attackerType, attackerTeam, targetType, targetTeam){
+  /* 포는 넘어서 잡으면 서열과 무관하게 잡는다. */
+  if(attackerType === 'cannon'){
+    return true;
+  }
+
+  return canCapture(
+    {type: attackerType, team: attackerTeam},
+    {type: targetType, team: targetTeam}
+  );
+}
+
+function hasUncapturablePiece(team){
+  var enemy = enemyTeam(team);
+  var mine = remainingTypesOf(team);
+  var theirs = Object.keys(remainingTypesOf(enemy));
+
+  if(theirs.length === 0){
+    return false;
+  }
+
+  for(var myType in mine){
+    var capturable = false;
+
+    for(var k=0; k<theirs.length; k++){
+      if(canTypeEverCapture(theirs[k], enemy, myType, team)){
+        capturable = true;
+        break;
+      }
+    }
+
+    if(!capturable){
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/* 이 포획으로 내 기물 중 잡히지 않는 기물이 새로 생기는지 */
+function captureCreatesUncapturable(team, action){
+  if(!action || action.type !== 'capture'){
+    return false;
+  }
+
+  if(hasUncapturablePiece(team)){
+    return false;
+  }
+
+  var snapshot = applySearchAction(action);
+  var result = hasUncapturablePiece(team);
+  undoSearchAction(snapshot);
+
+  return result;
+}
+
+/* 팀별 남은 기물 수를 잡힌 기물 목록으로 센다.
+   판 위를 세면 숨은 알의 실제 팀이 섞여 들어가, 뒤집기 기대값을 계산할 때
+   숨은 알의 정체에 따라 점수가 달라진다. 잡힌 수는 양쪽 모두 아는 정보다. */
+function publicAliveCount(team){
+  return 16 - (
+    team === 'blue'
+    ? capturedBlue.length
+    : capturedRed.length
+  );
+}
+
+function evaluateStrategicPosition(team){
+  var enemy = enemyTeam(team);
+  var myAlive = publicAliveCount(team);
+  var enemyAlive = publicAliveCount(enemy);
+
+  if(enemyAlive === 0){
+    return 100000;
+  }
+
+  if(myAlive === 0){
+    return -100000;
+  }
+
+  var score = 0;
+  var myVisibleValue = 0;
+  var enemyVisibleValue = 0;
+  var myThreatenedValue = 0;
+  var enemyThreatenedValue = 0;
+
+  strategicValueContext = buildValueContext();
+
+  for(var i=0; i<board.length; i++){
+    var piece = board[i];
+
+    if(!piece || !piece.revealed){
+      continue;
+    }
+
+    var value = strategicPieceValue(piece);
+
+    if(piece.team === team){
+      myVisibleValue += value;
+
+      if(isMyPieceInImmediateDanger(team, i)){
+        myThreatenedValue += value;
+      }
+    }
+    else if(piece.team === enemy){
+      enemyVisibleValue += value;
+
+      if(isMyPieceInImmediateDanger(enemy, i)){
+        enemyThreatenedValue += value;
+      }
+    }
+  }
+
+  score += myVisibleValue - enemyVisibleValue;
+  score += enemyThreatenedValue * 0.30;
+  score -= myThreatenedValue * 0.45;
+
+  var capturedEnemy =
+    enemy === 'blue'
+    ? capturedBlue
+    : capturedRed;
+
+  var capturedMine =
+    team === 'blue'
+    ? capturedBlue
+    : capturedRed;
+
+  score += sumStrategicValues(capturedEnemy) * 0.55;
+  score -= sumStrategicValues(capturedMine) * 0.55;
+
+  score += (myAlive - enemyAlive) * 90;
+
+  var myMobility = countVisibleMobility(team);
+  var enemyMobility = countVisibleMobility(enemy);
+
+  score += (myMobility - enemyMobility) * 18;
+
+  if(findDangerKing(team) !== -1){
+    score -= 900;
+  }
+
+  if(findDangerKing(enemy) !== -1){
+    score += 700;
+  }
+
+  score +=
+    (
+      countKingEscapeSpaces(team) -
+      countKingEscapeSpaces(enemy)
+    ) * 70;
+
+  var remaining = getRemainingPieces();
+
+  score +=
+    (
+      sumRemainingStrategicValues(remaining[team], team) -
+      sumRemainingStrategicValues(remaining[enemy], enemy)
+    ) * 0.08;
+
+  strategicValueContext = null;
+
+  /* 잡히지 않는 기물이 있으면 그 팀은 질 수 없다. */
+  if(hasUncapturablePiece(team)){
+    score += UNCAPTURABLE_BONUS;
+  }
+
+  if(hasUncapturablePiece(enemy)){
+    score -= UNCAPTURABLE_BONUS;
+  }
+
+  /* 종반 추격: 상대 기물이 얼마 남지 않았고 내가 수적으로 앞서면
+     상대의 움직일 공간을 줄이고 거리를 좁히는 쪽을 높게 본다.
+     1수 탐색만으로는 포위가 안 되어 판이 끝나지 않는 문제를 줄인다. */
+  if(
+    enemyAlive <= 2 &&
+    myAlive > enemyAlive &&
+    countHiddenBoardPieces() === 0
+  ){
+    score -= enemyMobility * 80;
+    score -= sumDistanceToEnemyPieces(team) * 25;
+  }
+
+  return score;
+}
+
+/* 내 공개 기물마다 가장 가까운 상대 공개 기물까지의 거리 합 */
+function sumDistanceToEnemyPieces(team){
+  var enemy = enemyTeam(team);
+  var total = 0;
+
+  for(var i=0; i<board.length; i++){
+    var piece = board[i];
+
+    if(!piece || !piece.revealed || piece.team !== team){
+      continue;
+    }
+
+    var nearest = 99;
+
+    for(var j=0; j<board.length; j++){
+      var other = board[j];
+
+      if(!other || !other.revealed || other.team !== enemy){
+        continue;
+      }
+
+      var distance =
+        Math.abs(Math.floor(i / 4) - Math.floor(j / 4)) +
+        Math.abs(i % 4 - j % 4);
+
+      if(distance < nearest){
+        nearest = distance;
+      }
+    }
+
+    if(nearest !== 99){
+      total += nearest;
+    }
+  }
+
+  return total;
+}
+
+function applySearchAction(action){
+  var snapshot = {
+    from: action.from,
+    to: action.to,
+    oldFrom: board[action.from],
+    oldTo: board[action.to],
+    capturedBlueLength: capturedBlue.length,
+    capturedRedLength: capturedRed.length
+  };
+
+  if(action.type === 'capture'){
+    if(snapshot.oldTo.team === 'blue'){
+      capturedBlue.push(snapshot.oldTo);
+    }
+    else{
+      capturedRed.push(snapshot.oldTo);
+    }
+  }
+
+  board[action.to] = snapshot.oldFrom;
+  board[action.from] = null;
+
+  return snapshot;
+}
+
+function undoSearchAction(snapshot){
+  board[snapshot.from] = snapshot.oldFrom;
+  board[snapshot.to] = snapshot.oldTo;
+  capturedBlue.length = snapshot.capturedBlueLength;
+  capturedRed.length = snapshot.capturedRedLength;
+}
+
+/* index에 있는 기물이 지금 잡을 수 있는 가장 비싼 상대 기물 가치 */
+function bestCaptureValueFrom(team, index){
+  var actions = getMasterActions(team);
+  var best = 0;
+
+  for(var i=0; i<actions.length; i++){
+    var action = actions[i];
+
+    if(
+      action.type !== 'capture' ||
+      action.from !== index
+    ){
+      continue;
+    }
+
+    var value = strategicPieceValue(board[action.to]);
+
+    if(value > best){
+      best = value;
+    }
+  }
+
+  return best;
+}
+
+/* index의 상대 기물을 되잡히지 않고 잡을 수 있는지 */
+function canSafelyCaptureAt(team, index){
+  var actions = getMasterActions(team);
+
+  for(var i=0; i<actions.length; i++){
+    var action = actions[i];
+
+    if(
+      action.type !== 'capture' ||
+      action.to !== index
+    ){
+      continue;
+    }
+
+    if(
+      !isCaptureImmediatelyPunished(
+        team,
+        action.from,
+        action.to
+      )
+    ){
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/* 알을 열었을 때의 기대 형세.
+
+   숨은 알의 실제 정체는 읽지 않는다. 아직 공개되지도 잡히지도
+   않은 기물 구성에서 각 정체가 나올 확률을 구하고, 정체마다
+   실제로 놓아 본 형세점수를 확률 가중 평균한다.
+   - 내 기물이 나왔는데 바로 잡히는 자리면 그 가치를 잃는다
+   - 상대 기물이 나왔고 그 기물이 바로 내 기물을 잡으면 잃는다
+   - 상대 기물이 나왔고 내가 안전하게 되잡을 수 있으면 얻는다 */
+function expectedRevealPositionScore(team, index){
+  var piece = board[index];
+
+  if(!piece || piece.revealed){
+    return -999999;
+  }
+
+  var enemy = enemyTeam(team);
+  var remaining = getRemainingPieces();
+  var sides = [team, enemy];
+  var total = 0;
+  var s, type;
+
+  for(s=0; s<sides.length; s++){
+    for(type in remaining[sides[s]]){
+      if(remaining[sides[s]][type] > 0){
+        total += remaining[sides[s]][type];
+      }
+    }
+  }
+
+  if(total <= 0){
+    return evaluateStrategicPosition(team);
+  }
+
+  var expected = 0;
+
+  for(s=0; s<sides.length; s++){
+    var side = sides[s];
+
+    for(type in remaining[side]){
+      var count = remaining[side][type];
+
+      if(count <= 0){
+        continue;
+      }
+
+      var trial = {
+        team: side,
+        type: type,
+        name: piece.name,
+        emoji: piece.emoji,
+        dog: piece.dog,
+        revealed: true
+      };
+
+      board[index] = trial;
+
+      var value = evaluateStrategicPosition(team);
+
+      if(side === team){
+        if(isMyPieceInImmediateDanger(team, index)){
+          value -= strategicPieceValue(trial) * 0.85;
+        }
+      }
+      else{
+        value -= bestCaptureValueFrom(enemy, index) * 0.80;
+
+        if(canSafelyCaptureAt(team, index)){
+          value += strategicPieceValue(trial) * 0.35;
+        }
+      }
+
+      expected += value * count / total;
+    }
+  }
+
+  board[index] = piece;
+
+  return expected;
+}
+
+function getVisibleReplyActions(team){
+  return getMasterActions(team)
+    .filter(function(action){
+      return action.type !== 'reveal';
+    });
+}
+
+/* 이동·포획·공개를 같은 단위로 점수화한다.
+   이동·포획: 즉시점수 0.8 + 실행 직후 형세 0.55 + 상대 최선 응수 뒤 형세 0.45
+   공개:      즉시점수 0.8 + 기대 형세 1.0 */
+function scorePositionSearchAction(team, action){
+  if(!action){
+    return -999999;
+  }
+
+  var immediateScore =
+    masterScoreAction(team, action);
+
+  if(immediateScore <= -999999){
+    return -999999;
+  }
+
+  if(action.type === 'reveal'){
+    return (
+      immediateScore * 0.80 +
+      expectedRevealPositionScore(team, action.index)
+    );
+  }
+
+  if(isLosingTrade(team, action)){
+    return -999999;
+  }
+
+  /* 원본 점수는 되잡힘 하나만 보고 포획에 -1000을 준다.
+     연속 교환 결과가 이득이면 그 감점을 되돌린다. */
+  if(
+    useExchangeEvaluation &&
+    action.type === 'capture' &&
+    isCaptureImmediatelyPunished(team, action.from, action.to) &&
+    staticExchangeGain(team, action.from, action.to) > 0
+  ){
+    immediateScore += 1000;
+  }
+
+  var snapshot = applySearchAction(action);
+  var enemy = enemyTeam(team);
+
+  if(countAlivePieces(enemy) === 0){
+    undoSearchAction(snapshot);
+    return 100000;
+  }
+
+  var afterMyAction =
+    evaluateStrategicPosition(team);
+
+  var replies = getVisibleReplyActions(enemy);
+  var worstReplyScore = afterMyAction;
+
+  if(replies.length > 0){
+    worstReplyScore = 999999;
+
+    for(var i=0; i<replies.length; i++){
+      var reply = replies[i];
+
+      if(isBadMasterAction(enemy, reply)){
+        continue;
+      }
+
+      var replyImmediateScore =
+        masterScoreAction(enemy, reply);
+
+      if(replyImmediateScore <= -999999){
+        continue;
+      }
+
+      var replySnapshot =
+        applySearchAction(reply);
+
+      var replyPositionScore =
+        evaluateStrategicPosition(team);
+
+      /* 상대 응수 뒤에는 내 차례다. 이득인 교환이 남아 있으면
+         (예: 상대가 되잡은 기물을 내가 다시 잡음) 그만큼 반영한다. */
+      if(useExchangeEvaluation){
+        replyPositionScore +=
+          bestExchangeGainFor(team) * 0.7;
+      }
+
+      undoSearchAction(replySnapshot);
+
+      if(replyPositionScore < worstReplyScore){
+        worstReplyScore = replyPositionScore;
+      }
+    }
+
+    if(worstReplyScore === 999999){
+      worstReplyScore = afterMyAction;
+    }
+  }
+
+  undoSearchAction(snapshot);
+
+  var score =
+    immediateScore * 0.80 +
+    afterMyAction * 0.55 +
+    worstReplyScore * 0.45;
+
+  /* 같은 판을 반복할수록 감점을 키운다. */
+  score -=
+    countRecentPositionRepeats(team, action) * 450;
+
+  return score;
+}
+
+function getSearchRevealPenalty(team, actions){
+  /* 초반에는 전개를 위해 공개를 충분히 허용한다. */
+  if(totalActionCount < 8){
+    return 0;
+  }
+
+  var penalty = 0;
+  var safeCaptureExists = false;
+  var nonRevealExists = false;
+
+  for(var i=0; i<actions.length; i++){
+    var action = actions[i];
+
+    if(action.type === 'reveal'){
+      continue;
+    }
+
+    if(masterScoreAction(team, action) <= -999999){
+      continue;
+    }
+
+    nonRevealExists = true;
+
+    if(
+      action.type === 'capture' &&
+      !isLosingTrade(team, action)
+    ){
+      safeCaptureExists = true;
+    }
+  }
+
+  /* 잡을 수 있는데 새 기물부터 여는 행동을 강하게 억제한다. */
+  if(safeCaptureExists){
+    penalty += 1400;
+  }
+
+  /* 두 번 연속 공개했다면 가능한 이동/공격으로 전환한다. */
+  if(
+    aiRevealStreak[team] >= 2 &&
+    nonRevealExists
+  ){
+    penalty +=
+      1200 +
+      (aiRevealStreak[team] - 2) * 450;
+  }
+
+  /* 내 공개 기물이 충분하면 활동과 공격을 우선한다. */
+  if(countRevealedTeamPieces(team) >= 3){
+    penalty += 320;
+  }
+
+  return penalty;
+}
+
+/* 이동만 이어져 판이 맴돌 때 공개에 주는 가산점 */
+function getSearchStallRevealBonus(team){
+  if(!shouldBreakStall(team)){
+    return 0;
+  }
+
+  return Math.min(
+    1500,
+    300 +
+    (aiQuietStreak[team] - AI_QUIET_STREAK_LIMIT) * 80
+  );
+}
+
+function shouldSearchForceNonReveal(team, actions){
+  if(aiRevealStreak[team] < 2){
+    return false;
+  }
+
+  for(var i=0; i<actions.length; i++){
+    var action = actions[i];
+
+    if(action.type === 'reveal'){
+      continue;
+    }
+
+    if(masterScoreAction(team, action) > -999999){
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function sameMasterAction(a, b){
+  if(!a || !b || a.type !== b.type){
+    return false;
+  }
+
+  if(a.type === 'reveal'){
+    return a.index === b.index;
+  }
+
+  return a.from === b.from && a.to === b.to;
+}
+
+function choosePositionSearchAction(team){
+  var winningCapture =
+    findImmediateWinningCapture(team);
+
+  if(winningCapture){
+    return winningCapture;
+  }
+
+  var ruleCandidateAction =
+    chooseRuleCandidateAction(team);
+
+  var actions = getMasterActions(team);
+  var revealPenalty =
+    getSearchRevealPenalty(team, actions);
+  var stallRevealBonus =
+    getSearchStallRevealBonus(team);
+  var forceNonReveal =
+    shouldSearchForceNonReveal(team, actions);
+
+  var bestAction = null;
+  var bestScore = -999999;
+
+  aiSearchSilent = true;
+
+  for(var i=0; i<actions.length; i++){
+    var action = actions[i];
+
+    if(forceNonReveal && action.type === 'reveal'){
+      continue;
+    }
+
+    if(isBadMasterAction(team, action)){
+      continue;
+    }
+
+    var score = scorePositionSearchAction(team, action);
+
+    if(score <= -999999){
+      continue;
+    }
+
+    if(action.type === 'reveal'){
+      score -= revealPenalty;
+      score += stallRevealBonus;
+    }
+
+    /* 기존 규칙과 전술 검사가 고른 수에는 소폭 가산점 */
+    if(sameMasterAction(action, ruleCandidateAction)){
+      score += 120;
+    }
+
+    if(score > bestScore){
+      bestScore = score;
+      bestAction = action;
+    }
+  }
+
+  aiSearchSilent = false;
+
+  if(!bestAction){
+    return ruleCandidateAction;
+  }
+
+  bestAction.searchScore = bestScore;
+
+  if(!bestAction.reason){
+    bestAction.reason = 'positionSearch';
+  }
+
+  return bestAction;
+}
+
+function chooseMasterAction(team){
+  return choosePositionSearchAction(team);
+}
+
 
 /* 일반 대국 AI 실행 */
 function aiMove(){
 console.log('🤖 aiMove 호출', Date.now(), 'turn=', turn, 'aiTeam=', aiTeam);
   if(
     !aiMode ||
-    aiVsAiMode ||
     turn !== aiTeam ||
     gameEnded
   ){
@@ -16962,7 +18504,6 @@ console.log('🤖 aiMove 호출', Date.now(), 'turn=', turn, 'aiTeam=', aiTeam);
 
     if(
       !aiMode ||
-      aiVsAiMode ||
       turn !== aiTeam ||
       gameEnded
     ){
@@ -16978,7 +18519,7 @@ console.timeEnd('AI판단시간');
     );
 
 console.log('✅ aiMove 실행 끝', 'turn=', turn, 'gameEnded=', gameEnded);
-  },900);
+  },aiThinkDelay);
 }
 
 
@@ -17014,7 +18555,7 @@ function blueAiMove(){
       action
     );
 
-  },500);
+  },blueAiThinkDelay);
 }
 
 /* =====================================================
@@ -17715,4 +19256,102 @@ window.addEventListener('orientationchange', function(){
   }, 300);
 
 });
-       
+
+/* =====================================================
+   개발/회귀 테스트 API
+
+   화면 버튼에는 노출하지 않는다. 브라우저 콘솔이나 자동화
+   테스트에서 동일 시드의 AI 대 AI 대국을 재현할 때 사용한다.
+===================================================== */
+
+function getAutoMatchState(){
+  var blueAlive = countAlivePieces('blue');
+  var redAlive = countAlivePieces('red');
+  var winner = null;
+
+  if(blueAlive === 0){
+    winner = 'red';
+  }
+  else if(redAlive === 0){
+    winner = 'blue';
+  }
+
+  return {
+    running: aiVsAiMode && !gameEnded,
+    gameEnded: gameEnded,
+    reason:
+      winner
+      ? 'victory'
+      : autoMatchFinishedReason,
+    winner: winner,
+    turn: turn,
+    totalActionCount: totalActionCount,
+    blueAlive: blueAlive,
+    redAlive: redAlive,
+    seed: gameRandomSeed
+  };
+}
+
+function startAutoMatch(options){
+  options = options || {};
+
+  setGameRandomSeed(
+    typeof options.seed === 'undefined'
+    ? 1
+    : options.seed
+  );
+
+  aiThinkDelay =
+    typeof options.delay === 'number'
+    ? Math.max(0, options.delay)
+    : 0;
+
+  blueAiThinkDelay = aiThinkDelay;
+
+  autoMatchMaxActions =
+    typeof options.maxActions === 'number'
+    ? Math.max(1, options.maxActions)
+    : 300;
+
+  autoMatchFinishedReason = null;
+  aiMode = true;
+  aiVsAiMode = true;
+  aiTeam = 'red';
+  firstMover = 'ai';
+  teamsAssigned = true;
+  rpsActive = false;
+
+  document.getElementById('mainMenu').style.display = 'none';
+  document.getElementById('game').style.display = 'block';
+
+  newGame();
+
+  turn = aiTeam;
+  recentVisiblePositions = [];
+  rememberVisiblePosition(turn);
+  draw();
+  aiMove();
+
+  return getAutoMatchState();
+}
+
+function stopAutoMatch(){
+  if(aiVsAiMode && !gameEnded){
+    autoMatchFinishedReason = 'stopped';
+  }
+
+  gameEnded = true;
+  aiVsAiMode = false;
+
+  return getAutoMatchState();
+}
+
+window.PawStoryDebug = {
+  setSeed: setGameRandomSeed,
+  startAutoMatch: startAutoMatch,
+  stopAutoMatch: stopAutoMatch,
+  getState: getAutoMatchState,
+  chooseAction: function(team){
+    return chooseMasterAction(team);
+  }
+};
